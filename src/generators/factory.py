@@ -2,7 +2,7 @@
 Generator Factory - Select appropriate generator
 """
 
-from src.generators.template import TemplateGenerator
+from generators.template import TemplateGenerator
 
 class GeneratorFactory:
     """Factory to get appropriate generator"""

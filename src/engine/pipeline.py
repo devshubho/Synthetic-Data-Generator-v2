@@ -3,12 +3,12 @@ Generation Pipeline - Complete Workflow
 """
 
 import pandas as pd
-from src.generators.factory import GeneratorFactory
-from src.generators.custom import CustomGenerator
-from src.privacy.anonymizer import Anonymizer
-from src.engine.data_processor import DataProcessor
-from src.engine.validator import DataValidator
-from src.logger import setup_logger
+from generators.factory import GeneratorFactory
+from generators.custom import CustomGenerator
+from privacy.anonymizer import Anonymizer
+from engine.data_processor import DataProcessor
+from engine.validator import DataValidator
+from logger import setup_logger
 
 logger = setup_logger()
 
