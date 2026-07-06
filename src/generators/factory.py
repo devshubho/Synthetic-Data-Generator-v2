@@ -13,6 +13,7 @@ class GeneratorFactory:
     def get_generator(self, data_type: str):
         """Get generator for data type"""
         
+        # All pre-built templates use the same generator
         template_types = [
             "Personal/Customer Data",
             "Sales Transactions",
