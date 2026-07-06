@@ -12,48 +12,69 @@ from logger import setup_logger
 
 logger = setup_logger()
 
+
 class GenerationPipeline:
     """Complete generation workflow"""
-    
+
     def __init__(self):
         self.processor = DataProcessor()
         self.validator = DataValidator()
         self.factory = GeneratorFactory()
         self.anonymizer = Anonymizer()
-    
-    def generate_template(self, data_type: str, num_records: int, 
-                         random_seed: int = 42) -> pd.DataFrame:
-        """Generate from template"""
-        
+
+    def generate_template(
+        self,
+        data_type: str,
+        num_records: int,
+        random_seed: int = 42,
+    ) -> pd.DataFrame:
+        """Generate data from a pre-built template"""
+
         logger.info(f"Generating {num_records} records of {data_type}")
-        
+
         generator = self.factory.get_generator(data_type)
-        df = generator.generate(num_records, random_seed=random_seed)
-        
+
+        # ✅ FIX: Pass BOTH data_type and num_records
+        df = generator.generate(
+            data_type=data_type,
+            num_records=num_records,
+            random_seed=random_seed,
+        )
+
         self.validator.validate(df)
         df = self.processor.clean(df)
-        
+
         logger.info(f"Generated {len(df)} records")
         return df
-    
-    def generate_from_sample(self, sample: pd.DataFrame, num_records: int,
-                            preserve_correlations: bool = True,
-                            enable_privacy: bool = True) -> pd.DataFrame:
-        """Generate from user sample"""
-        
-        logger.info(f"Generating {num_records} records from sample ({len(sample)} rows)")
-        
+
+    def generate_from_sample(
+        self,
+        sample: pd.DataFrame,
+        num_records: int,
+        preserve_correlations: bool = True,
+        enable_privacy: bool = True,
+    ) -> pd.DataFrame:
+        """Generate synthetic data from uploaded sample"""
+
+        logger.info(
+            f"Generating {num_records} records from sample ({len(sample)} rows)"
+        )
+
         self.validator.validate_sample(sample)
         sample = self.processor.process_sample(sample)
-        
+
         generator = CustomGenerator(sample)
-        df = generator.generate(num_records, preserve_correlations=preserve_correlations)
-        
+
+        df = generator.generate(
+            num_records=num_records,
+            preserve_correlations=preserve_correlations,
+        )
+
         if enable_privacy:
             df = self.anonymizer.apply_privacy(df)
-        
+
         self.validator.validate(df)
         df = self.processor.clean(df)
-        
+
         logger.info(f"Generated {len(df)} records from sample")
         return df
