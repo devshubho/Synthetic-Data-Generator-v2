@@ -35,11 +35,10 @@ st.set_page_config(
 
 # ==================== SESSION STATE INITIALIZATION ====================
 
-# !!! IMPORTANT: Initialize session state at module level !!!
-def init_session():
-    """Initialize ALL session state variables"""
+def initialize_session_state():
+    """Initialize ALL session state variables at once"""
     
-    # Initialize each attribute with default values
+    # This is the ONLY place where session state is initialized
     if 'sample_data' not in st.session_state:
         st.session_state.sample_data = None
     
@@ -63,8 +62,8 @@ def init_session():
     
     return True
 
-# !!! CRITICAL: Call initialization IMMEDIATELY !!!
-INIT_SUCCESS = init_session()
+# !!! CRITICAL: Initialize session state BEFORE anything else !!!
+initialize_session_state()
 
 # ==================== CUSTOM CSS ====================
 
@@ -493,14 +492,12 @@ def export_page():
         except Exception as e:
             st.error(f"❌ Export failed: {str(e)}")
 
-# ==================== NAVIGATION ====================
+# ==================== MAIN NAVIGATION ====================
 
 def main():
     """Main Application"""
     
-    # !!! CRITICAL: Re-initialize at start of main !!!
-    init_session()
-    
+    # Sidebar
     st.sidebar.title("🎲 Project Synthesi")
     st.sidebar.markdown("---")
     
@@ -512,7 +509,7 @@ def main():
     
     st.sidebar.markdown("---")
     
-    # Session Info - Now SAFE to access
+    # Session Info
     try:
         if st.session_state.sample_data is not None:
             st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
@@ -523,8 +520,8 @@ def main():
             st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
         else:
             st.sidebar.info("📦 No data generated")
-    except Exception as e:
-        st.sidebar.error("Session not initialized")
+    except:
+        st.sidebar.warning("Session not ready")
     
     st.sidebar.markdown("---")
     st.sidebar.caption(f"v{Config.VERSION} | {Config.AUTHOR}")
@@ -541,7 +538,9 @@ def main():
     elif page == "💾 Export":
         export_page()
 
+# ==================== ENTRY POINT ====================
+
 if __name__ == "__main__":
-    # Ensure initialization before running main
-    init_session()
+    # Ensure session state is initialized
+    initialize_session_state()
     main()

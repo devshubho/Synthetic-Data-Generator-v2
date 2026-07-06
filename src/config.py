@@ -5,9 +5,9 @@ Configuration Settings
 class Config:
     """Application Configuration"""
     
-    APP_NAME = "Project Synthesi"
+    APP_NAME = "Project Synthesis"
     VERSION = "3.0.0"
-    AUTHOR = "Bikram Sarkar"
+    AUTHOR = " Team Synthesis"
     
     # Generation Limits
     MAX_RECORDS = 100000
