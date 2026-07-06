@@ -132,10 +132,12 @@ class TemplateGenerator:
         start = datetime.now() - timedelta(days=n)
         dates = [start + timedelta(days=i) for i in range(n)]
         
+        # Multiple patterns
         trend = np.linspace(0, 50, n)
         seasonality = 20 * np.sin(2 * np.pi * np.arange(n) / 30)
         weekly = 10 * np.sin(2 * np.pi * np.arange(n) / 7)
         noise = np.random.normal(0, 5, n)
+        
         values = 100 + trend + seasonality + weekly + noise
         
         return pd.DataFrame({
@@ -197,6 +199,7 @@ class TemplateGenerator:
             ts = datetime.now() - timedelta(minutes=i*5)
             host = random.choice(hosts)
             
+            # Correlated metrics
             has_issue = random.random() < 0.2
             cpu = random.uniform(10, 60) + (random.uniform(30, 60) if has_issue else 0)
             memory = random.uniform(30, 70) + (random.uniform(20, 40) if has_issue else 0)
