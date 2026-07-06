@@ -1,0 +1,3 @@
+"""
+Project Synthesi - Main Package
+"""
