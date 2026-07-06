@@ -109,6 +109,22 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #667eea;
         margin: 1rem 0;
+        color: #2d3748 !important;
+    }
+    .feature-card h3 {
+        color: #1a2332 !important;
+        margin-bottom: 1rem;
+    }
+    .feature-card ol {
+        color: #2d3748 !important;
+        padding-left: 1.25rem;
+    }
+    .feature-card li {
+        color: #2d3748 !important;
+        margin-bottom: 0.5rem;
+    }
+    .feature-card strong {
+        color: #1a2332 !important;
     }
     .upload-area {
         border: 2px dashed #667eea;
@@ -116,6 +132,18 @@ st.markdown("""
         padding: 2rem;
         text-align: center;
         background: #f8f9fa;
+        color: #1a2332 !important;
+    }
+    .upload-area h3 {
+        color: #1a2332 !important;
+        margin-bottom: 0.75rem;
+    }
+    .upload-area p {
+        color: #2d3748 !important;
+    }
+    .upload-area .upload-hint {
+        color: #4a5568 !important;
+        font-size: 0.9rem;
     }
     .upload-area:hover {
         background: #e8ecf1;
@@ -191,8 +219,8 @@ def home_page():
         st.markdown("""
         <div class="upload-area">
             <h3>📤 Start with Your Own Data</h3>
-            <p style="color: #666;">Upload a sample dataset to generate synthetic data with the same patterns</p>
-            <p style="color: #999; font-size: 0.9rem;">Supported: CSV, Excel, JSON</p>
+            <p>Upload a sample dataset to generate synthetic data with the same patterns</p>
+            <p class="upload-hint">Supported: CSV, Excel, JSON</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -481,10 +509,11 @@ def export_page():
                     
                     st.success(f"✅ Data ready for download ({file_size})")
                     
+                    extension = "xlsx" if export_format == "Excel" else export_format.lower()
                     st.download_button(
                         label=f"📥 Download {export_format} ({file_size})",
                         data=data_bytes,
-                        file_name=f"{filename}.{export_format.lower()}",
+                        file_name=f"{filename}.{extension}",
                         mime="application/octet-stream",
                         use_container_width=True
                     )
