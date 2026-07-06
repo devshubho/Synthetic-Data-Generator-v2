@@ -34,12 +34,8 @@ class GenerationPipeline:
 
         generator = self.factory.get_generator(data_type)
 
-        # ✅ FIX: Pass BOTH data_type and num_records
-        df = generator.generate(
-            data_type=data_type,
-            num_records=num_records,
-            random_seed=random_seed,
-        )
+        # ✅ FIX: Pass BOTH data_type and num_records as positional arguments
+        df = generator.generate(data_type, num_records, random_seed)
 
         self.validator.validate(df)
         df = self.processor.clean(df)
@@ -59,6 +55,10 @@ class GenerationPipeline:
         logger.info(
             f"Generating {num_records} records from sample ({len(sample)} rows)"
         )
+
+        # Validate sample has enough data
+        if len(sample) < 2:
+            raise ValueError("Sample must have at least 2 rows. Please upload more data.")
 
         self.validator.validate_sample(sample)
         sample = self.processor.process_sample(sample)
