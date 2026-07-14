@@ -1,5 +1,7 @@
 """
-SynthSLM - Main Application (Complete)
+SynthSLM - Main Application
+B.Tech Final Year Project
+Author: Subham Sarkar
 """
 
 import streamlit as st
@@ -8,6 +10,7 @@ import time
 import traceback
 from datetime import datetime
 
+# Import from config
 from config import Config
 from logger import setup_logger, get_logger, log_error
 from engine.pipeline import GenerationPipeline
@@ -175,7 +178,6 @@ def generate_page():
     
     if st.button("🚀 Generate Data", use_container_width=True):
         try:
-            # Progress tracking
             progress_bar = st.progress(0)
             status_text = st.empty()
             
@@ -238,7 +240,6 @@ def generate_page():
                     quality = report.get('overall_score', 0)
                     st.metric("Quality Score", f"{quality:.1%}")
                 
-                # Clear progress
                 progress_bar.empty()
                 status_text.empty()
                 

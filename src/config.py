@@ -26,6 +26,7 @@ class Config:
         "IoT Sensor Data",
         "Healthcare Records",
         "Financial Transactions",
+        "Toll Plaza Data",
         "User-Defined (Upload Sample)"
     ]
     
