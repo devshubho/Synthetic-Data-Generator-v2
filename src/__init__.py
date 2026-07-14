@@ -1,7 +1,3 @@
 """
-Visualization Module
+SynthSLM - Main Package
 """
-
-from visualization.dashboard import Dashboard
-
-__all__ = ['Dashboard']

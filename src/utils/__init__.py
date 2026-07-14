@@ -14,7 +14,6 @@ from utils.exceptions import (
     ConfigError,
     DatabaseError
 )
-from utils.deduplicator import DataDeduplicator
 
 __all__ = [
     'format_size', 
@@ -28,6 +27,5 @@ __all__ = [
     'ExportError',
     'SampleError',
     'ConfigError',
-    'DatabaseError',
-    'DataDeduplicator'
+    'DatabaseError'
 ]
