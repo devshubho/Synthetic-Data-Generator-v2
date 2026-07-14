@@ -229,6 +229,7 @@ class CustomGenerator:
             logger.warning(f"Correlation calculation failed: {str(e)}")
             self.correlations = None
     
+    # ========== FIXED METHOD ==========
     def generate(self, n: int, preserve_correlations: bool = True) -> pd.DataFrame:
         """Generate synthetic data with error handling"""
         try:
