@@ -1,19 +1,23 @@
 """
-Data Processor with Error Handling
+Data Processor with Intelligent Deduplication
 """
 
 import pandas as pd
 import numpy as np
 from logger import get_logger
 from utils.exceptions import DataValidationError
+from utils.deduplicator import DataDeduplicator
 
 logger = get_logger()
 
 class DataProcessor:
-    """Process and clean data with error handling"""
+    """Process and clean data with intelligent deduplication"""
     
-    def clean(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Clean dataframe with error handling"""
+    def __init__(self):
+        self.deduplicator = DataDeduplicator()
+    
+    def clean(self, data: pd.DataFrame, data_type: str = "unknown") -> pd.DataFrame:
+        """Clean dataframe with intelligent deduplication"""
         try:
             if data is None or len(data) == 0:
                 logger.warning("Empty data provided for cleaning")
@@ -22,12 +26,10 @@ class DataProcessor:
             df = data.copy()
             original_shape = df.shape
             
-            # Remove duplicate rows
-            duplicates = df.duplicated().sum()
-            if duplicates > 0:
-                df = df.drop_duplicates()
-                logger.info(f"Removed {duplicates} duplicate rows")
+            # === STEP 1: INTELLIGENT DEDUPLICATION ===
+            df = self.deduplicator.deduplicate(df, data_type)
             
+            # === STEP 2: FILL NULLS ===
             # Fill nulls for numeric with median
             numeric_cols = df.select_dtypes(include=[np.number]).columns
             for col in numeric_cols:
@@ -50,34 +52,43 @@ class DataProcessor:
                 except Exception as e:
                     logger.warning(f"Could not fill nulls in '{col}': {str(e)}")
             
-            # Remove columns that are all null
-            all_null_cols = [col for col in df.columns if df[col].isnull().all()]
-            if all_null_cols:
-                df = df.drop(columns=all_null_cols)
-                logger.info(f"Removed all-null columns: {all_null_cols}")
+            # === STEP 3: STANDARDIZE ===
+            # Standardize string columns
+            string_cols = df.select_dtypes(include=['object']).columns
+            for col in string_cols:
+                try:
+                    df[col] = df[col].astype(str).str.strip()
+                    # Replace empty strings with None
+                    df[col] = df[col].replace('', None)
+                except Exception as e:
+                    logger.warning(f"Could not standardize column '{col}': {str(e)}")
             
-            logger.info(f"Cleaned data: {original_shape} -> {df.shape}")
+            # Convert date columns
+            for col in df.columns:
+                try:
+                    if 'date' in col.lower() or 'time' in col.lower() or 'timestamp' in col.lower():
+                        if not pd.api.types.is_datetime64_dtype(df[col]):
+                            df[col] = pd.to_datetime(df[col], errors='coerce')
+                except Exception as e:
+                    logger.warning(f"Could not convert datetime column '{col}': {str(e)}")
+            
+            logger.info(f"Cleaned data: {original_shape} → {df.shape}")
             return df
             
         except Exception as e:
             logger.error(f"Data cleaning failed: {str(e)}")
             raise DataValidationError(f"Data cleaning failed: {str(e)}")
     
-    def process_sample(self, sample: pd.DataFrame) -> pd.DataFrame:
-        """Process sample data with error handling"""
+    def process_sample(self, sample: pd.DataFrame, data_type: str = "unknown") -> pd.DataFrame:
+        """Process sample data with deduplication"""
         try:
             if sample is None or len(sample) == 0:
                 raise DataValidationError("Sample is empty")
             
             df = sample.copy()
             
-            # Convert date columns
-            for col in df.columns:
-                try:
-                    if pd.api.types.is_datetime64_dtype(df[col]):
-                        df[col] = df[col].astype('datetime64[ns]')
-                except Exception as e:
-                    logger.warning(f"Could not process datetime column '{col}': {str(e)}")
+            # Apply deduplication
+            df = self.deduplicator.deduplicate(df, data_type)
             
             # Standardize string columns
             string_cols = df.select_dtypes(include=['object']).columns
@@ -93,3 +104,11 @@ class DataProcessor:
         except Exception as e:
             logger.error(f"Sample processing failed: {str(e)}")
             raise DataValidationError(f"Sample processing failed: {str(e)}")
+    
+    def get_dedup_report(self) -> Dict:
+        """Get deduplication report"""
+        return self.deduplicator.get_dedup_report()
+    
+    def analyze_duplicates(self, data: pd.DataFrame) -> Dict:
+        """Analyze duplicates in data"""
+        return self.deduplicator.get_duplicates_info(data)
