@@ -4,8 +4,8 @@ Data Validator with Error Handling
 
 import pandas as pd
 import numpy as np
-from src.utils.exceptions import DataValidationError, SampleError
-from src.logger import get_logger
+from utils.exceptions import DataValidationError, SampleError
+from logger import get_logger
 
 logger = get_logger()
 

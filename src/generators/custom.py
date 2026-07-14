@@ -1,5 +1,5 @@
 """
-Custom Generator with Error Handling
+Custom Generator - Advanced Pattern Learning from User Data
 """
 
 import pandas as pd
@@ -7,14 +7,14 @@ import numpy as np
 from sklearn.neighbors import KernelDensity
 from sklearn.preprocessing import StandardScaler
 import warnings
-from src.logger import get_logger
-from src.utils.exceptions import GenerationError
+from logger import get_logger
+from utils.exceptions import GenerationError
 
 logger = get_logger()
 warnings.filterwarnings('ignore')
 
 class CustomGenerator:
-    """Advanced synthetic data generator with error handling"""
+    """Advanced synthetic data generator from user-provided sample"""
     
     def __init__(self, sample_data: pd.DataFrame):
         try:
@@ -22,7 +22,6 @@ class CustomGenerator:
                 raise GenerationError("Sample data is None")
             
             if len(sample_data) < 2:
-                # Duplicate small sample
                 logger.warning(f"Sample has only {len(sample_data)} rows. Duplicating...")
                 self.sample = pd.concat([sample_data, sample_data], ignore_index=True)
             else:
@@ -99,7 +98,6 @@ class CustomGenerator:
             elif pd.api.types.is_bool_dtype(series):
                 return 'categorical'
             else:
-                # Check if categorical (few unique values)
                 unique_ratio = series.nunique() / len(series) if len(series) > 0 else 0
                 if unique_ratio < 0.5 and series.nunique() < 20:
                     return 'categorical'
@@ -114,7 +112,6 @@ class CustomGenerator:
             values = series.dropna().values
             
             if len(values) < 3:
-                # Small sample - use simple statistics
                 return {
                     'type': 'numeric',
                     'method': 'statistical',
@@ -124,7 +121,6 @@ class CustomGenerator:
                     'max': np.max(values) if len(values) > 0 else 1
                 }
             
-            # Try KDE
             try:
                 kde = KernelDensity(kernel='gaussian', bandwidth='scott')
                 kde.fit(values.reshape(-1, 1))
@@ -254,14 +250,12 @@ class CustomGenerator:
             
             df = pd.DataFrame(data)
             
-            # Apply correlations
             if preserve_correlations and self.correlations is not None:
                 try:
                     df = self._apply_correlations(df)
                 except Exception as e:
                     logger.warning(f"Correlation application failed: {str(e)}")
             
-            # Apply constraints
             try:
                 df = self._apply_constraints(df)
             except Exception as e:
@@ -315,23 +309,13 @@ class CustomGenerator:
             if len(numeric_cols) < 2:
                 return df
             
-            # Get generated numeric data
             gen_data = df[numeric_cols].values
-            
-            # Standardize
             scaler = StandardScaler()
             gen_scaled = scaler.fit_transform(gen_data)
-            
-            # Apply Cholesky decomposition
             L = np.linalg.cholesky(self.correlations.values + np.eye(len(numeric_cols)) * 0.001)
-            
-            # Transform
             correlated = gen_scaled @ L.T
-            
-            # Scale back
             correlated = scaler.inverse_transform(correlated)
             
-            # Replace values
             for i, col in enumerate(numeric_cols):
                 df[col] = correlated[:, i]
                 

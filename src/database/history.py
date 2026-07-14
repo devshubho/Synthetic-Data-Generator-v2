@@ -7,6 +7,9 @@ import sqlite3
 import json
 from datetime import datetime
 import os
+from logger import get_logger
+
+logger = get_logger()
 
 class HistoryManager:
     """Manage generation history"""
@@ -36,6 +39,7 @@ class HistoryManager:
         
         conn.commit()
         conn.close()
+        logger.info("Database initialized")
     
     def save(self, data: dict):
         """Save generation record"""
@@ -58,6 +62,7 @@ class HistoryManager:
         
         conn.commit()
         conn.close()
+        logger.info(f"Saved generation record: {data.get('type', 'Unknown')}")
     
     def get_history(self, limit: int = 20) -> pd.DataFrame:
         """Get generation history"""
@@ -73,5 +78,4 @@ class HistoryManager:
         
         df = pd.read_sql_query(query, conn)
         conn.close()
-        
         return df

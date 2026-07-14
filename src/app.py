@@ -93,13 +93,6 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #667eea;
     }
-    .error-box {
-        background: #f8d7da;
-        border: 1px solid #f5c6cb;
-        border-radius: 8px;
-        padding: 1rem;
-        color: #721c24;
-    }
     .success-box {
         background: #d4edda;
         border: 1px solid #c3e6cb;
@@ -377,7 +370,6 @@ def main():
     
     st.sidebar.markdown("---")
     
-    # Show status
     if st.session_state.sample_data is not None:
         st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
     else:
@@ -389,7 +381,6 @@ def main():
     st.sidebar.markdown("---")
     st.sidebar.caption(f"v{Config.VERSION} | {Config.AUTHOR}")
     
-    # Route
     if page == "🏠 Home":
         home_page()
     elif page == "📤 Upload Sample":

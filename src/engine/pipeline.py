@@ -3,13 +3,13 @@ Generation Pipeline with Error Handling
 """
 
 import pandas as pd
-from src.generators.factory import GeneratorFactory
-from src.generators.custom import CustomGenerator
-from src.privacy.anonymizer import Anonymizer
-from src.engine.data_processor import DataProcessor
-from src.engine.validator import DataValidator
-from src.logger import get_logger, log_error
-from src.utils.exceptions import GenerationError, SampleError
+from generators.factory import GeneratorFactory
+from generators.custom import CustomGenerator
+from privacy.anonymizer import Anonymizer
+from engine.data_processor import DataProcessor
+from engine.validator import DataValidator
+from logger import get_logger, log_error
+from utils.exceptions import GenerationError, SampleError
 
 logger = get_logger()
 

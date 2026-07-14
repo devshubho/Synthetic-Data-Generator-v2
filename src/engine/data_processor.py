@@ -4,8 +4,8 @@ Data Processor with Error Handling
 
 import pandas as pd
 import numpy as np
-from src.logger import get_logger
-from src.utils.exceptions import DataValidationError
+from logger import get_logger
+from utils.exceptions import DataValidationError
 
 logger = get_logger()
 
