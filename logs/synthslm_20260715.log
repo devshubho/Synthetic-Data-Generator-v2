@@ -1,0 +1,11 @@
+2026-07-15 01:26:05,991 - SynthSLM - INFO - Anonymizer initialized
+2026-07-15 01:26:05,993 - SynthSLM - INFO - GenerationPipeline initialized successfully
+2026-07-15 01:26:05,993 - SynthSLM - INFO - Generating 20 records from sample (6 rows)
+2026-07-15 01:26:05,996 - SynthSLM - INFO - Sample validation passed: 6 rows, 3 columns
+2026-07-15 01:26:06,246 - SynthSLM - INFO - Column roles: {'courier': 'closed_categorical', 'doctor': 'person_name', 'x': 'numeric'}
+2026-07-15 01:26:06,246 - SynthSLM - INFO - CustomGenerator locale=en_IN india_mode=False india_phone=False
+2026-07-15 01:26:06,268 - SynthSLM - INFO - Generation nunique by field: courier=6, doctor=20, x=6
+2026-07-15 01:26:06,268 - SynthSLM - INFO - Generation validation passed
+2026-07-15 01:26:06,270 - SynthSLM - INFO - Data validation passed: 20 rows, 3 columns
+2026-07-15 01:26:06,283 - SynthSLM - INFO - Final nunique by field: courier=6, doctor=20, x=6
+2026-07-15 01:26:06,283 - SynthSLM - INFO - Successfully generated 20 records from sample

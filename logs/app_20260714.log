@@ -1,0 +1,1299 @@
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,477 - INFO - Generating 500 records from sample (29225 rows)
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:52:43,691 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:54:08,018 - INFO - Generating 10 records from sample (5 rows)
+2026-07-14 21:54:08,057 - INFO - Generated 10 records from sample
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,270 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:55:20,577 - ERROR - Generation error: CustomGenerator.generate() got an unexpected keyword argument 'num_records'
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:55,784 - INFO - Generating 1000 records from sample (29225 rows)
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 21:59:56,105 - INFO - Generated 965 records from sample
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,712 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:01:57,775 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:04:20,245 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 22:04:20,260 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 22:04:20,279 - INFO - Generated 18 records from sample
+2026-07-14 22:04:20,279 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 22:04:20,285 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 22:04:20,331 - INFO - Generated 19 records from sample
+2026-07-14 22:05:40,598 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:05:40,624 - INFO - Generated 6 records from sample
+2026-07-14 22:05:40,624 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:05:40,643 - INFO - Generated 46 records from sample
+2026-07-14 22:05:40,643 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:05:40,662 - INFO - Generated 46 records from sample
+2026-07-14 22:05:40,662 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:05:40,681 - INFO - Generated 30 records from sample
+2026-07-14 22:05:40,682 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:05:40,729 - INFO - Generated 49 records from sample
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,320 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:06:52,422 - ERROR - Generation error: cannot convert float NaN to integer
+2026-07-14 22:10:22,296 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:10:22,316 - INFO - Generated 6 records from sample
+2026-07-14 22:10:22,316 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:10:22,340 - INFO - Generated 45 records from sample
+2026-07-14 22:10:22,340 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:10:22,359 - INFO - Generated 45 records from sample
+2026-07-14 22:10:22,359 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:10:22,378 - INFO - Generated 22 records from sample
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,834 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:12:05,922 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:15:56,408 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:15:56,485 - INFO - Generated 50 records from sample
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:52,965 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:16:53,059 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,900 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:04,973 - ERROR - Generation error: could not convert string to float: 'FALSE '
+2026-07-14 22:18:59,521 - INFO - Generating 50 records from sample (6 rows)
+2026-07-14 22:18:59,600 - INFO - Generated 50 records from sample
+2026-07-14 22:20:30,278 - INFO - Generating 500 records from sample (6 rows)
+2026-07-14 22:20:30,415 - INFO - Generated 500 records from sample
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:19,980 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:21:20,177 - INFO - Generated 998 records from sample
+2026-07-14 22:26:19,432 - INFO - Generating 30 records from sample (6 rows)
+2026-07-14 22:26:19,520 - INFO - Generated 30 records from sample
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,781 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:27:07,976 - INFO - Generated 999 records from sample
+2026-07-14 22:29:29,198 - INFO - Generating 40 records from sample (6 rows)
+2026-07-14 22:29:29,331 - INFO - Generated 40 records from sample
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,619 - INFO - Generating 1000 records from sample (6 rows)
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:31:14,823 - INFO - Generated 997 records from sample
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:04,770 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:37:05,418 - INFO - Generated 1000 records from sample
+2026-07-14 22:50:29,448 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:50:29,448 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:50:29,670 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 22:50:29,670 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 22:50:29,773 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:50:29,773 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:50:29,912 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:50:29,912 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:50:29,912 - INFO - Generation validation passed
+2026-07-14 22:50:29,912 - INFO - Generation validation passed
+2026-07-14 22:50:29,941 - INFO - Final nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:50:29,941 - INFO - Final nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:50:29,945 - INFO - Datetime 'order_date': nunique=18, min=2024-01-16 00:00:00, max=2024-05-06 00:00:00
+2026-07-14 22:50:29,945 - INFO - Datetime 'order_date': nunique=18, min=2024-01-16 00:00:00, max=2024-05-06 00:00:00
+2026-07-14 22:50:29,946 - INFO - Generated 20 records from sample
+2026-07-14 22:50:29,946 - INFO - Generated 20 records from sample
+2026-07-14 22:50:30,054 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:50:30,054 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=4, category=1, quantity=3, unit_price=4, order_date=18, payment_method=4, shipping_city=4, order_status=4
+2026-07-14 22:51:21,391 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 22:51:21,391 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 22:51:21,503 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:51:21,503 - INFO - Linked field groups: [['product_name', 'category', 'unit_price'], ['customer_name', 'email']]
+2026-07-14 22:51:21,625 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=5, category=2, quantity=4, unit_price=5, order_date=20, payment_method=4, shipping_city=5, order_status=4
+2026-07-14 22:51:21,625 - INFO - Generation nunique by field: order_id=20, customer_name=7, email=7, product_name=5, category=2, quantity=4, unit_price=5, order_date=20, payment_method=4, shipping_city=5, order_status=4
+2026-07-14 22:51:21,625 - INFO - Generation validation passed
+2026-07-14 22:51:21,625 - INFO - Generation validation passed
+2026-07-14 22:51:21,672 - INFO - Final nunique by field: order_id=20, customer_name=7, email=7, product_name=5, category=2, quantity=4, unit_price=5, order_date=20, payment_method=4, shipping_city=5, order_status=4
+2026-07-14 22:51:21,672 - INFO - Final nunique by field: order_id=20, customer_name=7, email=7, product_name=5, category=2, quantity=4, unit_price=5, order_date=20, payment_method=4, shipping_city=5, order_status=4
+2026-07-14 22:51:21,676 - INFO - Datetime 'order_date': nunique=20, min=2024-01-05 00:00:00, max=2024-05-09 00:00:00
+2026-07-14 22:51:21,676 - INFO - Datetime 'order_date': nunique=20, min=2024-01-05 00:00:00, max=2024-05-09 00:00:00
+2026-07-14 22:51:21,676 - INFO - Generated 20 records from sample
+2026-07-14 22:51:21,676 - INFO - Generated 20 records from sample
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,092 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:53:38,557 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,503 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:55:25,941 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:33,808 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 22:57:34,347 - INFO - Generated 1000 records from sample
+2026-07-14 23:07:10,423 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:10,423 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:10,638 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:10,638 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:10,687 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:10,687 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:10,734 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=20, payment_method=4, txn_date=20
+2026-07-14 23:07:10,734 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=20, payment_method=4, txn_date=20
+2026-07-14 23:07:10,734 - INFO - Generation validation passed
+2026-07-14 23:07:10,734 - INFO - Generation validation passed
+2026-07-14 23:07:10,758 - INFO - Final nunique by field: transaction_id=20, account_holder=8, email=8, amount=20, payment_method=4, txn_date=20
+2026-07-14 23:07:10,758 - INFO - Final nunique by field: transaction_id=20, account_holder=8, email=8, amount=20, payment_method=4, txn_date=20
+2026-07-14 23:07:10,760 - INFO - Datetime 'txn_date': nunique=20, min=2023-01-02 00:00:00, max=2023-10-29 00:00:00
+2026-07-14 23:07:10,760 - INFO - Datetime 'txn_date': nunique=20, min=2023-01-02 00:00:00, max=2023-10-29 00:00:00
+2026-07-14 23:07:10,760 - INFO - Generated 20 records from sample
+2026-07-14 23:07:10,760 - INFO - Generated 20 records from sample
+2026-07-14 23:07:53,538 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:53,538 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:53,600 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:53,600 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:53,649 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,649 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,650 - INFO - Generation validation passed
+2026-07-14 23:07:53,650 - INFO - Generation validation passed
+2026-07-14 23:07:53,675 - INFO - Final nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,675 - INFO - Final nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,680 - INFO - Datetime 'txn_date': nunique=20, min=2023-01-10 00:00:00, max=2023-12-11 00:00:00
+2026-07-14 23:07:53,680 - INFO - Datetime 'txn_date': nunique=20, min=2023-01-10 00:00:00, max=2023-12-11 00:00:00
+2026-07-14 23:07:53,680 - INFO - Generated 20 records from sample
+2026-07-14 23:07:53,680 - INFO - Generated 20 records from sample
+2026-07-14 23:07:53,723 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:53,723 - INFO - Linked field groups: [['account_holder', 'email']]
+2026-07-14 23:07:53,759 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,759 - INFO - Generation nunique by field: transaction_id=20, account_holder=8, email=8, amount=19, payment_method=4, txn_date=20
+2026-07-14 23:07:53,776 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:53,776 - INFO - Generating 20 records from sample (8 rows)
+2026-07-14 23:07:53,833 - INFO - Linked field groups: [['full_name', 'email']]
+2026-07-14 23:07:53,833 - INFO - Linked field groups: [['full_name', 'email']]
+2026-07-14 23:07:53,984 - INFO - Generation nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:07:53,984 - INFO - Generation nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:07:53,984 - INFO - Generation validation passed
+2026-07-14 23:07:53,984 - INFO - Generation validation passed
+2026-07-14 23:07:54,062 - INFO - Final nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:07:54,062 - INFO - Final nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:07:54,064 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-01-27 00:00:00, max=2021-11-27 00:00:00
+2026-07-14 23:07:54,064 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-01-27 00:00:00, max=2021-11-27 00:00:00
+2026-07-14 23:07:54,064 - INFO - Generated 20 records from sample
+2026-07-14 23:07:54,064 - INFO - Generated 20 records from sample
+2026-07-14 23:07:54,208 - INFO - Linked field groups: [['full_name', 'email']]
+2026-07-14 23:07:54,208 - INFO - Linked field groups: [['full_name', 'email']]
+2026-07-14 23:07:54,304 - INFO - Generation nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:07:54,304 - INFO - Generation nunique by field: employee_id=20, full_name=8, email=8, department=5, designation=7, date_of_joining=20
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:25,387 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:09:26,079 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:11,434 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:11:12,184 - INFO - Generated 1000 records from sample
+2026-07-14 23:56:57,627 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:56:57,627 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:56:57,778 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:56:57,778 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:56:57,779 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:56:57,779 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:56:57,875 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=16, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:56:57,875 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=16, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:56:57,877 - INFO - Generation validation passed
+2026-07-14 23:56:57,877 - INFO - Generation validation passed
+2026-07-14 23:56:57,877 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:56:57,877 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:56:57,915 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=16, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:56:57,915 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=16, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:56:57,917 - INFO - Datetime 'order_date': nunique=18, min=2024-01-18 00:00:00, max=2024-05-10 00:00:00
+2026-07-14 23:56:57,917 - INFO - Datetime 'order_date': nunique=18, min=2024-01-18 00:00:00, max=2024-05-10 00:00:00
+2026-07-14 23:56:57,917 - INFO - Generated 20 records from sample
+2026-07-14 23:56:57,917 - INFO - Generated 20 records from sample
+2026-07-14 23:56:58,033 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:56:58,033 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:56:58,118 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'country', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:56:58,118 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'country', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:56:58,153 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=19, city=17, date_of_joining=18
+2026-07-14 23:56:58,153 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=19, city=17, date_of_joining=18
+2026-07-14 23:56:58,154 - INFO - Generation validation passed
+2026-07-14 23:56:58,154 - INFO - Generation validation passed
+2026-07-14 23:56:58,154 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:56:58,154 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:56:58,183 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=19, city=17, date_of_joining=18
+2026-07-14 23:56:58,183 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=19, city=17, date_of_joining=18
+2026-07-14 23:56:58,185 - INFO - Datetime 'date_of_joining': nunique=18, min=2018-11-28 00:00:00, max=2021-01-13 00:00:00
+2026-07-14 23:56:58,185 - INFO - Datetime 'date_of_joining': nunique=18, min=2018-11-28 00:00:00, max=2021-01-13 00:00:00
+2026-07-14 23:56:58,185 - INFO - Generated 20 records from sample
+2026-07-14 23:56:58,185 - INFO - Generated 20 records from sample
+2026-07-14 23:57:46,613 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'job', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:57:46,613 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'job', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:57:46,616 - INFO - Generating 12 records from sample (6 rows)
+2026-07-14 23:57:46,616 - INFO - Generating 12 records from sample (6 rows)
+2026-07-14 23:57:46,687 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'job', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:57:46,687 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'job', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:57:46,720 - INFO - Generation nunique by field: employee_id=12, full_name=12, email=12, department=3, designation=12, city=12, date_of_joining=12
+2026-07-14 23:57:46,720 - INFO - Generation nunique by field: employee_id=12, full_name=12, email=12, department=3, designation=12, city=12, date_of_joining=12
+2026-07-14 23:57:46,720 - INFO - Generation validation passed
+2026-07-14 23:57:46,720 - INFO - Generation validation passed
+2026-07-14 23:57:46,759 - INFO - Final nunique by field: employee_id=12, full_name=12, email=12, department=3, designation=12, city=12, date_of_joining=12
+2026-07-14 23:57:46,759 - INFO - Final nunique by field: employee_id=12, full_name=12, email=12, department=3, designation=12, city=12, date_of_joining=12
+2026-07-14 23:57:46,762 - INFO - Datetime 'date_of_joining': nunique=12, min=2018-03-20 00:00:00, max=2020-07-26 00:00:00
+2026-07-14 23:57:46,762 - INFO - Datetime 'date_of_joining': nunique=12, min=2018-03-20 00:00:00, max=2020-07-26 00:00:00
+2026-07-14 23:57:46,763 - INFO - Generated 12 records from sample
+2026-07-14 23:57:46,763 - INFO - Generated 12 records from sample
+2026-07-14 23:58:40,448 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:40,448 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:40,565 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:58:40,565 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:58:40,566 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:58:40,566 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:58:40,657 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=19, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:58:40,657 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=19, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:58:40,657 - INFO - Generation validation passed
+2026-07-14 23:58:40,657 - INFO - Generation validation passed
+2026-07-14 23:58:40,658 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:58:40,658 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:58:40,703 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=19, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:58:40,703 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=19, order_date=18, payment_method=4, order_status=4
+2026-07-14 23:58:40,708 - INFO - Datetime 'order_date': nunique=18, min=2024-01-05 00:00:00, max=2024-05-10 00:00:00
+2026-07-14 23:58:40,708 - INFO - Datetime 'order_date': nunique=18, min=2024-01-05 00:00:00, max=2024-05-10 00:00:00
+2026-07-14 23:58:40,709 - INFO - Generated 20 records from sample
+2026-07-14 23:58:40,709 - INFO - Generated 20 records from sample
+2026-07-14 23:58:40,818 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:40,818 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:40,901 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'closed_categorical', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:58:40,901 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'closed_categorical', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:58:40,952 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=16, date_of_joining=20
+2026-07-14 23:58:40,952 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=16, date_of_joining=20
+2026-07-14 23:58:40,952 - INFO - Generation validation passed
+2026-07-14 23:58:40,952 - INFO - Generation validation passed
+2026-07-14 23:58:40,953 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:58:40,953 - INFO - Privacy anonymization skipped for custom synthetic data (generated values are synthetic, not uploaded PII)
+2026-07-14 23:58:40,980 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=16, date_of_joining=20
+2026-07-14 23:58:40,980 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=16, date_of_joining=20
+2026-07-14 23:58:40,983 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-06-23 00:00:00, max=2020-11-17 00:00:00
+2026-07-14 23:58:40,983 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-06-23 00:00:00, max=2020-11-17 00:00:00
+2026-07-14 23:58:40,983 - INFO - Generated 20 records from sample
+2026-07-14 23:58:40,983 - INFO - Generated 20 records from sample
+2026-07-14 23:58:41,074 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:41,074 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:41,178 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:58:41,178 - INFO - Column roles: {'order_id': 'id', 'customer_name': 'person_name', 'email': 'email', 'product_name': 'product', 'category': 'closed_categorical', 'unit_price': 'numeric', 'shipping_city': 'city', 'order_date': 'datetime', 'payment_method': 'closed_categorical', 'order_status': 'closed_categorical'}
+2026-07-14 23:58:41,178 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:58:41,178 - INFO - Product linked groups: [['product_name', 'category', 'unit_price']]
+2026-07-14 23:58:41,269 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=17, order_date=19, payment_method=3, order_status=4
+2026-07-14 23:58:41,269 - INFO - Generation nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=17, order_date=19, payment_method=3, order_status=4
+2026-07-14 23:58:41,270 - INFO - Generation validation passed
+2026-07-14 23:58:41,270 - INFO - Generation validation passed
+2026-07-14 23:58:41,310 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=17, order_date=19, payment_method=3, order_status=4
+2026-07-14 23:58:41,310 - INFO - Final nunique by field: order_id=20, customer_name=20, email=20, product_name=4, category=2, unit_price=4, shipping_city=17, order_date=19, payment_method=3, order_status=4
+2026-07-14 23:58:41,312 - INFO - Datetime 'order_date': nunique=19, min=2024-01-05 00:00:00, max=2024-05-05 00:00:00
+2026-07-14 23:58:41,312 - INFO - Datetime 'order_date': nunique=19, min=2024-01-05 00:00:00, max=2024-05-05 00:00:00
+2026-07-14 23:58:41,312 - INFO - Generated 20 records from sample
+2026-07-14 23:58:41,312 - INFO - Generated 20 records from sample
+2026-07-14 23:58:41,320 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:41,320 - INFO - Generating 20 records from sample (6 rows)
+2026-07-14 23:58:41,404 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'closed_categorical', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:58:41,404 - INFO - Column roles: {'employee_id': 'id', 'full_name': 'person_name', 'email': 'email', 'department': 'closed_categorical', 'designation': 'closed_categorical', 'city': 'city', 'date_of_joining': 'datetime'}
+2026-07-14 23:58:41,447 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=17, date_of_joining=20
+2026-07-14 23:58:41,447 - INFO - Generation nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=17, date_of_joining=20
+2026-07-14 23:58:41,448 - INFO - Generation validation passed
+2026-07-14 23:58:41,448 - INFO - Generation validation passed
+2026-07-14 23:58:41,478 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=17, date_of_joining=20
+2026-07-14 23:58:41,478 - INFO - Final nunique by field: employee_id=20, full_name=20, email=20, department=4, designation=6, city=17, date_of_joining=20
+2026-07-14 23:58:41,479 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-03-28 00:00:00, max=2020-11-20 00:00:00
+2026-07-14 23:58:41,479 - INFO - Datetime 'date_of_joining': nunique=20, min=2018-03-28 00:00:00, max=2020-11-20 00:00:00
+2026-07-14 23:58:41,480 - INFO - Generated 20 records from sample
+2026-07-14 23:58:41,480 - INFO - Generated 20 records from sample
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,236 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:01:12,778 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,563 - INFO - Generating 1000 records from sample (7 rows)
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,977 - INFO - Generated 1000 records from sample
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
+2026-07-15 00:20:31,987 - ERROR - Generation error: QualityReporter.generate_report() got an unexpected keyword argument 'sample'
