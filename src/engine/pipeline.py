@@ -66,15 +66,54 @@ class GenerationPipeline:
         generator = CustomGenerator(sample)
 
         df = generator.generate(
-            num_records=num_records,
+            n=num_records,
             preserve_correlations=preserve_correlations,
         )
+        # Full structural validation already ran inside generate()
 
+        # Synthetic Faker output is not real PII — skip anonymization so
+        # name↔email coherence and authentic values survive to the UI.
         if enable_privacy:
-            df = self.anonymizer.apply_privacy(df)
+            logger.info(
+                "Privacy anonymization skipped for custom synthetic data "
+                "(generated values are synthetic, not uploaded PII)"
+            )
+
+        # Attach generator metadata for quality scoring (attrs survive most exports)
+        try:
+            df.attrs['column_roles'] = dict(generator.column_roles)
+            df.attrs['sample_columns'] = list(sample.columns)
+            df.attrs['generator_locale'] = getattr(generator, 'locale', 'en_IN')
+        except Exception:
+            pass
 
         self.validator.validate(df)
         df = self.processor.clean(df)
+        df = self.processor.preserve_numeric_style(df, sample)
+
+        # Re-attach attrs after processor (some ops may drop them)
+        try:
+            df.attrs['column_roles'] = dict(generator.column_roles)
+            df.attrs['generator_locale'] = getattr(generator, 'locale', 'en_IN')
+        except Exception:
+            pass
+
+        nunique = {col: int(df[col].nunique(dropna=True)) for col in df.columns}
+        logger.info(
+            "Final nunique by field: "
+            + ', '.join(f"{k}={v}" for k, v in nunique.items())
+        )
+        for col, typ in generator.column_types.items():
+            if typ == 'id' and col in df.columns:
+                if df[col].nunique(dropna=True) != len(df):
+                    raise ValueError(f"Duplicate IDs in '{col}' after post-processing")
+            if typ == 'datetime' and col in df.columns:
+                vals = pd.to_datetime(df[col], errors='coerce').dropna()
+                if len(vals):
+                    logger.info(
+                        f"Datetime '{col}': nunique={vals.nunique()}, "
+                        f"min={vals.min()}, max={vals.max()}"
+                    )
 
         logger.info(f"Generated {len(df)} records from sample")
         return df

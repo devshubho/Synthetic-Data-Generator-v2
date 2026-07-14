@@ -396,8 +396,24 @@ def generate_page():
                 
                 # Quality Report
                 with st.spinner("📊 Analyzing quality..."):
-                    reporter = QualityReporter()
-                    report = reporter.generate_report(df)
+                    import importlib
+                    import analytics.quality_report as _qr_mod
+                    importlib.reload(_qr_mod)
+                    reporter = _qr_mod.QualityReporter()
+                    sample_for_report = None
+                    roles_for_report = None
+                    if data_type == "User-Defined (Upload Sample)":
+                        sample_for_report = st.session_state.sample_data
+                        roles_for_report = getattr(df, 'attrs', {}).get('column_roles')
+                    try:
+                        report = reporter.generate_report(
+                            df,
+                            sample=sample_for_report,
+                            column_roles=roles_for_report,
+                        )
+                    except TypeError:
+                        # Stale module without sample/column_roles kwargs
+                        report = reporter.generate_report(df)
                     st.session_state.quality_report = report
                 
                 # Save History
@@ -419,6 +435,29 @@ def generate_page():
                 with col3:
                     quality = report.get('overall_score', 0)
                     st.metric("Quality Score", f"{quality:.1%}")
+
+                with st.expander("📊 Quality breakdown", expanded=True):
+                    b1, b2, b3 = st.columns(3)
+                    with b1:
+                        st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
+                        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
+                    with b2:
+                        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
+                        st.metric("Open Diversity", f"{report.get('diversity', 0):.1%}")
+                    with b3:
+                        enum_f = report.get('enum_fidelity')
+                        st.metric(
+                            "Enum Fidelity",
+                            f"{enum_f:.1%}" if enum_f is not None else "N/A",
+                        )
+                        coh = report.get('name_email_coherence')
+                        st.metric(
+                            "Name↔Email",
+                            f"{coh:.1%}" if coh is not None else "N/A",
+                        )
+                    num_f = report.get('numeric_fidelity')
+                    if num_f is not None:
+                        st.caption(f"Numeric fidelity: {num_f:.1%}")
                 
         except Exception as e:
             st.error(f"❌ Generation failed: {str(e)}")
@@ -457,9 +496,22 @@ def dashboard_page():
     with col2:
         st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
     with col3:
-        st.metric("Uniqueness", f"{report.get('uniqueness', 0):.1%}")
+        st.metric("Open Uniqueness", f"{report.get('uniqueness', 0) or 0:.1%}")
     with col4:
-        st.metric("Privacy Score", f"{report.get('privacy_score', 0):.1%}")
+        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
+
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
+    with m2:
+        enum_f = report.get('enum_fidelity')
+        st.metric("Enum Fidelity", f"{enum_f:.1%}" if enum_f is not None else "N/A")
+    with m3:
+        coh = report.get('name_email_coherence')
+        st.metric("Name↔Email", f"{coh:.1%}" if coh is not None else "N/A")
+    with m4:
+        num_f = report.get('numeric_fidelity')
+        st.metric("Numeric Fidelity", f"{num_f:.1%}" if num_f is not None else "N/A")
     
     st.markdown("---")
     

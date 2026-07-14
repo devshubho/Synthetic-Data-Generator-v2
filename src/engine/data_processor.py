@@ -12,14 +12,35 @@ class DataProcessor:
         """Clean dataframe"""
         
         df = data.copy()
+        integer_cols = [
+            col for col in df.columns
+            if pd.api.types.is_integer_dtype(df[col])
+        ]
         
         # Remove duplicate rows
         df = df.drop_duplicates()
         
-        # Fill nulls for numeric with median
+        # Fill nulls for numeric with median (preserve integer dtypes)
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         for col in numeric_cols:
-            df[col] = df[col].fillna(df[col].median())
+            if not df[col].isna().any():
+                continue
+            median = df[col].median()
+            if pd.isna(median):
+                median = 0
+            if col in integer_cols or pd.api.types.is_integer_dtype(df[col]):
+                median = int(round(float(median)))
+            df[col] = df[col].fillna(median)
+        
+        # Restore integer columns after fillna (which may upcast to float)
+        for col in integer_cols:
+            if col in df.columns:
+                df[col] = (
+                    pd.to_numeric(df[col], errors='coerce')
+                    .fillna(0)
+                    .round()
+                    .astype('int64')
+                )
         
         # Fill nulls for categorical with mode
         categorical_cols = df.select_dtypes(include=['object']).columns
@@ -28,15 +49,105 @@ class DataProcessor:
                 df[col] = df[col].fillna(df[col].mode()[0] if len(df[col].mode()) > 0 else 'Unknown')
         
         return df
-    
+
+    def preserve_numeric_style(self, df: pd.DataFrame, sample: pd.DataFrame) -> pd.DataFrame:
+        """
+        Match generated numerics to the sample style:
+        - whole-number sample columns stay integers (no decimals)
+        - 6-digit codes (e.g. pincode) stay 6-digit integers
+        """
+        skip_name_re = (
+            'aadhaar', 'aadhar', 'ifsc', 'gstin', 'upi', 'phone', 'mobile',
+            'pan', 'msisdn', 'imei', 'email',
+        )
+        result = df.copy()
+        for col in sample.columns:
+            if col not in result.columns:
+                continue
+
+            name = str(col).strip().lower()
+            if any(k in name for k in skip_name_re):
+                continue
+
+            # Never cast datetime columns to integers (to_numeric yields epoch ns)
+            if (
+                pd.api.types.is_datetime64_dtype(sample[col])
+                or pd.api.types.is_datetime64_dtype(result[col])
+            ):
+                continue
+            try:
+                as_dates = pd.to_datetime(sample[col], errors='coerce')
+                if as_dates.notna().mean() > 0.8:
+                    continue
+            except Exception:
+                pass
+
+            sample_nums = pd.to_numeric(sample[col], errors='coerce').dropna()
+            if len(sample_nums) == 0:
+                continue
+
+            # Skip identity-scale integers float64 cannot uniquely represent
+            if sample_nums.abs().max() >= 1e11 or (
+                sample_nums.astype(str).str.replace(r'\.0$', '', regex=True).str.len().median() >= 11
+            ):
+                continue
+
+            is_integer_like = (
+                pd.api.types.is_integer_dtype(sample[col])
+                or np.allclose(sample_nums.values, np.round(sample_nums.values))
+            )
+            if not is_integer_like:
+                continue
+
+            values = pd.to_numeric(result[col], errors='coerce')
+            fill = int(round(float(sample_nums.median())))
+            values = values.fillna(fill).values
+            values = np.rint(values).astype(np.int64)
+
+            sample_ints = np.rint(sample_nums.values).astype(np.int64)
+            if np.all((sample_ints >= 100000) & (sample_ints <= 999999)):
+                values = np.clip(values, 100000, 999999)
+            else:
+                values = np.clip(values, int(sample_ints.min()), int(sample_ints.max()))
+
+            result[col] = values
+
+        return result
     def process_sample(self, sample: pd.DataFrame) -> pd.DataFrame:
         """Process sample data"""
         
         df = sample.copy()
         
-        # Convert date columns
         for col in df.columns:
             if pd.api.types.is_datetime64_dtype(df[col]):
                 df[col] = df[col].astype('datetime64[ns]')
+                continue
+
+            # Clean dirty object labels (e.g. Excel 'FALSE ' with trailing spaces)
+            if df[col].dtype == object or str(df[col].dtype) == 'string':
+                df[col] = df[col].map(self._normalize_cell)
         
         return df
+
+    @staticmethod
+    def _normalize_cell(value):
+        """Normalize bool-like / messy string cells without changing real numbers."""
+        if value is None or (isinstance(value, float) and pd.isna(value)):
+            return value
+        if isinstance(value, bool):
+            return 'TRUE' if value else 'FALSE'
+        if isinstance(value, (int, float, np.integer, np.floating)) and not isinstance(value, bool):
+            return value
+
+        text = str(value).strip()
+        lowered = text.lower()
+        bool_map = {
+            'true': 'TRUE', 'false': 'FALSE',
+            'yes': 'TRUE', 'no': 'FALSE',
+            'y': 'TRUE', 'n': 'FALSE',
+            't': 'TRUE', 'f': 'FALSE',
+            '1': 'TRUE', '0': 'FALSE',
+        }
+        if lowered in bool_map:
+            return bool_map[lowered]
+        return text
