@@ -1,5 +1,5 @@
 """
-Generation Pipeline with Intelligent Deduplication
+Generation Pipeline with Error Handling
 """
 
 import pandas as pd
@@ -14,7 +14,7 @@ from utils.exceptions import GenerationError, SampleError
 logger = get_logger()
 
 class GenerationPipeline:
-    """Complete generation workflow with intelligent deduplication"""
+    """Complete generation workflow with error handling"""
     
     def __init__(self):
         try:
@@ -51,7 +51,7 @@ class GenerationPipeline:
         if any(col in columns for col in ['patient_id', 'condition', 'medication']):
             return 'healthcare'
         
-        # IOT data
+        # IoT data
         if any(col in columns for col in ['device_id', 'sensor', 'device_type']):
             return 'iot'
         
@@ -67,7 +67,7 @@ class GenerationPipeline:
         num_records: int,
         random_seed: int = 42,
     ) -> pd.DataFrame:
-        """Generate data from a pre-built template"""
+        """Generate data from a pre-built template with error handling"""
         
         try:
             logger.info(f"Generating {num_records} records of {data_type}")
@@ -104,7 +104,7 @@ class GenerationPipeline:
         preserve_correlations: bool = True,
         enable_privacy: bool = True,
     ) -> pd.DataFrame:
-        """Generate synthetic data from uploaded sample"""
+        """Generate synthetic data from uploaded sample with error handling"""
         
         try:
             logger.info(f"Generating {num_records} records from sample ({len(sample)} rows)")

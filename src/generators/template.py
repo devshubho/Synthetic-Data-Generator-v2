@@ -31,13 +31,58 @@ class TemplateGenerator:
             "Correlated VM Data": self._vm,
             "IoT Sensor Data": self._iot,
             "Healthcare Records": self._healthcare,
-            "Financial Transactions": self._financial
+            "Financial Transactions": self._financial,
+            "Toll Plaza Data": self._toll
         }
         
         if data_type in generators:
             return generators[data_type](num_records)
         else:
             raise ValueError(f"Unknown data type: {data_type}")
+    
+    def _toll(self, n: int) -> pd.DataFrame:
+        """Toll Plaza Data"""
+        states = ['WB', 'JH', 'BR', 'UP', 'DL', 'MH', 'KA', 'TN']
+        toll_plazas = ['NH-16 Kolkata Toll Plaza', 'NH-8 Delhi Toll Plaza', 'NH-44 Chennai Toll Plaza']
+        vehicle_types = ['Car', 'Truck', 'Bus', 'SUV', 'Motorcycle']
+        payment_modes = ['FASTag', 'UPI', 'Cash', 'Card']
+        
+        data = []
+        # Generate unique vehicle numbers
+        vehicle_numbers = set()
+        while len(vehicle_numbers) < n:
+            state = random.choice(states)
+            number = f"{state}{random.randint(10,99)}{random.choice(['AB','CD','EF','GH'])}{random.randint(1000,9999)}"
+            vehicle_numbers.add(number)
+        
+        vehicle_numbers = list(vehicle_numbers)
+        # Assign consistent vehicle types
+        vehicle_type_map = {v: random.choice(vehicle_types) for v in vehicle_numbers}
+        
+        for i, vehicle in enumerate(vehicle_numbers):
+            record = {
+                'Transaction_ID': f"TXN{datetime.now().strftime('%Y%m%d')}{str(i+1).zfill(4)}",
+                'Toll_Plaza_ID': f"TP{random.randint(1,20):03d}",
+                'Toll_Plaza_Name': random.choice(toll_plazas),
+                'Lane_Number': random.randint(1, 10),
+                'Transaction_Date': datetime.now().strftime('%Y-%m-%d'),
+                'Transaction_Time': self.fake.time(),
+                'Vehicle_Number': vehicle,
+                'Vehicle_Type': vehicle_type_map[vehicle],
+                'Vehicle_Class': random.choice(['Private', 'Commercial']),
+                'Vehicle_Brand': random.choice(['Hyundai', 'Tata', 'Maruti', 'Toyota', 'Honda']),
+                'FASTag_ID': f"FT{random.randint(100000000000, 999999999999)}",
+                'FASTag_Status': random.choice(['Active', 'Active', 'Active', 'Inactive']),
+                'Toll_Amount': round(random.uniform(50, 500), 2),
+                'Payment_Mode': random.choice(payment_modes),
+                'Payment_Status': random.choice(['Success', 'Success', 'Success', 'Failed']),
+                'Speed_kmph': random.randint(10, 80),
+                'Overloaded': random.choice(['No', 'No', 'No', 'Yes']),
+                'Remarks': random.choice(['Normal Transaction', 'Normal Transaction', 'Normal Transaction', 'Overload Alert'])
+            }
+            data.append(record)
+        
+        return pd.DataFrame(data)
     
     def _personal(self, n: int) -> pd.DataFrame:
         """Personal/Customer Data"""
@@ -60,8 +105,7 @@ class TemplateGenerator:
                 'occupation': self.fake.job(),
                 'income': random.randint(30000, 200000),
                 'education': random.choice(['High School', 'Bachelor', 'Master', 'PhD']),
-                'active': random.choice([True, False]),
-                'created_at': self.fake.date_time_between(start_date='-2y', end_date='now')
+                'active': random.choice([True, False])
             })
         return pd.DataFrame(data)
     
@@ -122,8 +166,7 @@ class TemplateGenerator:
                 'performance_rating': round(random.uniform(1, 5), 1),
                 'experience': random.randint(0, 20),
                 'education': random.choice(['Bachelor', 'Master', 'PhD', 'MBA']),
-                'remote': random.choice([True, False]),
-                'bonus_eligible': random.choice([True, False])
+                'remote': random.choice([True, False])
             })
         return pd.DataFrame(data)
     
@@ -132,12 +175,10 @@ class TemplateGenerator:
         start = datetime.now() - timedelta(days=n)
         dates = [start + timedelta(days=i) for i in range(n)]
         
-        # Multiple patterns
         trend = np.linspace(0, 50, n)
         seasonality = 20 * np.sin(2 * np.pi * np.arange(n) / 30)
         weekly = 10 * np.sin(2 * np.pi * np.arange(n) / 7)
         noise = np.random.normal(0, 5, n)
-        
         values = 100 + trend + seasonality + weekly + noise
         
         return pd.DataFrame({
@@ -163,10 +204,8 @@ class TemplateGenerator:
                 'message': f"{random.choice(services)}: {self.fake.sentence()}",
                 'source_ip': self.fake.ipv4() if random.random() < 0.5 else None,
                 'user_id': self.fake.uuid4() if random.random() < 0.3 else None,
-                'session_id': self.fake.uuid4()[:8] if random.random() < 0.3 else None,
                 'response_time_ms': random.randint(10, 5000),
-                'status_code': random.choice([200, 201, 400, 401, 403, 404, 500]),
-                'endpoint': f"/api/v1/{random.choice(['users', 'orders', 'products'])}"
+                'status_code': random.choice([200, 201, 400, 401, 403, 404, 500])
             })
         return pd.DataFrame(data)
     
@@ -185,8 +224,7 @@ class TemplateGenerator:
                 'network_in_mbps': round(random.uniform(0.1, 100), 2),
                 'network_out_mbps': round(random.uniform(0.1, 80), 2),
                 'load_avg_1min': round(random.uniform(0, 4), 2),
-                'process_count': random.randint(50, 500),
-                'uptime_hours': random.randint(1, 8760)
+                'process_count': random.randint(50, 500)
             })
         return pd.DataFrame(data)
     
@@ -199,7 +237,6 @@ class TemplateGenerator:
             ts = datetime.now() - timedelta(minutes=i*5)
             host = random.choice(hosts)
             
-            # Correlated metrics
             has_issue = random.random() < 0.2
             cpu = random.uniform(10, 60) + (random.uniform(30, 60) if has_issue else 0)
             memory = random.uniform(30, 70) + (random.uniform(20, 40) if has_issue else 0)
@@ -210,8 +247,6 @@ class TemplateGenerator:
                 'cpu_usage': round(min(100, cpu), 2),
                 'memory_usage': round(min(100, memory), 2),
                 'disk_usage': round(random.uniform(20, 85), 2),
-                'network_in_mbps': round(random.uniform(1, 50), 2),
-                'network_out_mbps': round(random.uniform(1, 40), 2),
                 'has_issue': has_issue
             })
         
@@ -239,8 +274,7 @@ class TemplateGenerator:
                 'device_type': dtype,
                 'value': round(value, 2),
                 'battery_level': random.randint(10, 100),
-                'signal_strength': random.randint(1, 5),
-                'status': random.choice(['active', 'idle', 'maintenance'])
+                'signal_strength': random.randint(1, 5)
             })
         return pd.DataFrame(data)
     
@@ -291,7 +325,6 @@ class TemplateGenerator:
                 'timestamp': self.fake.date_time_between(start_date='-1y'),
                 'status': random.choice(['Pending', 'Completed', 'Failed']),
                 'description': self.fake.sentence(),
-                'category': random.choice(['Food', 'Transport', 'Entertainment', 'Bills']),
-                'location': self.fake.city()
+                'category': random.choice(['Food', 'Transport', 'Entertainment', 'Bills'])
             })
         return pd.DataFrame(data)

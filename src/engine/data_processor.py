@@ -4,6 +4,7 @@ Data Processor with Intelligent Deduplication
 
 import pandas as pd
 import numpy as np
+from typing import Dict, Optional, Any
 from logger import get_logger
 from utils.exceptions import DataValidationError
 from utils.deduplicator import DataDeduplicator
@@ -30,7 +31,6 @@ class DataProcessor:
             df = self.deduplicator.deduplicate(df, data_type)
             
             # === STEP 2: FILL NULLS ===
-            # Fill nulls for numeric with median
             numeric_cols = df.select_dtypes(include=[np.number]).columns
             for col in numeric_cols:
                 try:
@@ -41,7 +41,6 @@ class DataProcessor:
                 except Exception as e:
                     logger.warning(f"Could not fill nulls in '{col}': {str(e)}")
             
-            # Fill nulls for categorical with mode
             categorical_cols = df.select_dtypes(include=['object']).columns
             for col in categorical_cols:
                 try:
@@ -53,12 +52,10 @@ class DataProcessor:
                     logger.warning(f"Could not fill nulls in '{col}': {str(e)}")
             
             # === STEP 3: STANDARDIZE ===
-            # Standardize string columns
             string_cols = df.select_dtypes(include=['object']).columns
             for col in string_cols:
                 try:
                     df[col] = df[col].astype(str).str.strip()
-                    # Replace empty strings with None
                     df[col] = df[col].replace('', None)
                 except Exception as e:
                     logger.warning(f"Could not standardize column '{col}': {str(e)}")
@@ -86,11 +83,8 @@ class DataProcessor:
                 raise DataValidationError("Sample is empty")
             
             df = sample.copy()
-            
-            # Apply deduplication
             df = self.deduplicator.deduplicate(df, data_type)
             
-            # Standardize string columns
             string_cols = df.select_dtypes(include=['object']).columns
             for col in string_cols:
                 try:
@@ -105,10 +99,10 @@ class DataProcessor:
             logger.error(f"Sample processing failed: {str(e)}")
             raise DataValidationError(f"Sample processing failed: {str(e)}")
     
-    def get_dedup_report(self) -> Dict:
+    def get_dedup_report(self) -> Dict[str, Any]:
         """Get deduplication report"""
         return self.deduplicator.get_dedup_report()
     
-    def analyze_duplicates(self, data: pd.DataFrame) -> Dict:
+    def analyze_duplicates(self, data: pd.DataFrame) -> Dict[str, Any]:
         """Analyze duplicates in data"""
         return self.deduplicator.get_duplicates_info(data)

@@ -13,6 +13,7 @@ from logger import get_logger
 
 logger = get_logger()
 
+
 class DataDeduplicator:
     """
     Universal deduplication engine for ANY data type
@@ -32,6 +33,7 @@ class DataDeduplicator:
         }
         self.config = {**self.default_config, **self.config}
         self.dedup_stats = {}
+        self.patterns = {}
         logger.info("DataDeduplicator initialized")
     
     def deduplicate(self, df: pd.DataFrame, data_type: str = "unknown") -> pd.DataFrame:
@@ -63,7 +65,7 @@ class DataDeduplicator:
         if self.config['remove_near_duplicates']:
             df = self._remove_near_duplicates(df)
         
-        # Step 4: Resolve inconsistent duplicates (e.g., same vehicle, different type)
+        # Step 4: Resolve inconsistent duplicates
         if self.config['consistency_check']:
             df = self._resolve_inconsistent_duplicates(df)
         
@@ -165,7 +167,6 @@ class DataDeduplicator:
         """Remove exact duplicate rows"""
         before = len(df)
         
-        # Identify columns to check for duplicates
         subset = self.patterns['strict_columns'] if self.patterns['strict_columns'] else None
         
         if subset:
@@ -186,23 +187,18 @@ class DataDeduplicator:
         if len(df) < 2:
             return df
         
-        # Use unique columns for near-duplicate detection
         unique_cols = self.patterns['unique_columns'] if self.patterns['unique_columns'] else df.columns.tolist()
         
-        # Convert to strings for similarity comparison
         to_drop = []
         seen_items = {}
         
         for idx, row in df.iterrows():
-            # Create fingerprint for row
             fingerprint = self._create_fingerprint(row, unique_cols)
             
-            # Check if similar item exists
             duplicate_found = False
             for existing_fp, existing_idx in seen_items.items():
                 similarity = self._calculate_similarity(fingerprint, existing_fp)
                 if similarity >= self.config['similarity_threshold']:
-                    # Check if current row is more complete
                     if self._is_more_complete(row, df.loc[existing_idx]):
                         to_drop.append(existing_idx)
                         seen_items[existing_fp] = idx
@@ -230,21 +226,17 @@ class DataDeduplicator:
             strict_col = self.patterns['strict_columns'][0]
             conflict_cols = self.patterns['conflict_columns']
             
-            # Group by strict column
             for strict_val in df[strict_col].unique():
                 group = df[df[strict_col] == strict_val]
                 if len(group) > 1:
-                    # Check for conflicts
                     for conflict_col in conflict_cols:
                         if conflict_col in df.columns:
                             unique_values = group[conflict_col].unique()
                             if len(unique_values) > 1:
-                                # Resolve by taking most common value
                                 most_common = group[conflict_col].mode()[0]
                                 df.loc[df[strict_col] == strict_val, conflict_col] = most_common
                                 logger.debug(f"Resolved conflict in {conflict_col} for {strict_col}={strict_val}")
         
-        # Remove duplicates after conflict resolution
         df = df.drop_duplicates()
         
         removed = before - len(df)
@@ -256,32 +248,24 @@ class DataDeduplicator:
         """Auto-resolve duplicate entries using intelligent strategies"""
         before = len(df)
         
-        # Strategy: Keep the most complete record
         if self.config['keep_strategy'] == 'most_complete':
-            # Calculate completeness score for each row
             completeness_scores = df.notna().sum(axis=1) / len(df.columns)
             df['_completeness_score'] = completeness_scores
             
-            # Sort by completeness and drop duplicates
             df = df.sort_values('_completeness_score', ascending=False)
             
-            # Get unique columns for deduplication
             subset = self.patterns['strict_columns'] if self.patterns['strict_columns'] else ['_completeness_score']
             df = df.drop_duplicates(subset=subset, keep='first')
             
-            # Remove temporary column
             df = df.drop(columns=['_completeness_score'])
         
-        # Strategy: Keep latest record based on timestamp
         elif self.config['keep_strategy'] == 'latest':
             if self.patterns['timestamp_columns']:
                 ts_col = self.patterns['timestamp_columns'][0]
                 if ts_col in df.columns:
-                    # Convert to datetime if needed
                     if not pd.api.types.is_datetime64_dtype(df[ts_col]):
                         df[ts_col] = pd.to_datetime(df[ts_col], errors='coerce')
                     
-                    # Sort by timestamp and keep latest
                     df = df.sort_values(ts_col, ascending=False)
                     
                     subset = self.patterns['strict_columns'] if self.patterns['strict_columns'] else None
@@ -301,12 +285,11 @@ class DataDeduplicator:
         for col in columns:
             if col in row.index:
                 val = str(row[col]) if pd.notna(row[col]) else ''
-                # Clean and normalize
                 val = val.lower().strip()
                 val = re.sub(r'\s+', ' ', val)
                 parts.append(val)
         
-        return '|'.join(parts)[:1000]  # Limit length
+        return '|'.join(parts)[:1000]
     
     def _calculate_similarity(self, str1: str, str2: str) -> float:
         """Calculate similarity between two strings"""
@@ -315,7 +298,6 @@ class DataDeduplicator:
         if not str1 or not str2:
             return 0.0
         
-        # Use sequence matching for similarity
         from difflib import SequenceMatcher
         return SequenceMatcher(None, str1, str2).ratio()
     
@@ -338,26 +320,24 @@ class DataDeduplicator:
                 logger.info(f"{step}: removed {stats['removed']} records")
         logger.info("=" * 60)
     
-    def get_dedup_report(self) -> Dict:
+    def get_dedup_report(self) -> Dict[str, Any]:
         """Get detailed deduplication report"""
         return self.dedup_stats
     
-    def get_duplicates_info(self, df: pd.DataFrame) -> Dict:
+    def get_duplicates_info(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Analyze and return duplicate information"""
         duplicate_info = {
-            'total_duplicates': df.duplicated().sum(),
-            'duplicate_percentage': (df.duplicated().sum() / len(df)) * 100 if len(df) > 0 else 0,
+            'total_duplicates': int(df.duplicated().sum()),
+            'duplicate_percentage': float((df.duplicated().sum() / len(df)) * 100) if len(df) > 0 else 0,
             'duplicate_columns': {},
             'duplicate_rows': []
         }
         
-        # Find duplicates per column
         for col in df.columns:
-            duplicate_count = df[col].duplicated().sum()
+            duplicate_count = int(df[col].duplicated().sum())
             if duplicate_count > 0:
                 duplicate_info['duplicate_columns'][col] = duplicate_count
         
-        # Get duplicate rows
         duplicate_rows = df[df.duplicated(keep=False)]
         if not duplicate_rows.empty:
             duplicate_info['duplicate_rows'] = duplicate_rows.to_dict('records')

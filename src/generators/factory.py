@@ -23,7 +23,8 @@ class GeneratorFactory:
             "Correlated VM Data",
             "IoT Sensor Data",
             "Healthcare Records",
-            "Financial Transactions"
+            "Financial Transactions",
+            "Toll Plaza Data"
         ]
         
         if data_type in template_types:
