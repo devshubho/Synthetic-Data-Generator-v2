@@ -288,37 +288,119 @@ def analyze_quality(data):
 # ==================== DASHBOARD ====================
 
 def create_dashboard(data, report):
-    fig = make_subplots(rows=2, cols=2, 
-                        subplot_titles=('Data Overview', 'Distribution', 'Quality Score', 'Missing Values'))
+    """Create quality dashboard with proper error handling"""
     
-    numeric_cols = data.select_dtypes(include=[np.number]).columns
-    
-    if len(numeric_cols) >= 2:
-        fig.add_trace(
-            go.Scatter(x=data[numeric_cols[0]][:500], y=data[numeric_cols[1]][:500],
-                      mode='markers', marker=dict(size=5, opacity=0.5)),
-            row=1, col=1
-        )
-    
-    if len(numeric_cols) > 0:
-        fig.add_trace(
-            go.Histogram(x=data[numeric_cols[0]], nbinsx=30),
-            row=1, col=2
-        )
-    
-    score = report.get('overall_score', 0.5) * 100
-    fig.add_trace(
-        go.Indicator(mode="gauge+number", value=score, title={'text': "Quality Score"},
-                    gauge={'axis': {'range': [0, 100]}, 
-                          'bar': {'color': 'green' if score > 70 else 'orange' if score > 40 else 'red'}}),
-        row=2, col=1
+    # Create figure with subplots
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=('Data Overview', 'Distribution', 'Quality Score', 'Missing Values')
     )
     
-    nulls = data.isnull().sum()
-    if nulls.sum() > 0:
-        fig.add_trace(go.Bar(x=nulls.index[:5], y=nulls.values[:5]), row=2, col=2)
+    numeric_cols = data.select_dtypes(include=[np.number]).columns.tolist()
     
-    fig.update_layout(height=800, showlegend=False)
+    # 1. Data Overview - Scatter plot
+    try:
+        if len(numeric_cols) >= 2:
+            # Sample data for performance
+            sample_size = min(500, len(data))
+            fig.add_trace(
+                go.Scatter(
+                    x=data[numeric_cols[0]][:sample_size],
+                    y=data[numeric_cols[1]][:sample_size],
+                    mode='markers',
+                    marker=dict(size=5, opacity=0.5, color='#667eea'),
+                    name='Data Points'
+                ),
+                row=1, col=1
+            )
+        else:
+            # If only one numeric column, show a line plot
+            fig.add_trace(
+                go.Scatter(
+                    x=list(range(len(data)))[:500],
+                    y=data[numeric_cols[0]][:500] if numeric_cols else [],
+                    mode='lines',
+                    name='Data Trend',
+                    line=dict(color='#667eea')
+                ),
+                row=1, col=1
+            )
+    except Exception:
+        pass
+    
+    # 2. Distribution - Histogram
+    try:
+        if numeric_cols:
+            fig.add_trace(
+                go.Histogram(
+                    x=data[numeric_cols[0]].dropna(),
+                    nbinsx=30,
+                    name='Distribution',
+                    marker_color='#764ba2'
+                ),
+                row=1, col=2
+            )
+    except Exception:
+        pass
+    
+    # 3. Quality Score - Gauge
+    try:
+        score = report.get('overall_score', 0.5) * 100
+        fig.add_trace(
+            go.Indicator(
+                mode="gauge+number",
+                value=score,
+                title={'text': "Quality Score"},
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': '#6bcb77' if score >= 70 else '#ffd93d' if score >= 40 else '#ff6b6b'},
+                    'steps': [
+                        {'range': [0, 40], 'color': "#ff6b6b"},
+                        {'range': [40, 70], 'color': "#ffd93d"},
+                        {'range': [70, 100], 'color': "#6bcb77"}
+                    ]
+                }
+            ),
+            row=2, col=1
+        )
+    except Exception:
+        pass
+    
+    # 4. Missing Values - Bar chart
+    try:
+        nulls = data.isnull().sum()
+        nulls = nulls[nulls > 0]
+        if len(nulls) > 0:
+            fig.add_trace(
+                go.Bar(
+                    x=nulls.index[:5],
+                    y=nulls.values[:5],
+                    name='Missing Values',
+                    marker_color='#ff6b6b'
+                ),
+                row=2, col=2
+            )
+        else:
+            # Show "No missing values" message
+            fig.add_trace(
+                go.Indicator(
+                    mode="number",
+                    value=0,
+                    title={'text': "Missing Values"},
+                    number={'font': {'color': '#6bcb77'}}
+                ),
+                row=2, col=2
+            )
+    except Exception:
+        pass
+    
+    # Update layout
+    fig.update_layout(
+        height=600,
+        showlegend=False,
+        template='plotly_white'
+    )
+    
     return fig
 
 # ==================== PAGES ====================
@@ -492,8 +574,27 @@ def dashboard_page():
     with col4: st.metric("Privacy", f"{report.get('privacy_score', 0):.1%}")
     
     st.markdown("---")
-    fig = create_dashboard(df, report)
-    st.plotly_chart(fig, use_container_width=True)
+    
+    # Create and display dashboard with error handling
+    try:
+        fig = create_dashboard(df, report)
+        st.plotly_chart(fig, use_container_width=True)
+    except Exception as e:
+        st.error(f"Dashboard error: {str(e)}")
+        st.info("Showing simple data summary instead...")
+        
+        # Fallback: Show basic data info
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write("**Data Info**")
+            st.write(f"- Records: {len(df):,}")
+            st.write(f"- Columns: {len(df.columns)}")
+            st.write(f"- Memory: {df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB")
+        with col2:
+            st.write("**Quality Metrics**")
+            st.write(f"- Completeness: {report.get('completeness', 0):.1%}")
+            st.write(f"- Uniqueness: {report.get('uniqueness', 0):.1%}")
+            st.write(f"- Privacy: {report.get('privacy_score', 0):.1%}")
 
 def export_page():
     st.subheader("💾 Export Data")
