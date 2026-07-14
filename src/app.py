@@ -1,8 +1,8 @@
 """
 SynthSLM - Main Application with Advanced Deduplication
 B.Tech Final Year Project
-Author: Subham Sarkar
-"""
+Author: Team Synthetic
+This application provides a user-friendly interface for generating synthetic data for small language models."""
 
 import streamlit as st
 import pandas as pd
@@ -125,29 +125,10 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #667eea;
         margin: 1rem 0;
-<<<<<<< HEAD
         transition: transform 0.3s ease;
     }
     .feature-card:hover {
         transform: translateX(5px);
-=======
-        color: #2d3748 !important;
-    }
-    .feature-card h3 {
-        color: #1a2332 !important;
-        margin-bottom: 1rem;
-    }
-    .feature-card ol {
-        color: #2d3748 !important;
-        padding-left: 1.25rem;
-    }
-    .feature-card li {
-        color: #2d3748 !important;
-        margin-bottom: 0.5rem;
-    }
-    .feature-card strong {
-        color: #1a2332 !important;
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
     }
     .upload-area {
         border: 2px dashed #667eea;
@@ -155,22 +136,7 @@ st.markdown("""
         padding: 2rem;
         text-align: center;
         background: #f8f9fa;
-<<<<<<< HEAD
         transition: all 0.3s ease;
-=======
-        color: #1a2332 !important;
-    }
-    .upload-area h3 {
-        color: #1a2332 !important;
-        margin-bottom: 0.75rem;
-    }
-    .upload-area p {
-        color: #2d3748 !important;
-    }
-    .upload-area .upload-hint {
-        color: #4a5568 !important;
-        font-size: 0.9rem;
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
     }
     .upload-area:hover {
         background: #e8ecf1;
@@ -196,22 +162,6 @@ st.markdown("""
         border-radius: 8px;
         padding: 1rem;
         color: #856404;
-    }
-    .metric-card {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        text-align: center;
-    }
-    .metric-card .value {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #667eea;
-    }
-    .metric-card .label {
-        color: #666;
-        font-size: 0.9rem;
     }
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -267,16 +217,12 @@ def home_page():
         </div>
         """, unsafe_allow_html=True)
     with col4:
-<<<<<<< HEAD
         st.markdown("""
         <div class="stats-card">
             <h3>100%</h3>
             <p>Privacy Guaranteed</p>
         </div>
         """, unsafe_allow_html=True)
-=======
-        st.markdown('<div class="stats-card"><h3>100%</h3><p>Privacy Guaranteed</p></div>', unsafe_allow_html=True)
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
     
     st.markdown("---")
     
@@ -285,15 +231,10 @@ def home_page():
         st.markdown("""
         <div class="upload-area">
             <h3>📤 Start with Your Own Data</h3>
-<<<<<<< HEAD
             <p style="color: #666;">Upload a sample dataset to generate synthetic data with the same patterns</p>
             <p style="color: #999; font-size: 0.9rem;">Supported: CSV, Excel, JSON</p>
             <br>
             <p style="color: #667eea; font-weight: bold;">👉 Go to Upload Sample page to get started</p>
-=======
-            <p>Upload a sample dataset to generate synthetic data with the same patterns</p>
-            <p class="upload-hint">Supported: CSV, Excel, JSON</p>
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
         </div>
         """, unsafe_allow_html=True)
     
@@ -312,20 +253,14 @@ def home_page():
         - System Metrics
         - IoT Sensor Data
         - Healthcare Records
-<<<<<<< HEAD
         - Financial Transactions
         - Toll Plaza Data
-=======
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
         
         **📤 User-Defined Generation**
         - Upload any dataset
         - AI learns patterns automatically
         - Generate realistic synthetic data
-<<<<<<< HEAD
         - Preserve relationships
-=======
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
         """)
     
     with col2:
@@ -337,15 +272,12 @@ def home_page():
         - PII Detection & Removal
         - GDPR/CCPA Compliant
         
-<<<<<<< HEAD
         **🧹 Intelligent Deduplication**
         - Auto-detects duplicates
         - Removes exact & near duplicates
         - Resolves inconsistent data
         - Smart conflict resolution
         
-=======
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
         **📈 Quality Analysis**
         - Statistical Similarity
         - Distribution Matching
@@ -358,12 +290,8 @@ def home_page():
         <h3>🎯 Quick Start Guide</h3>
         <ol>
             <li><strong>Upload Sample</strong> - Upload your dataset or use pre-built templates</li>
-<<<<<<< HEAD
             <li><strong>Configure</strong> - Set number of records and deduplication options</li>
             <li><strong>Generate</strong> - Click generate to create synthetic data</li>
-=======
-            <li><strong>Generate</strong> - Configure parameters and generate synthetic data</li>
->>>>>>> 13afe48a2cd9ea54a2a46ac23ae25eac85a4de45
             <li><strong>Analyze</strong> - View quality metrics and visualizations</li>
             <li><strong>Export</strong> - Download in your preferred format</li>
         </ol>
@@ -392,7 +320,7 @@ def upload_page():
                 df = pd.read_json(uploaded)
             
             st.session_state.sample_data = df
-            st.session_state.sample_data_type = self._detect_data_type(df)
+            st.session_state.sample_data_type = _detect_data_type(df)
             
             st.markdown(f"""
             <div class="success-box">
@@ -428,7 +356,7 @@ def upload_page():
                 st.dataframe(col_info, use_container_width=True)
             
             # Detect data type
-            detected_type = self._detect_data_type(df)
+            detected_type = _detect_data_type(df)
             st.info(f"📌 Detected data type: **{detected_type.title()}**")
             
             st.info("💡 **Next:** Go to **Generate** page and select 'User-Defined (Upload Sample)'")
@@ -437,7 +365,7 @@ def upload_page():
             st.error(f"❌ Error reading file: {str(e)}")
             logger.error(f"File upload error: {str(e)}\n{traceback.format_exc()}")
 
-def _detect_data_type(self, data: pd.DataFrame) -> str:
+def _detect_data_type(data: pd.DataFrame) -> str:
     """Auto-detect data type from columns"""
     columns = [c.lower() for c in data.columns]
     
@@ -580,24 +508,8 @@ def generate_page():
                 
                 # Quality Report
                 with st.spinner("📊 Analyzing quality..."):
-                    import importlib
-                    import analytics.quality_report as _qr_mod
-                    importlib.reload(_qr_mod)
-                    reporter = _qr_mod.QualityReporter()
-                    sample_for_report = None
-                    roles_for_report = None
-                    if data_type == "User-Defined (Upload Sample)":
-                        sample_for_report = st.session_state.sample_data
-                        roles_for_report = getattr(df, 'attrs', {}).get('column_roles')
-                    try:
-                        report = reporter.generate_report(
-                            df,
-                            sample=sample_for_report,
-                            column_roles=roles_for_report,
-                        )
-                    except TypeError:
-                        # Stale module without sample/column_roles kwargs
-                        report = reporter.generate_report(df)
+                    reporter = QualityReporter()
+                    report = reporter.generate_report(df)
                     st.session_state.quality_report = report
                 
                 # Save History
@@ -624,29 +536,6 @@ def generate_page():
                 with col3:
                     quality = report.get('overall_score', 0)
                     st.metric("Quality Score", f"{quality:.1%}")
-
-                with st.expander("📊 Quality breakdown", expanded=True):
-                    b1, b2, b3 = st.columns(3)
-                    with b1:
-                        st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
-                        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
-                    with b2:
-                        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
-                        st.metric("Open Diversity", f"{report.get('diversity', 0):.1%}")
-                    with b3:
-                        enum_f = report.get('enum_fidelity')
-                        st.metric(
-                            "Enum Fidelity",
-                            f"{enum_f:.1%}" if enum_f is not None else "N/A",
-                        )
-                        coh = report.get('name_email_coherence')
-                        st.metric(
-                            "Name↔Email",
-                            f"{coh:.1%}" if coh is not None else "N/A",
-                        )
-                    num_f = report.get('numeric_fidelity')
-                    if num_f is not None:
-                        st.caption(f"Numeric fidelity: {num_f:.1%}")
                 
         except Exception as e:
             st.error(f"❌ Generation failed: {str(e)}")
@@ -704,22 +593,9 @@ def dashboard_page():
     with col2:
         st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
     with col3:
-        st.metric("Open Uniqueness", f"{report.get('uniqueness', 0) or 0:.1%}")
+        st.metric("Uniqueness", f"{report.get('uniqueness', 0):.1%}")
     with col4:
-        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
-
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
-    with m2:
-        enum_f = report.get('enum_fidelity')
-        st.metric("Enum Fidelity", f"{enum_f:.1%}" if enum_f is not None else "N/A")
-    with m3:
-        coh = report.get('name_email_coherence')
-        st.metric("Name↔Email", f"{coh:.1%}" if coh is not None else "N/A")
-    with m4:
-        num_f = report.get('numeric_fidelity')
-        st.metric("Numeric Fidelity", f"{num_f:.1%}" if num_f is not None else "N/A")
+        st.metric("Privacy Score", f"{report.get('privacy_score', 0):.1%}")
     
     st.markdown("---")
     
@@ -770,11 +646,10 @@ def export_page():
                     
                     st.success(f"✅ Data ready for download ({file_size})")
                     
-                    extension = "xlsx" if export_format == "Excel" else export_format.lower()
                     st.download_button(
                         label=f"📥 Download {export_format} ({file_size})",
                         data=data_bytes,
-                        file_name=f"{filename}.{extension}",
+                        file_name=f"{filename}.{export_format.lower()}",
                         mime="application/octet-stream",
                         use_container_width=True
                     )
