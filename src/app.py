@@ -1,17 +1,15 @@
 """
-Project Synthesi - Main Application
-B.Tech Final Year Project
-Author: Bikram Sarkar
+SynthSLM - Main Application with Error Handling
 """
 
 import streamlit as st
 import pandas as pd
 import time
+import traceback
 from datetime import datetime
 
-# Import from config
 from config import Config
-from logger import setup_logger
+from logger import setup_logger, get_logger, log_error
 from engine.pipeline import GenerationPipeline
 from analytics.quality_report import QualityReporter
 from visualization.dashboard import Dashboard
@@ -21,49 +19,54 @@ from export.parquet_export import ParquetExporter
 from export.excel_export import ExcelExporter
 from database.history import HistoryManager
 from utils.helpers import format_size
+from utils.exceptions import GenerationError, SampleError, ExportError
 
-# Setup logger
+# Setup
 logger = setup_logger()
+st.set_page_config(page_title=Config.APP_NAME, page_icon="🎲", layout="wide")
 
-# ==================== PAGE CONFIG ====================
-st.set_page_config(
-    page_title=Config.APP_NAME,
-    page_icon="🎲",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# ==================== SESSION STATE ====================
 
-# ==================== SESSION STATE INITIALIZATION ====================
+def init_session():
+    """Initialize session state with error handling"""
+    try:
+        if 'initialized' not in st.session_state:
+            st.session_state.initialized = True
+            st.session_state.generated_data = None
+            st.session_state.sample_data = None
+            st.session_state.quality_report = None
+            st.session_state.history = HistoryManager()
+            st.session_state.pipeline = GenerationPipeline()
+            st.session_state.error = None
+            logger.info("Session state initialized")
+    except Exception as e:
+        logger.error(f"Session initialization failed: {str(e)}")
+        st.error(f"Failed to initialize application: {str(e)}")
 
-def initialize_session_state():
-    """Initialize ALL session state variables at once"""
-    
-    # This is the ONLY place where session state is initialized
-    if 'sample_data' not in st.session_state:
-        st.session_state.sample_data = None
-    
-    if 'generated_data' not in st.session_state:
-        st.session_state.generated_data = None
-    
-    if 'quality_report' not in st.session_state:
-        st.session_state.quality_report = None
-    
-    if 'history' not in st.session_state:
-        st.session_state.history = HistoryManager()
-    
-    if 'pipeline' not in st.session_state:
-        st.session_state.pipeline = GenerationPipeline()
-    
-    if 'page' not in st.session_state:
-        st.session_state.page = "Home"
-    
-    if 'initialized' not in st.session_state:
-        st.session_state.initialized = True
-    
-    return True
+init_session()
 
-# !!! CRITICAL: Initialize session state BEFORE anything else !!!
-initialize_session_state()
+# ==================== ERROR HANDLING DECORATOR ====================
+
+def handle_errors(func):
+    """Decorator for error handling in Streamlit"""
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except GenerationError as e:
+            st.error(f"❌ Generation Error: {str(e)}")
+            logger.error(f"GenerationError: {str(e)}")
+        except SampleError as e:
+            st.error(f"❌ Sample Error: {str(e)}")
+            logger.error(f"SampleError: {str(e)}")
+        except ExportError as e:
+            st.error(f"❌ Export Error: {str(e)}")
+            logger.error(f"ExportError: {str(e)}")
+        except Exception as e:
+            st.error(f"❌ Unexpected Error: {str(e)}")
+            logger.error(f"Unexpected Error: {str(e)}\n{traceback.format_exc()}")
+            with st.expander("🔍 Technical Details"):
+                st.code(traceback.format_exc())
+    return wrapper
 
 # ==================== CUSTOM CSS ====================
 
@@ -76,13 +79,6 @@ st.markdown("""
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0.5rem;
-    }
-    .sub-header {
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
     }
     .stats-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -90,18 +86,6 @@ st.markdown("""
         padding: 1.5rem;
         border-radius: 10px;
         text-align: center;
-        transition: transform 0.3s ease;
-    }
-    .stats-card:hover {
-        transform: translateY(-5px);
-    }
-    .stats-card h3 {
-        font-size: 2.5rem;
-        margin: 0;
-    }
-    .stats-card p {
-        margin: 0;
-        opacity: 0.9;
     }
     .feature-card {
         background: #f8f9fa;
@@ -156,61 +140,25 @@ st.markdown("""
         padding: 1rem;
         color: #155724;
     }
-    .info-box {
-        background: #d1ecf1;
-        border: 1px solid #bee5eb;
-        border-radius: 8px;
-        padding: 1rem;
-        color: #0c5460;
-    }
-    .warning-box {
-        background: #fff3cd;
-        border: 1px solid #ffeeba;
-        border-radius: 8px;
-        padding: 1rem;
-        color: #856404;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 # ==================== PAGES ====================
 
+@handle_errors
 def home_page():
-    """Home/Landing Page"""
+    st.markdown('<h1 class="main-header">🎲 SynthSLM</h1>', unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; font-size:1.2rem;'>Synthetic Data Generation for Small Language Models</p>", unsafe_allow_html=True)
     
-    st.markdown('<h1 class="main-header">🎲 Project Synthesi</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Enterprise-Grade Synthetic Data Generation System</p>', unsafe_allow_html=True)
-    
-    # Stats
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown("""
-        <div class="stats-card">
-            <h3>10+</h3>
-            <p>Data Types</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="stats-card"><h3>10+</h3><p>Data Types</p></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown("""
-        <div class="stats-card">
-            <h3>100K</h3>
-            <p>Records per Batch</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="stats-card"><h3>100K</h3><p>Records</p></div>', unsafe_allow_html=True)
     with col3:
-        st.markdown("""
-        <div class="stats-card">
-            <h3>4</h3>
-            <p>Export Formats</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="stats-card"><h3>4</h3><p>Formats</p></div>', unsafe_allow_html=True)
     with col4:
-        st.markdown("""
-        <div class="stats-card">
-            <h3>100%</h3>
-            <p>Privacy Guaranteed</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="stats-card"><h3>100%</h3><p>Privacy Guaranteed</p></div>', unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -274,9 +222,8 @@ def home_page():
     </div>
     """, unsafe_allow_html=True)
 
+@handle_errors
 def upload_page():
-    """Upload Sample Data Page"""
-    
     st.subheader("📤 Upload Sample Data")
     st.markdown("Upload a sample dataset to generate synthetic data with the same patterns")
     
@@ -302,35 +249,24 @@ def upload_page():
             </div>
             """, unsafe_allow_html=True)
             
-            st.subheader("📊 Data Preview")
-            st.dataframe(df.head(10), use_container_width=True)
+            st.dataframe(df.head(10))
             
-            with st.expander("📋 Data Summary", expanded=True):
+            with st.expander("📋 Data Summary"):
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric("Total Records", f"{len(df):,}")
+                    st.metric("Records", f"{len(df):,}")
                 with col2:
-                    st.metric("Total Columns", len(df.columns))
+                    st.metric("Columns", len(df.columns))
                 with col3:
                     missing = df.isnull().sum().sum()
                     st.metric("Missing Values", f"{missing:,}")
-                
-                col_info = pd.DataFrame({
-                    'Column': df.columns,
-                    'Type': df.dtypes.astype(str),
-                    'Unique': df.nunique(),
-                    'Null %': (df.isnull().sum() / len(df) * 100).round(2)
-                })
-                st.dataframe(col_info, use_container_width=True)
-            
-            st.info("💡 **Next:** Go to **Generate** page and select 'User-Defined (Upload Sample)'")
             
         except Exception as e:
             st.error(f"❌ Error reading file: {str(e)}")
+            logger.error(f"File upload error: {str(e)}\n{traceback.format_exc()}")
 
+@handle_errors
 def generate_page():
-    """Data Generation Page"""
-    
     st.subheader("⚙️ Generate Synthetic Data")
     
     pipeline = st.session_state.pipeline
@@ -351,17 +287,9 @@ def generate_page():
     
     if data_type == "User-Defined (Upload Sample)":
         if st.session_state.sample_data is not None:
-            st.markdown(f"""
-            <div class="info-box">
-                📊 Using sample data: <strong>{len(st.session_state.sample_data):,}</strong> records
-            </div>
-            """, unsafe_allow_html=True)
+            st.info(f"📊 Using sample data: {len(st.session_state.sample_data):,} records")
         else:
-            st.markdown("""
-            <div class="warning-box">
-                ⚠️ No sample data loaded. Please upload a sample first.
-            </div>
-            """, unsafe_allow_html=True)
+            st.warning("⚠️ No sample data loaded. Please upload a sample first.")
             if st.button("📤 Go to Upload Sample"):
                 st.session_state.page = "Upload Sample"
                 st.rerun()
@@ -425,7 +353,11 @@ def generate_page():
                     'quality': report.get('overall_score', 0)
                 })
                 
-                st.success(f"✅ Generated {len(df):,} records in {gen_time:.2f} seconds!")
+                st.markdown(f"""
+                <div class="success-box">
+                    ✅ Generated <strong>{len(df):,}</strong> records in {gen_time:.2f} seconds!
+                </div>
+                """, unsafe_allow_html=True)
                 
                 col1, col2, col3 = st.columns(3)
                 with col1:
@@ -461,7 +393,9 @@ def generate_page():
                 
         except Exception as e:
             st.error(f"❌ Generation failed: {str(e)}")
-            logger.error(f"Generation error: {e}")
+            logger.error(f"Generation error: {str(e)}\n{traceback.format_exc()}")
+            with st.expander("🔍 Technical Details"):
+                st.code(traceback.format_exc())
     
     if st.session_state.generated_data is not None:
         df = st.session_state.generated_data
@@ -478,9 +412,8 @@ def generate_page():
             })
             st.dataframe(col_info, use_container_width=True)
 
+@handle_errors
 def dashboard_page():
-    """Quality Dashboard"""
-    
     st.subheader("📈 Quality Dashboard")
     
     if st.session_state.generated_data is None:
@@ -515,16 +448,19 @@ def dashboard_page():
     
     st.markdown("---")
     
-    dashboard = Dashboard()
-    fig = dashboard.create_quality_dashboard(df, report)
-    st.plotly_chart(fig, use_container_width=True)
+    try:
+        dashboard = Dashboard()
+        fig = dashboard.create_quality_dashboard(df, report)
+        st.plotly_chart(fig, use_container_width=True)
+    except Exception as e:
+        st.error(f"Dashboard creation failed: {str(e)}")
+        logger.error(f"Dashboard error: {str(e)}")
     
     with st.expander("📊 Detailed Metrics Report"):
         st.json(report)
 
+@handle_errors
 def export_page():
-    """Export Data Page"""
-    
     st.subheader("💾 Export Data")
     
     if st.session_state.generated_data is None:
@@ -572,17 +508,16 @@ def export_page():
                 
         except Exception as e:
             st.error(f"❌ Export failed: {str(e)}")
+            logger.error(f"Export error: {str(e)}\n{traceback.format_exc()}")
 
-# ==================== MAIN NAVIGATION ====================
+# ==================== MAIN ====================
 
 def main():
     """Main Application"""
     
-    # Sidebar
-    st.sidebar.title("🎲 Project Synthesi")
+    st.sidebar.title("🎲 SynthSLM")
     st.sidebar.markdown("---")
     
-    # Navigation
     page = st.sidebar.radio(
         "Navigation",
         ["🏠 Home", "📤 Upload Sample", "⚙️ Generate", "📈 Dashboard", "💾 Export"]
@@ -590,24 +525,17 @@ def main():
     
     st.sidebar.markdown("---")
     
-    # Session Info
-    try:
-        if st.session_state.sample_data is not None:
-            st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
-        else:
-            st.sidebar.info("📊 No sample loaded")
-        
-        if st.session_state.generated_data is not None:
-            st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
-        else:
-            st.sidebar.info("📦 No data generated")
-    except:
-        st.sidebar.warning("Session not ready")
+    if st.session_state.sample_data is not None:
+        st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
+    else:
+        st.sidebar.info("📊 No sample loaded")
+    
+    if st.session_state.generated_data is not None:
+        st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
     
     st.sidebar.markdown("---")
     st.sidebar.caption(f"v{Config.VERSION} | {Config.AUTHOR}")
     
-    # Route to pages
     if page == "🏠 Home":
         home_page()
     elif page == "📤 Upload Sample":
@@ -619,9 +547,5 @@ def main():
     elif page == "💾 Export":
         export_page()
 
-# ==================== ENTRY POINT ====================
-
 if __name__ == "__main__":
-    # Ensure session state is initialized
-    initialize_session_state()
     main()

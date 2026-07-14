@@ -3,10 +3,12 @@ Quality Dashboard - Interactive Visualizations
 """
 
 import plotly.graph_objects as go
-import plotly.express as px
 from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
+from logger import get_logger
+
+logger = get_logger()
 
 class Dashboard:
     """Create interactive quality dashboard"""
@@ -28,8 +30,9 @@ class Dashboard:
             ]
         )
         
-        # Data Overview
         numeric_cols = data.select_dtypes(include=[np.number]).columns
+        
+        # 1. Data Overview
         if len(numeric_cols) >= 2:
             fig.add_trace(
                 go.Scatter(
@@ -42,7 +45,7 @@ class Dashboard:
                 row=1, col=1
             )
         
-        # Correlation
+        # 2. Correlation
         if len(numeric_cols) > 1:
             corr = data[numeric_cols].corr()
             fig.add_trace(
@@ -57,7 +60,7 @@ class Dashboard:
                 row=1, col=2
             )
         
-        # Distribution
+        # 3. Distribution
         if len(numeric_cols) > 0:
             fig.add_trace(
                 go.Histogram(
@@ -69,7 +72,7 @@ class Dashboard:
                 row=1, col=3
             )
         
-        # Quality Score
+        # 4. Quality Score
         score = report.get('overall_score', 0.5) * 100
         fig.add_trace(
             go.Indicator(
@@ -89,7 +92,7 @@ class Dashboard:
             row=2, col=1
         )
         
-        # Missing Values
+        # 5. Missing Values
         nulls = data.isnull().sum()
         if nulls.sum() > 0:
             fig.add_trace(
@@ -102,18 +105,19 @@ class Dashboard:
                 row=2, col=2
             )
         
-        # Data Types
+        # 6. Data Types
         types = data.dtypes.value_counts()
-        fig.add_trace(
-            go.Pie(
-                labels=types.index.astype(str),
-                values=types.values,
-                name='Data Types'
-            ),
-            row=2, col=3
-        )
+        if len(types) > 0:
+            fig.add_trace(
+                go.Pie(
+                    labels=types.index.astype(str),
+                    values=types.values,
+                    name='Data Types'
+                ),
+                row=2, col=3
+            )
         
-        # Outliers
+        # 7. Outliers
         if len(numeric_cols) > 0:
             outlier_counts = {}
             for col in numeric_cols[:5]:
@@ -123,17 +127,18 @@ class Dashboard:
                 outliers = ((data[col] < Q1 - 1.5*IQR) | (data[col] > Q3 + 1.5*IQR)).sum()
                 outlier_counts[col] = outliers
             
-            fig.add_trace(
-                go.Bar(
-                    x=list(outlier_counts.keys()),
-                    y=list(outlier_counts.values()),
-                    name='Outliers',
-                    marker_color='#ff6b6b'
-                ),
-                row=3, col=1
-            )
+            if outlier_counts:
+                fig.add_trace(
+                    go.Bar(
+                        x=list(outlier_counts.keys()),
+                        y=list(outlier_counts.values()),
+                        name='Outliers',
+                        marker_color='#ff6b6b'
+                    ),
+                    row=3, col=1
+                )
         
-        # Feature Statistics
+        # 8. Feature Statistics
         if 'statistics' in report:
             stats = report['statistics']
             std_values = {}
@@ -154,7 +159,7 @@ class Dashboard:
                     row=3, col=2
                 )
         
-        # Privacy Score
+        # 9. Privacy Score
         privacy = report.get('privacy_score', 0.5) * 100
         fig.add_trace(
             go.Indicator(

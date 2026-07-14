@@ -4,17 +4,17 @@ Privacy Protection - Anonymization
 
 import pandas as pd
 import re
+from utils.constants import PII_PATTERNS
+from logger import get_logger
+
+logger = get_logger()
 
 class Anonymizer:
     """Apply privacy protection to data"""
     
     def __init__(self):
-        self.pii_patterns = {
-            'email': r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
-            'phone': r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b',
-            'ssn': r'\b\d{3}-\d{2}-\d{4}\b',
-            'credit_card': r'\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b'
-        }
+        self.pii_patterns = PII_PATTERNS
+        logger.info("Anonymizer initialized")
     
     def detect_pii(self, data: pd.DataFrame) -> dict:
         """Detect PII in dataframe"""
@@ -35,15 +35,17 @@ class Anonymizer:
         pii_columns = self.detect_pii(df)
         
         for col, patterns in pii_columns.items():
-            if 'email' in patterns:
-                df[col] = df[col].apply(lambda x: self._anonymize_email(str(x)))
-            elif 'phone' in patterns:
-                df[col] = df[col].apply(lambda x: self._anonymize_phone(str(x)))
-            elif 'ssn' in patterns:
-                df[col] = df[col].apply(lambda x: self._anonymize_ssn(str(x)))
-            elif 'credit_card' in patterns:
-                df[col] = df[col].apply(lambda x: self._anonymize_credit_card(str(x)))
+            for pattern in patterns:
+                if pattern == 'email':
+                    df[col] = df[col].apply(lambda x: self._anonymize_email(str(x)))
+                elif pattern == 'phone':
+                    df[col] = df[col].apply(lambda x: self._anonymize_phone(str(x)))
+                elif pattern == 'ssn':
+                    df[col] = df[col].apply(lambda x: self._anonymize_ssn(str(x)))
+                elif pattern == 'credit_card':
+                    df[col] = df[col].apply(lambda x: self._anonymize_credit_card(str(x)))
         
+        logger.info(f"Applied privacy protection to {len(pii_columns)} columns")
         return df
     
     def _anonymize_email(self, email: str) -> str:
