@@ -1,5 +1,5 @@
 """
-SynthSLM - Complete Working Version
+SynthSLM - Complete Application with Enhanced Visualization
 B.Tech Final Year Project
 Author: Subham Sarkar
 """
@@ -285,50 +285,103 @@ def analyze_quality(data):
     }
     return report
 
-# ==================== DASHBOARD ====================
+# ==================== ENHANCED VISUALIZATION ====================
 
-def create_dashboard(data, report):
-    """Create quality dashboard with proper error handling"""
+def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
+    """
+    Create an enhanced interactive dashboard with multiple visualization types
+    """
     
-    # Create figure with subplots
+    # Create figure with 3x3 subplots
     fig = make_subplots(
-        rows=2, cols=2,
-        subplot_titles=('Data Overview', 'Distribution', 'Quality Score', 'Missing Values')
+        rows=3, cols=3,
+        subplot_titles=(
+            '📊 Data Overview',
+            '📈 Correlation Matrix',
+            '📉 Distribution Plot',
+            '🎯 Quality Score',
+            '🔍 Missing Values',
+            '📋 Data Types',
+            '📊 Feature Importance',
+            '📈 Outlier Analysis',
+            '🔒 Privacy Score'
+        ),
+        specs=[
+            [{"type": "scatter"}, {"type": "heatmap"}, {"type": "histogram"}],
+            [{"type": "indicator"}, {"type": "bar"}, {"type": "pie"}],
+            [{"type": "bar"}, {"type": "box"}, {"type": "indicator"}]
+        ],
+        vertical_spacing=0.12,
+        horizontal_spacing=0.1
     )
     
     numeric_cols = data.select_dtypes(include=[np.number]).columns.tolist()
     
-    # 1. Data Overview - Scatter plot
+    # ===== 1. DATA OVERVIEW (Scatter Plot) =====
     try:
         if len(numeric_cols) >= 2:
-            # Sample data for performance
-            sample_size = min(500, len(data))
+            sample_size = min(1000, len(data))
             fig.add_trace(
                 go.Scatter(
                     x=data[numeric_cols[0]][:sample_size],
                     y=data[numeric_cols[1]][:sample_size],
                     mode='markers',
-                    marker=dict(size=5, opacity=0.5, color='#667eea'),
-                    name='Data Points'
+                    marker=dict(
+                        size=8,
+                        color=data[numeric_cols[0]][:sample_size],
+                        colorscale='Viridis',
+                        showscale=False,
+                        opacity=0.7,
+                        line=dict(width=1, color='white')
+                    ),
+                    name='Data Points',
+                    hovertemplate='<b>%{x}</b><br>Value: %{y}<extra></extra>'
                 ),
                 row=1, col=1
             )
-        else:
-            # If only one numeric column, show a line plot
+            
+            # Add trend line
+            if len(data) > 10:
+                z = np.polyfit(data[numeric_cols[0]][:sample_size], data[numeric_cols[1]][:sample_size], 1)
+                p = np.poly1d(z)
+                x_trend = np.linspace(data[numeric_cols[0]].min(), data[numeric_cols[0]].max(), 100)
+                fig.add_trace(
+                    go.Scatter(
+                        x=x_trend,
+                        y=p(x_trend),
+                        mode='lines',
+                        name='Trend Line',
+                        line=dict(color='#ff6b6b', width=2, dash='dash'),
+                        hovertemplate='Trend: %{y:.2f}<extra></extra>'
+                    ),
+                    row=1, col=1
+                )
+    except Exception:
+        pass
+    
+    # ===== 2. CORRELATION MATRIX (Heatmap) =====
+    try:
+        if len(numeric_cols) > 1:
+            corr_matrix = data[numeric_cols].corr()
             fig.add_trace(
-                go.Scatter(
-                    x=list(range(len(data)))[:500],
-                    y=data[numeric_cols[0]][:500] if numeric_cols else [],
-                    mode='lines',
-                    name='Data Trend',
-                    line=dict(color='#667eea')
+                go.Heatmap(
+                    z=corr_matrix.values,
+                    x=corr_matrix.columns,
+                    y=corr_matrix.columns,
+                    colorscale='RdBu',
+                    zmid=0,
+                    name='Correlation',
+                    text=corr_matrix.round(2).values,
+                    texttemplate='%{text}',
+                    textfont={"size": 8},
+                    hovertemplate='<b>%{x}</b> ↔ <b>%{y}</b><br>Correlation: %{z:.2f}<extra></extra>'
                 ),
-                row=1, col=1
+                row=1, col=2
             )
     except Exception:
         pass
     
-    # 2. Distribution - Histogram
+    # ===== 3. DISTRIBUTION PLOT =====
     try:
         if numeric_cols:
             fig.add_trace(
@@ -336,29 +389,58 @@ def create_dashboard(data, report):
                     x=data[numeric_cols[0]].dropna(),
                     nbinsx=30,
                     name='Distribution',
-                    marker_color='#764ba2'
+                    marker_color='#667eea',
+                    opacity=0.8,
+                    hovertemplate='Range: %{x}<br>Count: %{y}<extra></extra>'
                 ),
-                row=1, col=2
+                row=1, col=3
+            )
+            
+            # Add mean line
+            mean_val = data[numeric_cols[0]].mean()
+            fig.add_vline(
+                x=mean_val,
+                line_dash="dash",
+                line_color="#ff6b6b",
+                annotation_text=f"Mean: {mean_val:.2f}",
+                annotation_position="top",
+                row=1, col=3
             )
     except Exception:
         pass
     
-    # 3. Quality Score - Gauge
+    # ===== 4. QUALITY SCORE (Gauge) =====
     try:
         score = report.get('overall_score', 0.5) * 100
         fig.add_trace(
             go.Indicator(
-                mode="gauge+number",
+                mode="gauge+number+delta",
                 value=score,
-                title={'text': "Quality Score"},
+                title={
+                    'text': "Overall Quality Score",
+                    'font': {'size': 14}
+                },
+                delta={
+                    'reference': 50,
+                    'increasing': {'color': '#6bcb77'},
+                    'decreasing': {'color': '#ff6b6b'}
+                },
                 gauge={
-                    'axis': {'range': [0, 100]},
+                    'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
                     'bar': {'color': '#6bcb77' if score >= 70 else '#ffd93d' if score >= 40 else '#ff6b6b'},
+                    'bgcolor': "white",
+                    'borderwidth': 2,
+                    'bordercolor': "gray",
                     'steps': [
-                        {'range': [0, 40], 'color': "#ff6b6b"},
-                        {'range': [40, 70], 'color': "#ffd93d"},
-                        {'range': [70, 100], 'color': "#6bcb77"}
-                    ]
+                        {'range': [0, 40], 'color': "#ff6b6b", 'name': 'Poor'},
+                        {'range': [40, 70], 'color': "#ffd93d", 'name': 'Average'},
+                        {'range': [70, 100], 'color': "#6bcb77", 'name': 'Good'}
+                    ],
+                    'threshold': {
+                        'line': {'color': "red", 'width': 4},
+                        'thickness': 0.75,
+                        'value': 90
+                    }
                 }
             ),
             row=2, col=1
@@ -366,39 +448,274 @@ def create_dashboard(data, report):
     except Exception:
         pass
     
-    # 4. Missing Values - Bar chart
+    # ===== 5. MISSING VALUES =====
     try:
         nulls = data.isnull().sum()
         nulls = nulls[nulls > 0]
         if len(nulls) > 0:
             fig.add_trace(
                 go.Bar(
-                    x=nulls.index[:5],
-                    y=nulls.values[:5],
+                    x=nulls.index[:8],
+                    y=nulls.values[:8],
                     name='Missing Values',
-                    marker_color='#ff6b6b'
+                    marker_color='#ff6b6b',
+                    text=nulls.values[:8],
+                    textposition='outside',
+                    hovertemplate='<b>%{x}</b><br>Missing: %{y}<extra></extra>'
                 ),
                 row=2, col=2
             )
         else:
-            # Show "No missing values" message
             fig.add_trace(
                 go.Indicator(
                     mode="number",
                     value=0,
-                    title={'text': "Missing Values"},
-                    number={'font': {'color': '#6bcb77'}}
+                    title={'text': "✅ No Missing Values"},
+                    number={'font': {'color': '#6bcb77', 'size': 40}}
                 ),
                 row=2, col=2
             )
     except Exception:
         pass
     
-    # Update layout
+    # ===== 6. DATA TYPES (Pie Chart) =====
+    try:
+        dtype_counts = data.dtypes.value_counts()
+        colors = ['#667eea', '#764ba2', '#ff6b6b', '#ffd93d', '#6bcb77']
+        fig.add_trace(
+            go.Pie(
+                labels=[str(dt) for dt in dtype_counts.index],
+                values=dtype_counts.values,
+                name='Data Types',
+                hole=0.4,
+                marker=dict(colors=colors[:len(dtype_counts)]),
+                textinfo='label+percent',
+                hovertemplate='<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>'
+            ),
+            row=2, col=3
+        )
+    except Exception:
+        pass
+    
+    # ===== 7. FEATURE IMPORTANCE =====
+    try:
+        if len(numeric_cols) > 1:
+            # Calculate feature importance using variance
+            importance = data[numeric_cols].var().sort_values(ascending=False)
+            top_features = importance.head(8)
+            
+            fig.add_trace(
+                go.Bar(
+                    x=top_features.values,
+                    y=top_features.index,
+                    orientation='h',
+                    name='Feature Importance',
+                    marker_color='#667eea',
+                    text=top_features.values.round(2),
+                    textposition='outside',
+                    hovertemplate='<b>%{y}</b><br>Importance: %{x:.2f}<extra></extra>'
+                ),
+                row=3, col=1
+            )
+    except Exception:
+        pass
+    
+    # ===== 8. OUTLIER ANALYSIS (Box Plot) =====
+    try:
+        if len(numeric_cols) > 0:
+            # Select top numeric columns for box plot
+            cols_to_show = numeric_cols[:4]
+            fig.add_trace(
+                go.Box(
+                    y=[data[col].dropna() for col in cols_to_show],
+                    name='Outliers',
+                    boxmean='sd',
+                    marker_color='#764ba2',
+                    hovertemplate='<b>%{x}</b><br>Value: %{y}<extra></extra>'
+                ),
+                row=3, col=2
+            )
+    except Exception:
+        pass
+    
+    # ===== 9. PRIVACY SCORE (Gauge) =====
+    try:
+        privacy_score = report.get('privacy_score', 0.5) * 100
+        fig.add_trace(
+            go.Indicator(
+                mode="gauge+number",
+                value=privacy_score,
+                title={
+                    'text': "🔒 Privacy Score",
+                    'font': {'size': 14}
+                },
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': '#6bcb77' if privacy_score >= 70 else '#ffd93d' if privacy_score >= 40 else '#ff6b6b'},
+                    'steps': [
+                        {'range': [0, 40], 'color': "#ff6b6b"},
+                        {'range': [40, 70], 'color': "#ffd93d"},
+                        {'range': [70, 100], 'color': "#6bcb77"}
+                    ]
+                }
+            ),
+            row=3, col=3
+        )
+    except Exception:
+        pass
+    
+    # ===== Update Layout =====
     fig.update_layout(
-        height=600,
+        height=900,
         showlegend=False,
-        template='plotly_white'
+        template='plotly_white',
+        font=dict(size=12),
+        title={
+            'text': '📊 Synthetic Data Quality Dashboard',
+            'y': 0.98,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': {'size': 24, 'color': '#2c3e50'}
+        },
+        margin=dict(l=50, r=50, t=80, b=50)
+    )
+    
+    return fig
+
+def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame, report: dict) -> go.Figure:
+    """
+    Create a comparison dashboard showing original vs synthetic data
+    """
+    
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=(
+            'Original vs Synthetic Distribution',
+            'Statistical Comparison',
+            'Correlation Comparison',
+            'Quality Metrics Comparison'
+        )
+    )
+    
+    numeric_cols = original.select_dtypes(include=[np.number]).columns.tolist()
+    
+    # 1. Distribution Comparison
+    if numeric_cols:
+        col = numeric_cols[0]
+        fig.add_trace(
+            go.Histogram(
+                x=original[col].dropna(),
+                name='Original',
+                opacity=0.6,
+                marker_color='#667eea',
+                nbinsx=20
+            ),
+            row=1, col=1
+        )
+        fig.add_trace(
+            go.Histogram(
+                x=synthetic[col].dropna(),
+                name='Synthetic',
+                opacity=0.6,
+                marker_color='#ff6b6b',
+                nbinsx=20
+            ),
+            row=1, col=1
+        )
+    
+    # 2. Statistical Comparison (Bar Chart)
+    try:
+        stats_comparison = pd.DataFrame({
+            'Mean': [original[numeric_cols].mean().mean(), synthetic[numeric_cols].mean().mean()],
+            'Std': [original[numeric_cols].std().mean(), synthetic[numeric_cols].std().mean()],
+            'Min': [original[numeric_cols].min().min(), synthetic[numeric_cols].min().min()],
+            'Max': [original[numeric_cols].max().max(), synthetic[numeric_cols].max().max()]
+        }, index=['Original', 'Synthetic'])
+        
+        fig.add_trace(
+            go.Bar(
+                x=stats_comparison.columns,
+                y=stats_comparison.loc['Original'],
+                name='Original',
+                marker_color='#667eea'
+            ),
+            row=1, col=2
+        )
+        fig.add_trace(
+            go.Bar(
+                x=stats_comparison.columns,
+                y=stats_comparison.loc['Synthetic'],
+                name='Synthetic',
+                marker_color='#ff6b6b'
+            ),
+            row=1, col=2
+        )
+    except Exception:
+        pass
+    
+    # 3. Correlation Comparison
+    try:
+        if len(numeric_cols) > 1:
+            orig_corr = original[numeric_cols].corr().values.flatten()
+            synth_corr = synthetic[numeric_cols].corr().values.flatten()
+            fig.add_trace(
+                go.Scatter(
+                    x=orig_corr,
+                    y=synth_corr,
+                    mode='markers',
+                    marker=dict(size=10, color='#667eea', opacity=0.6),
+                    name='Correlation',
+                    hovertemplate='Original: %{x:.2f}<br>Synthetic: %{y:.2f}<extra></extra>'
+                ),
+                row=2, col=1
+            )
+            # Add diagonal line
+            fig.add_trace(
+                go.Scatter(
+                    x=[-1, 1],
+                    y=[-1, 1],
+                    mode='lines',
+                    name='Perfect Match',
+                    line=dict(color='#ff6b6b', dash='dash')
+                ),
+                row=2, col=1
+            )
+    except Exception:
+        pass
+    
+    # 4. Quality Metrics Comparison
+    try:
+        metrics = ['completeness', 'uniqueness', 'privacy_score']
+        orig_values = [report.get(m, 0) * 100 for m in metrics]
+        
+        fig.add_trace(
+            go.Bar(
+                x=metrics,
+                y=orig_values,
+                name='Synthetic',
+                marker_color='#6bcb77',
+                text=[f"{v:.1f}%" for v in orig_values],
+                textposition='outside'
+            ),
+            row=2, col=2
+        )
+    except Exception:
+        pass
+    
+    fig.update_layout(
+        height=800,
+        showlegend=True,
+        template='plotly_white',
+        font=dict(size=12),
+        title={
+            'text': '📊 Original vs Synthetic Data Comparison',
+            'y': 0.98,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': {'size': 24, 'color': '#2c3e50'}
+        }
     )
     
     return fig
@@ -557,6 +874,8 @@ def generate_page():
         st.subheader("📊 Preview")
         st.dataframe(st.session_state.generated_data.head(20))
 
+# ==================== DASHBOARD PAGE ====================
+
 def dashboard_page():
     st.subheader("📈 Quality Dashboard")
     
@@ -567,34 +886,95 @@ def dashboard_page():
     df = st.session_state.generated_data
     report = st.session_state.quality_report or {}
     
-    col1, col2, col3, col4 = st.columns(4)
-    with col1: st.metric("Overall", f"{report.get('overall_score', 0):.1%}")
-    with col2: st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
-    with col3: st.metric("Uniqueness", f"{report.get('uniqueness', 0):.1%}")
-    with col4: st.metric("Privacy", f"{report.get('privacy_score', 0):.1%}")
+    # Quick metrics cards
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        st.metric("📊 Overall", f"{report.get('overall_score', 0):.1%}")
+    with col2:
+        st.metric("✅ Completeness", f"{report.get('completeness', 0):.1%}")
+    with col3:
+        st.metric("🔄 Uniqueness", f"{report.get('uniqueness', 0):.1%}")
+    with col4:
+        st.metric("🔒 Privacy", f"{report.get('privacy_score', 0):.1%}")
+    with col5:
+        st.metric("📈 Records", f"{len(df):,}")
     
     st.markdown("---")
     
-    # Create and display dashboard with error handling
-    try:
-        fig = create_dashboard(df, report)
-        st.plotly_chart(fig, use_container_width=True)
-    except Exception as e:
-        st.error(f"Dashboard error: {str(e)}")
-        st.info("Showing simple data summary instead...")
-        
-        # Fallback: Show basic data info
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write("**Data Info**")
-            st.write(f"- Records: {len(df):,}")
-            st.write(f"- Columns: {len(df.columns)}")
-            st.write(f"- Memory: {df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB")
-        with col2:
-            st.write("**Quality Metrics**")
-            st.write(f"- Completeness: {report.get('completeness', 0):.1%}")
-            st.write(f"- Uniqueness: {report.get('uniqueness', 0):.1%}")
-            st.write(f"- Privacy: {report.get('privacy_score', 0):.1%}")
+    # Create tabs for different views
+    tab1, tab2 = st.tabs(["📊 Quality Dashboard", "📈 Comparison View"])
+    
+    with tab1:
+        try:
+            fig = create_enhanced_dashboard(df, report)
+            st.plotly_chart(fig, use_container_width=True)
+        except Exception as e:
+            st.error(f"Dashboard error: {str(e)}")
+            st.info("Showing data summary instead...")
+            _show_data_summary(df, report)
+    
+    with tab2:
+        if st.session_state.sample_data is not None:
+            try:
+                fig = create_comparison_dashboard(st.session_state.sample_data, df, report)
+                st.plotly_chart(fig, use_container_width=True)
+            except Exception as e:
+                st.warning(f"Comparison view error: {str(e)}")
+        else:
+            st.info("Upload a sample dataset to see comparison view")
+    
+    # Additional detailed metrics
+    with st.expander("📊 Detailed Metrics & Statistics", expanded=False):
+        _show_detailed_metrics(df, report)
+
+def _show_data_summary(df: pd.DataFrame, report: dict):
+    """Show data summary as fallback"""
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("**Data Info**")
+        st.write(f"- Records: {len(df):,}")
+        st.write(f"- Columns: {len(df.columns)}")
+        st.write(f"- Memory: {df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB")
+    with col2:
+        st.write("**Quality Metrics**")
+        st.write(f"- Completeness: {report.get('completeness', 0):.1%}")
+        st.write(f"- Uniqueness: {report.get('uniqueness', 0):.1%}")
+        st.write(f"- Privacy: {report.get('privacy_score', 0):.1%}")
+    
+    # Show column info
+    st.write("**Column Information**")
+    col_info = pd.DataFrame({
+        'Column': df.columns,
+        'Type': df.dtypes.astype(str),
+        'Unique': df.nunique(),
+        'Null %': (df.isnull().sum() / len(df) * 100).round(2)
+    })
+    st.dataframe(col_info, use_container_width=True)
+
+def _show_detailed_metrics(df: pd.DataFrame, report: dict):
+    """Show detailed metrics"""
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("📊 Column Statistics")
+        numeric_cols = df.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) > 0:
+            st.dataframe(df[numeric_cols].describe(), use_container_width=True)
+    
+    with col2:
+        st.subheader("📋 Data Profile")
+        profile = {
+            'Total Records': len(df),
+            'Total Columns': len(df.columns),
+            'Numeric Columns': len(df.select_dtypes(include=[np.number]).columns),
+            'Categorical Columns': len(df.select_dtypes(include=['object']).columns),
+            'Missing Values': df.isnull().sum().sum(),
+            'Duplicate Rows': df.duplicated().sum(),
+            'Memory Usage': f"{df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB"
+        }
+        st.json(profile)
+
+# ==================== EXPORT PAGE ====================
 
 def export_page():
     st.subheader("💾 Export Data")
