@@ -1,7 +1,5 @@
 """
-Project Synthesi - Simplified Working Version
-B.Tech Final Year Project
-Author: Bikram Sarkar
+SynthSLM - Simplified Working Version
 """
 
 import streamlit as st
@@ -16,15 +14,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 # ==================== PAGE CONFIG ====================
-st.set_page_config(
-    page_title="Project Synthesi",
-    page_icon="🎲",
-    layout="wide"
-)
+st.set_page_config(page_title="SynthSLM", page_icon="🎲", layout="wide")
 
 # ==================== INITIALIZE SESSION STATE ====================
-# !!! MUST BE FIRST THING AFTER PAGE CONFIG !!!
-
 if 'init' not in st.session_state:
     st.session_state.init = True
     st.session_state.sample_data = None
@@ -35,42 +27,21 @@ if 'init' not in st.session_state:
 # ==================== CUSTOM CSS ====================
 st.markdown("""
 <style>
-    .main-header {
-        font-size: 3rem;
-        font-weight: bold;
-        text-align: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .stats-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        text-align: center;
-    }
-    .feature-card {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 4px solid #667eea;
-        margin: 1rem 0;
-    }
-    .upload-area {
-        border: 2px dashed #667eea;
-        border-radius: 12px;
-        padding: 2rem;
-        text-align: center;
-        background: #f8f9fa;
-    }
+    .main-header { font-size: 3rem; font-weight: bold; text-align: center;
+                   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                   -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stats-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  color: white; padding: 1.5rem; border-radius: 10px; text-align: center; }
+    .feature-card { background: #f8f9fa; padding: 1.5rem; border-radius: 10px;
+                    border-left: 4px solid #667eea; margin: 1rem 0; }
+    .upload-area { border: 2px dashed #667eea; border-radius: 12px; padding: 2rem;
+                   text-align: center; background: #f8f9fa; }
 </style>
 """, unsafe_allow_html=True)
 
 # ==================== DATA GENERATORS ====================
 
 def generate_personal_data(n):
-    """Generate personal data"""
     fake = Faker()
     data = []
     for _ in range(n):
@@ -87,7 +58,7 @@ def generate_personal_data(n):
             'state': fake.state(),
             'zipcode': fake.zipcode(),
             'birth_date': fake.date_of_birth(minimum_age=18, maximum_age=80),
-            'gender': random.choice(['Male', 'Female']),
+            'gender': random.choice(['Male', 'Female', 'Non-binary']),
             'occupation': fake.job(),
             'income': random.randint(30000, 200000),
             'active': random.choice([True, False])
@@ -95,7 +66,6 @@ def generate_personal_data(n):
     return pd.DataFrame(data)
 
 def generate_sales_data(n):
-    """Generate sales data"""
     fake = Faker()
     products = ['Laptop', 'Phone', 'Headphones', 'Monitor', 'Keyboard', 'Mouse']
     data = []
@@ -116,7 +86,6 @@ def generate_sales_data(n):
     return pd.DataFrame(data)
 
 def generate_employee_data(n):
-    """Generate employee data"""
     fake = Faker()
     depts = ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance']
     data = []
@@ -136,8 +105,34 @@ def generate_employee_data(n):
         })
     return pd.DataFrame(data)
 
+def generate_toll_data(n):
+    fake = Faker()
+    states = ['WB', 'JH', 'BR', 'UP', 'DL', 'MH', 'KA', 'TN']
+    vehicle_types = ['Car', 'Truck', 'Bus', 'SUV', 'Motorcycle']
+    toll_plazas = ['NH-16 Kolkata Toll Plaza', 'NH-8 Delhi Toll Plaza', 'NH-44 Chennai Toll Plaza']
+    
+    data = []
+    for _ in range(n):
+        state = random.choice(states)
+        num = random.randint(10, 99)
+        letter = random.choice(['AB','CD','EF','GH'])
+        suffix = random.randint(1000, 9999)
+        vehicle = f"{state}{num:02d}{letter}{suffix}"
+        
+        data.append({
+            'transaction_id': f"TXN{datetime.now().strftime('%Y%m%d')}{str(len(data)+1).zfill(4)}",
+            'toll_plaza': random.choice(toll_plazas),
+            'vehicle_number': vehicle,
+            'vehicle_type': random.choice(vehicle_types),
+            'toll_amount': round(random.uniform(50, 500), 2),
+            'payment_mode': random.choice(['FASTag', 'Cash', 'UPI', 'Card']),
+            'transaction_date': fake.date_time_between(start_date='-7d'),
+            'speed': random.randint(10, 80),
+            'overloaded': random.choice(['No', 'No', 'No', 'Yes'])
+        })
+    return pd.DataFrame(data)
+
 def generate_timeseries_data(n):
-    """Generate time series data"""
     start = datetime.now() - timedelta(days=n)
     dates = [start + timedelta(days=i) for i in range(n)]
     trend = np.linspace(0, 50, n)
@@ -151,18 +146,20 @@ def generate_timeseries_data(n):
     })
 
 def generate_from_sample(sample, n):
-    """Generate from user sample"""
-    # Simple approach: sample with replacement
+    if len(sample) == 0:
+        return pd.DataFrame()
     indices = np.random.choice(len(sample), n, replace=True)
     return sample.iloc[indices].reset_index(drop=True)
 
 # ==================== QUALITY ANALYZER ====================
 
 def analyze_quality(data):
-    """Simple quality analysis"""
+    if data is None or len(data) == 0:
+        return {'overall_score': 0, 'completeness': 0, 'uniqueness': 0}
+    
     report = {
         'overall_score': 0.0,
-        'completeness': 1 - data.isnull().sum().sum() / (data.shape[0] * data.shape[1]),
+        'completeness': 1 - data.isnull().sum().sum() / (data.shape[0] * data.shape[1]) if data.shape[0] * data.shape[1] > 0 else 0,
         'uniqueness': data.nunique().mean() / len(data) if len(data) > 0 else 0,
         'diversity': 0.5,
         'privacy_score': 0.5
@@ -173,25 +170,22 @@ def analyze_quality(data):
 # ==================== DASHBOARD ====================
 
 def create_dashboard(data, report):
-    """Create quality dashboard"""
     fig = make_subplots(rows=2, cols=2, subplot_titles=('Data Overview', 'Distribution', 'Quality Score', 'Missing Values'))
     
-    # Data overview
     numeric_cols = data.select_dtypes(include=[np.number]).columns
     if len(numeric_cols) >= 2:
         fig.add_trace(
-            go.Scatter(x=data[numeric_cols[0]][:500], y=data[numeric_cols[1]][:500], mode='markers', marker=dict(size=5, opacity=0.5)),
+            go.Scatter(x=data[numeric_cols[0]][:500], y=data[numeric_cols[1]][:500], 
+                      mode='markers', marker=dict(size=5, opacity=0.5)),
             row=1, col=1
         )
     
-    # Distribution
     if len(numeric_cols) > 0:
         fig.add_trace(
             go.Histogram(x=data[numeric_cols[0]], nbinsx=30),
             row=1, col=2
         )
     
-    # Quality Score
     score = report.get('overall_score', 0.5) * 100
     fig.add_trace(
         go.Indicator(mode="gauge+number", value=score, title={'text': "Quality Score"},
@@ -199,7 +193,6 @@ def create_dashboard(data, report):
         row=2, col=1
     )
     
-    # Missing Values
     nulls = data.isnull().sum()
     if nulls.sum() > 0:
         fig.add_trace(go.Bar(x=nulls.index[:5], y=nulls.values[:5]), row=2, col=2)
@@ -210,8 +203,8 @@ def create_dashboard(data, report):
 # ==================== PAGES ====================
 
 def home_page():
-    st.markdown('<h1 class="main-header">🎲 Project Synthesi</h1>', unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; font-size:1.2rem;'>Enterprise-Grade Synthetic Data Generation System</p>", unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🎲 SynthSLM</h1>', unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; font-size:1.2rem;'>Synthetic Data Generation for Small Language Models</p>", unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -228,15 +221,15 @@ def home_page():
     with col1:
         st.markdown("""
         ### 🚀 Features
-        - **10+ Pre-built Templates**
-        - **User-Defined Generation**
-        - **Privacy Protection**
-        - **Quality Analysis**
+        - **10+ Data Types** - Personal, Sales, Employee, Time Series, Toll Plaza
+        - **User-Defined Generation** - Upload your data
+        - **Privacy Protection** - PII detection
+        - **Quality Analysis** - Metrics & dashboard
         """)
     with col2:
         st.markdown("""
         ### 📊 Quick Start
-        1. Upload Sample or Choose Template
+        1. Upload Sample
         2. Configure Generation
         3. Generate Data
         4. Analyze & Export
@@ -269,19 +262,21 @@ def upload_page():
 def generate_page():
     st.subheader("⚙️ Generate Data")
     
+    data_types = [
+        "Personal/Customer Data",
+        "Sales Transactions",
+        "Employee Records",
+        "Time Series Data",
+        "Toll Plaza Data",
+        "User-Defined (Upload Sample)"
+    ]
+    
     col1, col2 = st.columns(2)
     with col1:
-        data_type = st.selectbox("Data Type", [
-            "Personal/Customer Data",
-            "Sales Transactions",
-            "Employee Records",
-            "Time Series Data",
-            "User-Defined (Upload Sample)"
-        ])
+        data_type = st.selectbox("Data Type", data_types)
     with col2:
         num_records = st.number_input("Records", 10, 10000, 100)
     
-    # Show sample info
     if data_type == "User-Defined (Upload Sample)":
         if st.session_state.sample_data is not None:
             st.info(f"📊 Using: {len(st.session_state.sample_data):,} records")
@@ -293,28 +288,25 @@ def generate_page():
         with st.spinner(f"Generating {num_records} records..."):
             start = time.time()
             
-            # Generate
             if data_type == "Personal/Customer Data":
                 df = generate_personal_data(num_records)
             elif data_type == "Sales Transactions":
                 df = generate_sales_data(num_records)
             elif data_type == "Employee Records":
                 df = generate_employee_data(num_records)
+            elif data_type == "Toll Plaza Data":
+                df = generate_toll_data(num_records)
             elif data_type == "Time Series Data":
                 df = generate_timeseries_data(num_records)
-            else:  # User-Defined
+            else:
                 df = generate_from_sample(st.session_state.sample_data, num_records)
             
             gen_time = time.time() - start
             
-            # Store
             st.session_state.generated_data = df
-            
-            # Quality
             report = analyze_quality(df)
             st.session_state.quality_report = report
             
-            # History
             st.session_state.generation_history.append({
                 'type': data_type,
                 'records': len(df),
@@ -329,7 +321,6 @@ def generate_page():
             with col2: st.metric("Columns", len(df.columns))
             with col3: st.metric("Quality", f"{report['overall_score']:.1%}")
     
-    # Show data
     if st.session_state.generated_data is not None:
         st.subheader("📊 Preview")
         st.dataframe(st.session_state.generated_data.head(20))
@@ -351,7 +342,6 @@ def dashboard_page():
     with col4: st.metric("Privacy", f"{report.get('privacy_score', 0):.1%}")
     
     st.markdown("---")
-    
     fig = create_dashboard(df, report)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -363,7 +353,6 @@ def export_page():
         return
     
     df = st.session_state.generated_data
-    
     format = st.selectbox("Format", ["CSV", "JSON", "Excel"])
     filename = st.text_input("Filename", f"data_{datetime.now().strftime('%Y%m%d')}")
     
@@ -392,7 +381,7 @@ def export_page():
 # ==================== MAIN ====================
 
 def main():
-    st.sidebar.title("🎲 Project Synthesi")
+    st.sidebar.title("🎲 SynthSLM")
     st.sidebar.markdown("---")
     
     page = st.sidebar.radio("Navigation", [
@@ -405,16 +394,14 @@ def main():
     
     st.sidebar.markdown("---")
     
-    # Show status
     if st.session_state.sample_data is not None:
         st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
     if st.session_state.generated_data is not None:
         st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
     
     st.sidebar.markdown("---")
-    st.sidebar.caption("v3.0 | Bikram Sarkar")
+    st.sidebar.caption("v3.0 | Subham Sarkar")
     
-    # Route
     if page == "🏠 Home":
         home_page()
     elif page == "📤 Upload Sample":
