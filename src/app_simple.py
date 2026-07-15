@@ -400,7 +400,7 @@ def main():
         st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
     
     st.sidebar.markdown("---")
-    st.sidebar.caption("v3.0 | Subham Sarkar")
+    st.sidebar.caption("v3.0 | Team CSE_13 | B.Tech Final Year Project")
     
     if page == "🏠 Home":
         home_page()
