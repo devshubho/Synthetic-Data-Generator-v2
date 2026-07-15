@@ -345,6 +345,8 @@ def dashboard_page():
     fig = create_dashboard(df, report)
     st.plotly_chart(fig, use_container_width=True)
 
+# ==================== EXPORT PAGE (FIXED) ====================
+
 def export_page():
     st.subheader("💾 Export Data")
     
@@ -353,30 +355,75 @@ def export_page():
         return
     
     df = st.session_state.generated_data
-    format = st.selectbox("Format", ["CSV", "JSON", "Excel"])
-    filename = st.text_input("Filename", f"data_{datetime.now().strftime('%Y%m%d')}")
     
-    if st.button("📥 Export", use_container_width=True):
-        if format == "CSV":
-            data = df.to_csv(index=False).encode()
-            mime = "text/csv"
-        elif format == "JSON":
-            data = df.to_json(orient='records', indent=2).encode()
-            mime = "application/json"
-        else:
-            output = io.BytesIO()
-            with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                df.to_excel(writer, index=False)
-            data = output.getvalue()
-            mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        
-        st.download_button(
-            label=f"Download {format}",
-            data=data,
-            file_name=f"{filename}.{format.lower()}",
-            mime=mime,
-            use_container_width=True
+    col1, col2 = st.columns(2)
+    with col1:
+        # Map display names to actual format values
+        format_options = {
+            "CSV (.csv)": "CSV",
+            "Excel (.xlsx)": "Excel",
+            "JSON (.json)": "JSON",
+            "Parquet (.parquet)": "Parquet"
+        }
+        display_format = st.selectbox(
+            "Export Format",
+            list(format_options.keys()),
+            index=0,
+            help="Choose the format to export your data"
         )
+        export_format = format_options[display_format]
+        
+    with col2:
+        filename = st.text_input(
+            "File Name",
+            f"data_{datetime.now().strftime('%Y%m%d')}",
+            help="Enter a name for your exported file"
+        )
+    
+    if st.button("📥 Export Data", use_container_width=True):
+        try:
+            if export_format == "CSV":
+                data = df.to_csv(index=False).encode()
+                mime = "text/csv"
+                file_ext = "csv"
+            elif export_format == "JSON":
+                data = df.to_json(orient='records', indent=2).encode()
+                mime = "application/json"
+                file_ext = "json"
+            elif export_format == "Parquet":
+                output = io.BytesIO()
+                df.to_parquet(output, index=False)
+                data = output.getvalue()
+                mime = "application/octet-stream"
+                file_ext = "parquet"
+            else:  # Excel
+                output = io.BytesIO()
+                with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                    df.to_excel(writer, index=False, sheet_name='Data')
+                data = output.getvalue()
+                mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                file_ext = "xlsx"
+            
+            file_size = len(data)
+            if file_size > 1024 * 1024:
+                size_str = f"{file_size / (1024*1024):.2f} MB"
+            elif file_size > 1024:
+                size_str = f"{file_size / 1024:.2f} KB"
+            else:
+                size_str = f"{file_size} B"
+            
+            st.success(f"✅ Data ready for download ({size_str})")
+            
+            st.download_button(
+                label=f"📥 Download {display_format}",
+                data=data,
+                file_name=f"{filename}.{file_ext}",
+                mime=mime,
+                use_container_width=True
+            )
+            
+        except Exception as e:
+            st.error(f"❌ Export failed: {str(e)}")
 
 # ==================== MAIN ====================
 

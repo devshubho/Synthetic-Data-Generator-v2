@@ -974,7 +974,7 @@ def _show_detailed_metrics(df: pd.DataFrame, report: dict):
         }
         st.json(profile)
 
-# ==================== EXPORT PAGE ====================
+# ==================== EXPORT PAGE (FIXED) ====================
 
 def export_page():
     st.subheader("💾 Export Data")
@@ -987,29 +987,51 @@ def export_page():
     
     col1, col2 = st.columns(2)
     with col1:
-        export_format = st.selectbox("Format", ["CSV", "JSON", "Excel", "Parquet"])
+        # Map display names to actual format values
+        format_options = {
+            "CSV (.csv)": "CSV",
+            "Excel (.xlsx)": "Excel",
+            "JSON (.json)": "JSON",
+            "Parquet (.parquet)": "Parquet"
+        }
+        display_format = st.selectbox(
+            "Export Format",
+            list(format_options.keys()),
+            index=0,
+            help="Choose the format to export your data"
+        )
+        export_format = format_options[display_format]
+        
     with col2:
-        filename = st.text_input("Filename", f"data_{datetime.now().strftime('%Y%m%d')}")
+        filename = st.text_input(
+            "File Name",
+            f"data_{datetime.now().strftime('%Y%m%d')}",
+            help="Enter a name for your exported file"
+        )
     
-    if st.button("📥 Export", use_container_width=True):
+    if st.button("📥 Export Data", use_container_width=True):
         try:
             if export_format == "CSV":
                 data = df.to_csv(index=False).encode()
                 mime = "text/csv"
+                file_ext = "csv"
             elif export_format == "JSON":
                 data = df.to_json(orient='records', indent=2).encode()
                 mime = "application/json"
+                file_ext = "json"
             elif export_format == "Parquet":
                 output = io.BytesIO()
                 df.to_parquet(output, index=False)
                 data = output.getvalue()
                 mime = "application/octet-stream"
-            else:
+                file_ext = "parquet"
+            else:  # Excel
                 output = io.BytesIO()
                 with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                    df.to_excel(writer, index=False)
+                    df.to_excel(writer, index=False, sheet_name='Data')
                 data = output.getvalue()
                 mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                file_ext = "xlsx"
             
             file_size = len(data)
             if file_size > 1024 * 1024:
@@ -1019,17 +1041,18 @@ def export_page():
             else:
                 size_str = f"{file_size} B"
             
-            st.success(f"✅ Ready for download ({size_str})")
+            st.success(f"✅ Data ready for download ({size_str})")
             
             st.download_button(
-                label=f"📥 Download {export_format}",
+                label=f"📥 Download {display_format}",
                 data=data,
-                file_name=f"{filename}.{export_format.lower()}",
+                file_name=f"{filename}.{file_ext}",
                 mime=mime,
                 use_container_width=True
             )
+            
         except Exception as e:
-            st.error(f"Export failed: {e}")
+            st.error(f"❌ Export failed: {str(e)}")
 
 # ==================== MAIN ====================
 
@@ -1058,7 +1081,7 @@ def main():
         st.sidebar.info("📦 No data generated")
     
     st.sidebar.markdown("---")
-    st.sidebar.caption("v3.0 | Subham Sarkar")
+    st.sidebar.caption("v3.0 | Team CSE_13 | B.Tech Final Year Project")
     
     if page == "🏠 Home":
         home_page()
