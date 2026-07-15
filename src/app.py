@@ -1,7 +1,7 @@
 """
 SynthSLM - Complete Application with Enhanced Visualization
 B.Tech Final Year Project
-Author: Subham Sarkar
+Author: Team CSE_13
 """
 
 import streamlit as st
