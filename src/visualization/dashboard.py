@@ -7,6 +7,14 @@ from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 from logger import get_logger
+from visualization.chart_theme import (
+    BRAND_PRIMARY,
+    BRAND_PALETTE,
+    SCORE_LOW,
+    DASHBOARD_SUBPLOT_TITLES,
+    gauge_config,
+    apply_dashboard_layout,
+)
 
 logger = get_logger()
 
@@ -18,11 +26,7 @@ class Dashboard:
         
         fig = make_subplots(
             rows=3, cols=3,
-            subplot_titles=(
-                'Data Overview', 'Correlation', 'Distribution',
-                'Quality Score', 'Missing Values', 'Data Types',
-                'Outliers', 'Feature Stats', 'Privacy Score'
-            ),
+            subplot_titles=DASHBOARD_SUBPLOT_TITLES,
             specs=[
                 [{'type': 'scatter'}, {'type': 'heatmap'}, {'type': 'histogram'}],
                 [{'type': 'indicator'}, {'type': 'bar'}, {'type': 'pie'}],
@@ -32,20 +36,18 @@ class Dashboard:
         
         numeric_cols = data.select_dtypes(include=[np.number]).columns
         
-        # 1. Data Overview
         if len(numeric_cols) >= 2:
             fig.add_trace(
                 go.Scatter(
                     x=data[numeric_cols[0]][:500],
                     y=data[numeric_cols[1]][:500],
                     mode='markers',
-                    marker=dict(size=5, opacity=0.5),
+                    marker=dict(size=5, opacity=0.5, color=BRAND_PRIMARY),
                     name='Data'
                 ),
                 row=1, col=1
             )
         
-        # 2. Correlation
         if len(numeric_cols) > 1:
             corr = data[numeric_cols].corr()
             fig.add_trace(
@@ -60,39 +62,23 @@ class Dashboard:
                 row=1, col=2
             )
         
-        # 3. Distribution
         if len(numeric_cols) > 0:
             fig.add_trace(
                 go.Histogram(
                     x=data[numeric_cols[0]],
                     nbinsx=30,
                     name='Distribution',
-                    marker_color='#667eea'
+                    marker_color=BRAND_PRIMARY
                 ),
                 row=1, col=3
             )
         
-        # 4. Quality Score
         score = report.get('overall_score', 0.5) * 100
         fig.add_trace(
-            go.Indicator(
-                mode="gauge+number",
-                value=score,
-                title={'text': "Overall Quality"},
-                gauge={
-                    'axis': {'range': [0, 100]},
-                    'bar': {'color': '#6bcb77' if score >= 70 else '#ffd93d' if score >= 40 else '#ff6b6b'},
-                    'steps': [
-                        {'range': [0, 40], 'color': "#ff6b6b"},
-                        {'range': [40, 70], 'color': "#ffd93d"},
-                        {'range': [70, 100], 'color': "#6bcb77"}
-                    ]
-                }
-            ),
+            go.Indicator(**gauge_config(score, "Overall Quality")),
             row=2, col=1
         )
         
-        # 5. Missing Values
         nulls = data.isnull().sum()
         if nulls.sum() > 0:
             fig.add_trace(
@@ -100,24 +86,23 @@ class Dashboard:
                     x=nulls.index[:10],
                     y=nulls.values[:10],
                     name='Missing',
-                    marker_color='#ff6b6b'
+                    marker_color=SCORE_LOW
                 ),
                 row=2, col=2
             )
         
-        # 6. Data Types
         types = data.dtypes.value_counts()
         if len(types) > 0:
             fig.add_trace(
                 go.Pie(
                     labels=types.index.astype(str),
                     values=types.values,
-                    name='Data Types'
+                    name='Data Types',
+                    marker=dict(colors=BRAND_PALETTE[:len(types)]),
                 ),
                 row=2, col=3
             )
         
-        # 7. Outliers
         if len(numeric_cols) > 0:
             outlier_counts = {}
             for col in numeric_cols[:5]:
@@ -133,12 +118,11 @@ class Dashboard:
                         x=list(outlier_counts.keys()),
                         y=list(outlier_counts.values()),
                         name='Outliers',
-                        marker_color='#ff6b6b'
+                        marker_color=SCORE_LOW
                     ),
                     row=3, col=1
                 )
         
-        # 8. Feature Statistics
         if 'statistics' in report:
             stats = report['statistics']
             std_values = {}
@@ -154,30 +138,16 @@ class Dashboard:
                         y=[k for k, _ in sorted_vals],
                         orientation='h',
                         name='Std Dev',
-                        marker_color='#667eea'
+                        marker_color=BRAND_PRIMARY
                     ),
                     row=3, col=2
                 )
         
-        # 9. Privacy Score
         privacy = report.get('privacy_score', 0.5) * 100
         fig.add_trace(
-            go.Indicator(
-                mode="gauge+number",
-                value=privacy,
-                title={'text': "Privacy Score"},
-                gauge={
-                    'axis': {'range': [0, 100]},
-                    'bar': {'color': '#6bcb77' if privacy >= 70 else '#ffd93d' if privacy >= 40 else '#ff6b6b'},
-                    'steps': [
-                        {'range': [0, 40], 'color': "#ff6b6b"},
-                        {'range': [40, 70], 'color': "#ffd93d"},
-                        {'range': [70, 100], 'color': "#6bcb77"}
-                    ]
-                }
-            ),
+            go.Indicator(**gauge_config(privacy, "Privacy Score")),
             row=3, col=3
         )
         
-        fig.update_layout(height=1000, showlegend=False)
+        apply_dashboard_layout(fig, title="Synthetic Data Quality Dashboard", height=1000)
         return fig

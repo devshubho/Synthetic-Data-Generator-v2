@@ -1,5 +1,5 @@
 """
-SynthSLM - Simplified Working Version
+Project Synthesis - Simplified Working Version
 """
 
 import streamlit as st
@@ -20,9 +20,10 @@ if _SRC not in sys.path:
     sys.path.insert(0, _SRC)
 
 from export.excel_export import make_excel_safe
+from ui.theme import APP_NAME, APP_TAGLINE, APP_VERSION, inject_styles, sidebar_brand, status_pill
 
 # ==================== PAGE CONFIG ====================
-st.set_page_config(page_title="SynthSLM", page_icon="🎲", layout="wide")
+st.set_page_config(page_title=APP_NAME, page_icon="🎲", layout="wide")
 
 # ==================== INITIALIZE SESSION STATE ====================
 if 'init' not in st.session_state:
@@ -32,20 +33,7 @@ if 'init' not in st.session_state:
     st.session_state.quality_report = None
     st.session_state.generation_history = []
 
-# ==================== CUSTOM CSS ====================
-st.markdown("""
-<style>
-    .main-header { font-size: 3rem; font-weight: bold; text-align: center;
-                   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                   -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .stats-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                  color: white; padding: 1.5rem; border-radius: 10px; text-align: center; }
-    .feature-card { background: #f8f9fa; padding: 1.5rem; border-radius: 10px;
-                    border-left: 4px solid #667eea; margin: 1rem 0; }
-    .upload-area { border: 2px dashed #667eea; border-radius: 12px; padding: 2rem;
-                   text-align: center; background: #f8f9fa; }
-</style>
-""", unsafe_allow_html=True)
+inject_styles()
 
 # ==================== DATA GENERATORS ====================
 
@@ -211,8 +199,8 @@ def create_dashboard(data, report):
 # ==================== PAGES ====================
 
 def home_page():
-    st.markdown('<h1 class="main-header">🎲 SynthSLM</h1>', unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; font-size:1.2rem;'>Synthetic Data Generation for Small Language Models</p>", unsafe_allow_html=True)
+    st.markdown(f'<h1 class="main-header">{APP_NAME}</h1>', unsafe_allow_html=True)
+    st.markdown(f'<p class="hero-subtitle">{APP_TAGLINE}</p>', unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -436,36 +424,36 @@ def export_page():
 # ==================== MAIN ====================
 
 def main():
-    st.sidebar.title("🎲 SynthSLM")
+    sidebar_brand()
     st.sidebar.markdown("---")
     
     page = st.sidebar.radio("Navigation", [
-        "🏠 Home",
-        "📤 Upload Sample",
-        "⚙️ Generate",
-        "📈 Dashboard",
-        "💾 Export"
+        "Home",
+        "Upload Sample",
+        "Generate",
+        "Dashboard",
+        "Export",
     ])
     
     st.sidebar.markdown("---")
     
     if st.session_state.sample_data is not None:
-        st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
+        status_pill(f"Sample loaded · {len(st.session_state.sample_data):,} rows", ok=True)
     if st.session_state.generated_data is not None:
-        st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
+        status_pill(f"Generated · {len(st.session_state.generated_data):,} rows", ok=True)
     
     st.sidebar.markdown("---")
-    st.sidebar.caption("v3.0 | Team CSE_13 | B.Tech Final Year Project")
+    st.sidebar.caption(f"v{APP_VERSION} · Team CSE_13")
     
-    if page == "🏠 Home":
+    if page == "Home":
         home_page()
-    elif page == "📤 Upload Sample":
+    elif page == "Upload Sample":
         upload_page()
-    elif page == "⚙️ Generate":
+    elif page == "Generate":
         generate_page()
-    elif page == "📈 Dashboard":
+    elif page == "Dashboard":
         dashboard_page()
-    elif page == "💾 Export":
+    elif page == "Export":
         export_page()
 
 if __name__ == "__main__":

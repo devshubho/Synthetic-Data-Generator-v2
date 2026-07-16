@@ -20,3 +20,17 @@ class TestQualityReporter:
         assert 'overall_score' in report
         assert 'completeness' in report
         assert 'uniqueness' in report
+
+    def test_privacy_score_differs_from_id_uniqueness(self):
+        data = pd.DataFrame({
+            'customer_id': ['C001', 'C002', 'C003', 'C004', 'C005'],
+            'name': ['Alice', 'Bob', 'Carol', 'Dave', 'Eve'],
+            'city': ['NYC', 'LA', 'NYC', 'LA', 'NYC'],
+        })
+
+        reporter = QualityReporter()
+        report = reporter.generate_report(data)
+
+        assert report['id_uniqueness'] == 1.0
+        assert report['privacy_score'] == pytest.approx(0.2)
+        assert report['privacy_score'] != report['id_uniqueness']

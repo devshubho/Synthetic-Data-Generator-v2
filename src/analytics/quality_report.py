@@ -46,7 +46,7 @@ class QualityReporter:
             'enum_fidelity': self._enum_fidelity(data, sample, roles),
             'name_email_coherence': self._name_email_coherence(data, roles),
             'numeric_fidelity': self._numeric_fidelity(data, sample, roles),
-            'privacy_score': self._id_uniqueness(data),
+            'privacy_score': self._privacy_score(data),
             'statistics': self._statistics(data),
             'column_roles': roles,
         }
@@ -245,6 +245,17 @@ class QualityReporter:
             scores.append(1.0 if mean_ok else 0.5)
             scores.append(float(std_ratio))
         return float(np.mean(scores)) if scores else None
+
+    def _privacy_score(self, data: pd.DataFrame) -> float:
+        """Score privacy as inverse column uniqueness (lower uniqueness = better privacy)."""
+        n = len(data)
+        if n == 0:
+            return 0.0
+        scores = [
+            1.0 - min(data[col].nunique(dropna=True) / n, 1.0)
+            for col in data.columns
+        ]
+        return float(np.mean(scores)) if scores else 0.0
 
     def _id_uniqueness(self, data: pd.DataFrame) -> float:
         id_cols = [c for c in data.columns if ID_COL_RE.search(str(c))]

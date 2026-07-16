@@ -60,6 +60,11 @@ ID_NAME_RE = re.compile(
 )
 ID_VALUE_RE = re.compile(r'^([A-Za-z]+[-_]?)(\d+)$')
 EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+DECIMAL_COL_RE = re.compile(
+    r'price|amount|cost|fee|rating|percent|pct|discount|tax|subtotal|'
+    r'balance|salary|wage|usd|inr|eur',
+    re.IGNORECASE,
+)
 
 INDIAN_CITY_HINTS = {
     'delhi', 'mumbai', 'kolkata', 'chennai', 'bangalore', 'bengaluru', 'hyderabad',
@@ -192,7 +197,7 @@ class CustomGenerator:
             self.column_roles[col] = role
 
             if col_type == 'numeric':
-                model = self._build_numeric_model(self.sample[col])
+                model = self._build_numeric_model(col, self.sample[col])
             elif col_type == 'datetime':
                 model = self._build_datetime_model(self.sample[col])
             elif col_type == 'id':
@@ -406,22 +411,31 @@ class CustomGenerator:
         if domains:
             self.email_domains = sorted(set(domains))
 
-    def _build_numeric_model(self, series: pd.Series) -> dict:
+    @staticmethod
+    def _infer_decimal_places(col_name: str, values: np.ndarray) -> int:
+        """Use decimals only when the sample has fractions and the column needs them."""
+        if len(values) == 0:
+            return 0
+        if np.allclose(values, np.round(values), rtol=0, atol=1e-9):
+            return 0
+        if DECIMAL_COL_RE.search(str(col_name)):
+            return 2
+        return 0
+
+    def _build_numeric_model(self, col_name: str, series: pd.Series) -> dict:
         values = pd.to_numeric(series, errors='coerce').dropna().values
         if len(values) == 0:
             return {
                 'type': 'numeric', 'method': 'statistical',
                 'mean': 0.0, 'std': 1.0, 'min': 0.0, 'max': 1.0,
-                'as_integer': True, 'six_digit': False,
+                'as_integer': True, 'decimal_places': 0, 'six_digit': False,
             }
         mean = self._safe_float(np.mean(values), 0.0)
         std = self._safe_std(values, 1.0)
         vmin = self._safe_float(np.min(values), mean)
         vmax = self._safe_float(np.max(values), mean)
-        as_integer = bool(
-            pd.api.types.is_integer_dtype(series)
-            or np.allclose(values, np.round(values), equal_nan=True)
-        )
+        decimal_places = self._infer_decimal_places(col_name, values)
+        as_integer = decimal_places == 0
         six_digit = bool(
             as_integer and len(values) > 0
             and np.all((values >= 100000) & (values <= 999999))
@@ -429,7 +443,8 @@ class CustomGenerator:
         model = {
             'type': 'numeric', 'method': 'statistical',
             'mean': mean, 'std': std, 'min': vmin, 'max': vmax,
-            'as_integer': as_integer, 'six_digit': six_digit,
+            'as_integer': as_integer, 'decimal_places': decimal_places,
+            'six_digit': six_digit,
         }
         if len(values) >= 5:
             try:
@@ -593,7 +608,7 @@ class CustomGenerator:
             df = self._apply_correlations(df)
 
         df = self._apply_constraints(df)
-        df = self._cast_integer_columns(df)
+        df = self._finalize_numeric_columns(df)
 
         self.last_validation = self.validate_generation(df, self.sample)
         self._log_validation(self.last_validation)
@@ -904,21 +919,22 @@ class CustomGenerator:
         vmin = model.get('min', np.min(samples))
         vmax = model.get('max', np.max(samples))
         samples = np.clip(samples, vmin, vmax)
-        if model.get('as_integer', False):
-            samples = np.rint(samples).astype(np.int64)
-            if model.get('six_digit', False):
-                samples = np.clip(samples, 100000, 999999)
-            else:
-                samples = np.clip(samples, int(round(vmin)), int(round(vmax)))
+        decimal_places = int(model.get('decimal_places', 0))
+        if decimal_places > 0:
+            return np.round(samples, decimal_places)
+        samples = np.rint(samples).astype(np.int64)
+        if model.get('six_digit', False):
+            samples = np.clip(samples, 100000, 999999)
+        else:
+            samples = np.clip(samples, int(round(vmin)), int(round(vmax)))
         return samples
 
-    def _cast_integer_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+    def _finalize_numeric_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         for col, model in self.models.items():
             if col not in df.columns or model.get('type') != 'numeric':
                 continue
-            if model.get('as_integer', False):
-                values = pd.to_numeric(df[col], errors='coerce').fillna(model.get('mean', 0)).values
-                df[col] = self._finalize_numeric_samples(values, model)
+            values = pd.to_numeric(df[col], errors='coerce').fillna(model.get('mean', 0)).values
+            df[col] = self._finalize_numeric_samples(values, model)
         return df
 
     def _apply_correlations(self, df: pd.DataFrame) -> pd.DataFrame:

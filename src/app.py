@@ -1,5 +1,5 @@
 """
-SynthSLM - Complete Application with Enhanced Visualization
+Project Synthesis - Synthetic Data Generator
 B.Tech Final Year Project
 Author: Team CSE_13
 """
@@ -25,6 +25,29 @@ if _SRC not in sys.path:
 from engine.pipeline import GenerationPipeline
 from analytics.quality_report import QualityReporter
 from export.excel_export import make_excel_safe
+from ui.theme import (
+    APP_NAME,
+    APP_TAGLINE,
+    APP_VERSION,
+    inject_styles,
+    page_header,
+    empty_state,
+    quality_metric,
+    format_score_pct,
+    styled_dataframe,
+    sidebar_brand,
+    status_pill,
+)
+from visualization.chart_theme import (
+    BRAND_PRIMARY,
+    BRAND_SECONDARY,
+    BRAND_PALETTE,
+    SCORE_GOOD,
+    SCORE_LOW,
+    DASHBOARD_SUBPLOT_TITLES,
+    gauge_config,
+    apply_dashboard_layout,
+)
 
 # ==================== PAGE CONFIG ====================
 st.set_page_config(page_title="SynthSLM", page_icon="🎲", layout="wide")
@@ -37,21 +60,7 @@ if 'init' not in st.session_state:
     st.session_state.quality_report = None
     st.session_state.generation_history = []
 
-# ==================== CSS ====================
-st.markdown("""
-<style>
-    .main-header { font-size: 3rem; font-weight: bold; text-align: center;
-                   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                   -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .stats-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                  color: white; padding: 1.5rem; border-radius: 10px; text-align: center; }
-    .feature-card { background: #f8f9fa; padding: 1.5rem; border-radius: 10px;
-                    border-left: 4px solid #667eea; margin: 1rem 0; }
-    .upload-area { border: 2px dashed #667eea; border-radius: 12px; padding: 2rem;
-                   text-align: center; background: #f8f9fa; }
-    .success-box { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 1rem; color: #155724; }
-</style>
-""", unsafe_allow_html=True)
+inject_styles()
 
 # ==================== GENERATORS ====================
 
@@ -302,17 +311,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
     # Create figure with 3x3 subplots
     fig = make_subplots(
         rows=3, cols=3,
-        subplot_titles=(
-            '📊 Data Overview',
-            '📈 Correlation Matrix',
-            '📉 Distribution Plot',
-            '🎯 Quality Score',
-            '🔍 Missing Values',
-            '📋 Data Types',
-            '📊 Feature Importance',
-            '📈 Outlier Analysis',
-            '🔒 Privacy Score'
-        ),
+        subplot_titles=DASHBOARD_SUBPLOT_TITLES,
         specs=[
             [{"type": "scatter"}, {"type": "heatmap"}, {"type": "histogram"}],
             [{"type": "indicator"}, {"type": "bar"}, {"type": "pie"}],
@@ -358,7 +357,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                         y=p(x_trend),
                         mode='lines',
                         name='Trend Line',
-                        line=dict(color='#ff6b6b', width=2, dash='dash'),
+                        line=dict(color=SCORE_LOW, width=2, dash='dash'),
                         hovertemplate='Trend: %{y:.2f}<extra></extra>'
                     ),
                     row=1, col=1
@@ -396,7 +395,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                     x=data[numeric_cols[0]].dropna(),
                     nbinsx=30,
                     name='Distribution',
-                    marker_color='#667eea',
+                    marker_color=BRAND_PRIMARY,
                     opacity=0.8,
                     hovertemplate='Range: %{x}<br>Count: %{y}<extra></extra>'
                 ),
@@ -408,7 +407,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
             fig.add_vline(
                 x=mean_val,
                 line_dash="dash",
-                line_color="#ff6b6b",
+                line_color=SCORE_LOW,
                 annotation_text=f"Mean: {mean_val:.2f}",
                 annotation_position="top",
                 row=1, col=3
@@ -420,36 +419,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
     try:
         score = report.get('overall_score', 0.5) * 100
         fig.add_trace(
-            go.Indicator(
-                mode="gauge+number+delta",
-                value=score,
-                title={
-                    'text': "Overall Quality Score",
-                    'font': {'size': 14}
-                },
-                delta={
-                    'reference': 50,
-                    'increasing': {'color': '#6bcb77'},
-                    'decreasing': {'color': '#ff6b6b'}
-                },
-                gauge={
-                    'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                    'bar': {'color': '#6bcb77' if score >= 70 else '#ffd93d' if score >= 40 else '#ff6b6b'},
-                    'bgcolor': "white",
-                    'borderwidth': 2,
-                    'bordercolor': "gray",
-                    'steps': [
-                        {'range': [0, 40], 'color': "#ff6b6b", 'name': 'Poor'},
-                        {'range': [40, 70], 'color': "#ffd93d", 'name': 'Average'},
-                        {'range': [70, 100], 'color': "#6bcb77", 'name': 'Good'}
-                    ],
-                    'threshold': {
-                        'line': {'color': "red", 'width': 4},
-                        'thickness': 0.75,
-                        'value': 90
-                    }
-                }
-            ),
+            go.Indicator(**gauge_config(score, "Overall Quality Score", with_delta=True)),
             row=2, col=1
         )
     except Exception:
@@ -465,7 +435,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                     x=nulls.index[:8],
                     y=nulls.values[:8],
                     name='Missing Values',
-                    marker_color='#ff6b6b',
+                    marker_color=SCORE_LOW,
                     text=nulls.values[:8],
                     textposition='outside',
                     hovertemplate='<b>%{x}</b><br>Missing: %{y}<extra></extra>'
@@ -477,8 +447,8 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                 go.Indicator(
                     mode="number",
                     value=0,
-                    title={'text': "✅ No Missing Values"},
-                    number={'font': {'color': '#6bcb77', 'size': 40}}
+                    title={'text': "No Missing Values"},
+                    number={'font': {'color': SCORE_GOOD, 'size': 40}}
                 ),
                 row=2, col=2
             )
@@ -488,7 +458,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
     # ===== 6. DATA TYPES (Pie Chart) =====
     try:
         dtype_counts = data.dtypes.value_counts()
-        colors = ['#667eea', '#764ba2', '#ff6b6b', '#ffd93d', '#6bcb77']
+        colors = BRAND_PALETTE
         fig.add_trace(
             go.Pie(
                 labels=[str(dt) for dt in dtype_counts.index],
@@ -517,7 +487,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                     y=top_features.index,
                     orientation='h',
                     name='Feature Importance',
-                    marker_color='#667eea',
+                    marker_color=BRAND_PRIMARY,
                     text=top_features.values.round(2),
                     textposition='outside',
                     hovertemplate='<b>%{y}</b><br>Importance: %{x:.2f}<extra></extra>'
@@ -537,7 +507,7 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
                     y=[data[col].dropna() for col in cols_to_show],
                     name='Outliers',
                     boxmean='sd',
-                    marker_color='#764ba2',
+                    marker_color=BRAND_SECONDARY,
                     hovertemplate='<b>%{x}</b><br>Value: %{y}<extra></extra>'
                 ),
                 row=3, col=2
@@ -549,45 +519,13 @@ def create_enhanced_dashboard(data: pd.DataFrame, report: dict) -> go.Figure:
     try:
         privacy_score = report.get('privacy_score', 0.5) * 100
         fig.add_trace(
-            go.Indicator(
-                mode="gauge+number",
-                value=privacy_score,
-                title={
-                    'text': "🔒 Privacy Score",
-                    'font': {'size': 14}
-                },
-                gauge={
-                    'axis': {'range': [0, 100]},
-                    'bar': {'color': '#6bcb77' if privacy_score >= 70 else '#ffd93d' if privacy_score >= 40 else '#ff6b6b'},
-                    'steps': [
-                        {'range': [0, 40], 'color': "#ff6b6b"},
-                        {'range': [40, 70], 'color': "#ffd93d"},
-                        {'range': [70, 100], 'color': "#6bcb77"}
-                    ]
-                }
-            ),
+            go.Indicator(**gauge_config(privacy_score, "Privacy Score")),
             row=3, col=3
         )
     except Exception:
         pass
     
-    # ===== Update Layout =====
-    fig.update_layout(
-        height=900,
-        showlegend=False,
-        template='plotly_white',
-        font=dict(size=12),
-        title={
-            'text': '📊 Synthetic Data Quality Dashboard',
-            'y': 0.98,
-            'x': 0.5,
-            'xanchor': 'center',
-            'yanchor': 'top',
-            'font': {'size': 24, 'color': '#2c3e50'}
-        },
-        margin=dict(l=50, r=50, t=80, b=50)
-    )
-    
+    apply_dashboard_layout(fig, title="Synthetic Data Quality Dashboard")
     return fig
 
 def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame, report: dict) -> go.Figure:
@@ -615,7 +553,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                 x=original[col].dropna(),
                 name='Original',
                 opacity=0.6,
-                marker_color='#667eea',
+                marker_color=BRAND_PRIMARY,
                 nbinsx=20
             ),
             row=1, col=1
@@ -625,7 +563,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                 x=synthetic[col].dropna(),
                 name='Synthetic',
                 opacity=0.6,
-                marker_color='#ff6b6b',
+                marker_color=SCORE_LOW,
                 nbinsx=20
             ),
             row=1, col=1
@@ -645,7 +583,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                 x=stats_comparison.columns,
                 y=stats_comparison.loc['Original'],
                 name='Original',
-                marker_color='#667eea'
+                marker_color=BRAND_PRIMARY
             ),
             row=1, col=2
         )
@@ -654,7 +592,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                 x=stats_comparison.columns,
                 y=stats_comparison.loc['Synthetic'],
                 name='Synthetic',
-                marker_color='#ff6b6b'
+                marker_color=SCORE_LOW
             ),
             row=1, col=2
         )
@@ -671,7 +609,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                     x=orig_corr,
                     y=synth_corr,
                     mode='markers',
-                    marker=dict(size=10, color='#667eea', opacity=0.6),
+                    marker=dict(size=10, color=BRAND_PRIMARY, opacity=0.6),
                     name='Correlation',
                     hovertemplate='Original: %{x:.2f}<br>Synthetic: %{y:.2f}<extra></extra>'
                 ),
@@ -684,7 +622,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                     y=[-1, 1],
                     mode='lines',
                     name='Perfect Match',
-                    line=dict(color='#ff6b6b', dash='dash')
+                    line=dict(color=SCORE_LOW, dash='dash')
                 ),
                 row=2, col=1
             )
@@ -701,7 +639,7 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
                 x=metrics,
                 y=orig_values,
                 name='Synthetic',
-                marker_color='#6bcb77',
+                marker_color=SCORE_GOOD,
                 text=[f"{v:.1f}%" for v in orig_values],
                 textposition='outside'
             ),
@@ -710,28 +648,19 @@ def create_comparison_dashboard(original: pd.DataFrame, synthetic: pd.DataFrame,
     except Exception:
         pass
     
-    fig.update_layout(
+    apply_dashboard_layout(
+        fig,
+        title="Original vs Synthetic Data Comparison",
         height=800,
         showlegend=True,
-        template='plotly_white',
-        font=dict(size=12),
-        title={
-            'text': '📊 Original vs Synthetic Data Comparison',
-            'y': 0.98,
-            'x': 0.5,
-            'xanchor': 'center',
-            'yanchor': 'top',
-            'font': {'size': 24, 'color': '#2c3e50'}
-        }
     )
-    
     return fig
 
 # ==================== PAGES ====================
 
 def home_page():
     st.markdown('<h1 class="main-header">🎲 SynthSLM</h1>', unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; font-size:1.2rem;'>Synthetic Data Generation for Small Language Models</p>", unsafe_allow_html=True)
+    st.markdown(f'<p class="hero-subtitle">{APP_TAGLINE}</p>', unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -748,31 +677,39 @@ def home_page():
     if st.session_state.sample_data is None:
         st.markdown("""
         <div class="upload-area">
-            <h3>📤 Start with Your Own Data</h3>
-            <p style="color: #666;">Upload a sample dataset to generate synthetic data with the same patterns</p>
+            <h3>Start with Your Own Data</h3>
+            <p>Upload a sample dataset to generate synthetic data with the same patterns</p>
         </div>
         """, unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
-        ### 🚀 Features
-        - **10+ Data Types** - Personal, Sales, Employee, Time Series, Logs, System, IoT, Healthcare, Financial, Toll Plaza
-        - **User-Defined Generation** - Upload your data, AI learns patterns
-        - **Privacy Protection** - PII detection & anonymization
-        - **Quality Analysis** - Statistical validation & metrics
-        """)
+        <div class="feature-card">
+        <h3>Features</h3>
+        <ul>
+        <li><strong>10+ Data Types</strong> — Personal, Sales, Employee, Time Series, Logs, System, IoT, Healthcare, Financial, Toll Plaza</li>
+        <li><strong>User-Defined Generation</strong> — Upload your data; the engine learns patterns</li>
+        <li><strong>Privacy Protection</strong> — PII detection and anonymization</li>
+        <li><strong>Quality Analysis</strong> — Statistical validation and role-aware metrics</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
     with col2:
         st.markdown("""
-        ### 📊 Quick Start
-        1. **Upload Sample** - Upload your dataset
-        2. **Generate** - Configure and generate synthetic data
-        3. **Analyze** - View quality metrics
-        4. **Export** - Download in your preferred format
-        """)
+        <div class="feature-card">
+        <h3>Quick Start</h3>
+        <ol>
+        <li><strong>Upload Sample</strong> — Provide your dataset</li>
+        <li><strong>Generate</strong> — Configure and create synthetic data</li>
+        <li><strong>Analyze</strong> — Review quality metrics</li>
+        <li><strong>Export</strong> — Download in your preferred format</li>
+        </ol>
+        </div>
+        """, unsafe_allow_html=True)
 
 def upload_page():
-    st.subheader("📤 Upload Sample Data")
+    page_header("Upload Sample Data", "Load a CSV, Excel, or JSON file to drive custom generation.")
     
     uploaded = st.file_uploader("Choose CSV, Excel, or JSON", type=['csv', 'xlsx', 'xls', 'json'])
     
@@ -786,22 +723,22 @@ def upload_page():
                 df = pd.read_json(uploaded)
             
             st.session_state.sample_data = df
-            st.success(f"✅ Loaded {len(df):,} records, {len(df.columns)} columns")
-            st.dataframe(df.head(10))
+            st.success(f"Loaded {len(df):,} records, {len(df.columns)} columns")
+            styled_dataframe(df, max_rows=10)
             
-            with st.expander("📋 Data Summary"):
+            with st.expander("Data Summary"):
                 col_info = pd.DataFrame({
                     'Column': df.columns,
                     'Type': df.dtypes.astype(str),
                     'Unique': df.nunique(),
                     'Null %': (df.isnull().sum() / len(df) * 100).round(2)
                 })
-                st.dataframe(col_info)
+                styled_dataframe(col_info, max_rows=len(col_info))
         except Exception as e:
             st.error(f"Error: {e}")
 
 def generate_page():
-    st.subheader("⚙️ Generate Data")
+    page_header("Generate Data", "Choose a template or use your uploaded sample.")
     
     data_types = [
         "Personal/Customer Data",
@@ -817,20 +754,22 @@ def generate_page():
         "User-Defined (Upload Sample)"
     ]
     
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         data_type = st.selectbox("Data Type", data_types)
     with col2:
         num_records = st.number_input("Records", 10, 100000, 1000, 100)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     if data_type == "User-Defined (Upload Sample)":
         if st.session_state.sample_data is not None:
-            st.info(f"📊 Using: {len(st.session_state.sample_data):,} records")
+            st.info(f"Using uploaded sample: {len(st.session_state.sample_data):,} records")
         else:
-            st.warning("⚠️ No sample loaded. Upload first.")
+            st.warning("No sample loaded. Upload a file first.")
             return
     
-    if st.button("🚀 Generate", use_container_width=True):
+    if st.button("Generate", type="primary", use_container_width=True):
         with st.spinner(f"Generating {num_records} records..."):
             start = time.time()
             
@@ -876,67 +815,63 @@ def generate_page():
                 'quality': report['overall_score']
             })
             
-            st.success(f"✅ Generated {len(df):,} records in {gen_time:.2f}s")
+            st.success(f"Generated {len(df):,} records in {gen_time:.2f}s")
             
             col1, col2, col3 = st.columns(3)
-            with col1: st.metric("Records", f"{len(df):,}")
-            with col2: st.metric("Columns", len(df.columns))
-            with col3: st.metric("Quality", f"{report['overall_score']:.1%}")
+            with col1:
+                st.metric("Records", f"{len(df):,}")
+            with col2:
+                st.metric("Columns", len(df.columns))
+            with col3:
+                quality_metric("Quality", report['overall_score'])
 
             if data_type == "User-Defined (Upload Sample)":
-                with st.expander("📊 Quality breakdown", expanded=True):
+                with st.expander("Quality breakdown", expanded=True):
                     b1, b2, b3 = st.columns(3)
                     with b1:
-                        st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
-                        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
+                        quality_metric("Completeness", report.get('completeness'))
+                        quality_metric("ID Uniqueness", report.get('id_uniqueness'))
                     with b2:
-                        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
-                        st.metric("Open Diversity", f"{report.get('diversity', 0):.1%}")
+                        quality_metric("Date Diversity", report.get('date_diversity'))
+                        quality_metric("Open Diversity", report.get('diversity'))
                     with b3:
-                        enum_f = report.get('enum_fidelity')
-                        st.metric(
-                            "Enum Fidelity",
-                            f"{enum_f:.1%}" if enum_f is not None else "N/A",
-                        )
-                        coh = report.get('name_email_coherence')
-                        st.metric(
-                            "Name↔Email",
-                            f"{coh:.1%}" if coh is not None else "N/A",
-                        )
+                        quality_metric("Enum Fidelity", report.get('enum_fidelity'))
+                        quality_metric("Name-Email", report.get('name_email_coherence'))
     
     if st.session_state.generated_data is not None:
-        st.subheader("📊 Preview")
-        st.dataframe(st.session_state.generated_data.head(20))
+        page_header("Preview", "First 20 rows of generated data.")
+        styled_dataframe(st.session_state.generated_data, max_rows=20)
 
 # ==================== DASHBOARD PAGE ====================
 
 def dashboard_page():
-    st.subheader("📈 Quality Dashboard")
+    page_header("Quality Dashboard", "Visualize quality metrics and compare against your sample.")
     
     if st.session_state.generated_data is None:
-        st.warning("No data to analyze")
+        empty_state(
+            "No data yet",
+            "Generate a dataset first to view quality insights and charts.",
+        )
         return
     
     df = st.session_state.generated_data
     report = st.session_state.quality_report or {}
     
-    # Quick metrics cards
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.metric("📊 Overall", f"{report.get('overall_score', 0):.1%}")
+        quality_metric("Overall", report.get('overall_score'))
     with col2:
-        st.metric("✅ Completeness", f"{report.get('completeness', 0):.1%}")
+        quality_metric("Completeness", report.get('completeness'))
     with col3:
-        st.metric("🔄 Uniqueness", f"{report.get('uniqueness', 0):.1%}")
+        quality_metric("Uniqueness", report.get('uniqueness'))
     with col4:
-        st.metric("🔒 Privacy", f"{report.get('privacy_score', 0):.1%}")
+        quality_metric("Privacy", report.get('privacy_score'))
     with col5:
-        st.metric("📈 Records", f"{len(df):,}")
+        st.metric("Records", f"{len(df):,}")
     
     st.markdown("---")
     
-    # Create tabs for different views
-    tab1, tab2 = st.tabs(["📊 Quality Dashboard", "📈 Comparison View"])
+    tab1, tab2 = st.tabs(["Quality Dashboard", "Comparison View"])
     
     with tab1:
         try:
@@ -955,10 +890,12 @@ def dashboard_page():
             except Exception as e:
                 st.warning(f"Comparison view error: {str(e)}")
         else:
-            st.info("Upload a sample dataset to see comparison view")
+            empty_state(
+                "No sample loaded",
+                "Upload a sample dataset to compare original vs synthetic distributions.",
+            )
     
-    # Additional detailed metrics
-    with st.expander("📊 Detailed Metrics & Statistics", expanded=False):
+    with st.expander("Detailed Metrics & Statistics", expanded=False):
         _show_detailed_metrics(df, report)
 
 def _show_data_summary(df: pd.DataFrame, report: dict):
@@ -971,11 +908,10 @@ def _show_data_summary(df: pd.DataFrame, report: dict):
         st.write(f"- Memory: {df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB")
     with col2:
         st.write("**Quality Metrics**")
-        st.write(f"- Completeness: {report.get('completeness', 0):.1%}")
-        st.write(f"- Uniqueness: {report.get('uniqueness', 0):.1%}")
-        st.write(f"- Privacy: {report.get('privacy_score', 0):.1%}")
+        st.write(f"- Completeness: {format_score_pct(report.get('completeness'))}")
+        st.write(f"- Uniqueness: {format_score_pct(report.get('uniqueness'))}")
+        st.write(f"- Privacy: {format_score_pct(report.get('privacy_score'))}")
     
-    # Show column info
     st.write("**Column Information**")
     col_info = pd.DataFrame({
         'Column': df.columns,
@@ -983,20 +919,20 @@ def _show_data_summary(df: pd.DataFrame, report: dict):
         'Unique': df.nunique(),
         'Null %': (df.isnull().sum() / len(df) * 100).round(2)
     })
-    st.dataframe(col_info, use_container_width=True)
+    styled_dataframe(col_info, max_rows=len(col_info))
 
 def _show_detailed_metrics(df: pd.DataFrame, report: dict):
     """Show detailed metrics"""
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📊 Column Statistics")
+        st.markdown("**Column Statistics**")
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         if len(numeric_cols) > 0:
-            st.dataframe(df[numeric_cols].describe(), use_container_width=True)
+            styled_dataframe(df[numeric_cols].describe().reset_index(), max_rows=50)
     
     with col2:
-        st.subheader("📋 Data Profile")
+        st.markdown("**Data Profile**")
         profile = {
             'Total Records': len(df),
             'Total Columns': len(df.columns),
@@ -1011,17 +947,20 @@ def _show_detailed_metrics(df: pd.DataFrame, report: dict):
 # ==================== EXPORT PAGE (FIXED) ====================
 
 def export_page():
-    st.subheader("💾 Export Data")
+    page_header("Export Data", "Download generated data in CSV, Excel, JSON, or Parquet format.")
     
     if st.session_state.generated_data is None:
-        st.warning("No data to export")
+        empty_state(
+            "Nothing to export",
+            "Generate a dataset first, then return here to download it.",
+        )
         return
     
     df = st.session_state.generated_data
     
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
-        # Map display names to actual format values
         format_options = {
             "CSV (.csv)": "CSV",
             "Excel (.xlsx)": "Excel",
@@ -1042,8 +981,9 @@ def export_page():
             f"data_{datetime.now().strftime('%Y%m%d')}",
             help="Enter a name for your exported file"
         )
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.button("📥 Export Data", use_container_width=True):
+    if st.button("Export Data", type="primary", use_container_width=True):
         try:
             if export_format == "CSV":
                 data = df.to_csv(index=False).encode()
@@ -1075,10 +1015,10 @@ def export_page():
             else:
                 size_str = f"{file_size} B"
             
-            st.success(f"✅ Data ready for download ({size_str})")
+            st.success(f"Data ready for download ({size_str})")
 
             st.download_button(
-                label=f"📥 Download {display_format}",
+                label=f"Download {display_format}",
                 data=data,
                 file_name=f"{filename}.{file_ext}",
                 mime=mime,
@@ -1086,47 +1026,42 @@ def export_page():
             )
             
         except Exception as e:
-            st.error(f"❌ Export failed: {str(e)}")
+            st.error(f"Export failed: {str(e)}")
 
 # ==================== MAIN ====================
+
+NAV_PAGES = {
+    "Home": home_page,
+    "Upload Sample": upload_page,
+    "Generate": generate_page,
+    "Dashboard": dashboard_page,
+    "Export": export_page,
+}
+
 
 def main():
     st.sidebar.title("🎲 SynthSLM")
     st.sidebar.markdown("---")
     
-    page = st.sidebar.radio("Navigation", [
-        "🏠 Home",
-        "📤 Upload Sample",
-        "⚙️ Generate",
-        "📈 Dashboard",
-        "💾 Export"
-    ])
+    page = st.sidebar.radio("Navigation", list(NAV_PAGES.keys()))
     
     st.sidebar.markdown("---")
+    st.sidebar.markdown("**Status**")
     
     if st.session_state.sample_data is not None:
-        st.sidebar.success(f"📊 Sample: {len(st.session_state.sample_data):,} rows")
+        status_pill(f"Sample loaded · {len(st.session_state.sample_data):,} rows", ok=True)
     else:
-        st.sidebar.info("📊 No sample loaded")
+        status_pill("No sample loaded", ok=False)
     
     if st.session_state.generated_data is not None:
-        st.sidebar.info(f"📦 Generated: {len(st.session_state.generated_data):,} rows")
+        status_pill(f"Generated · {len(st.session_state.generated_data):,} rows", ok=True)
     else:
-        st.sidebar.info("📦 No data generated")
+        status_pill("No data generated", ok=False)
     
     st.sidebar.markdown("---")
-    st.sidebar.caption("v3.0 | Team CSE_13 | B.Tech Final Year Project")
+    st.sidebar.caption(f"v{APP_VERSION} · Team CSE_13")
     
-    if page == "🏠 Home":
-        home_page()
-    elif page == "📤 Upload Sample":
-        upload_page()
-    elif page == "⚙️ Generate":
-        generate_page()
-    elif page == "📈 Dashboard":
-        dashboard_page()
-    elif page == "💾 Export":
-        export_page()
+    NAV_PAGES[page]()
 
 if __name__ == "__main__":
     main()
