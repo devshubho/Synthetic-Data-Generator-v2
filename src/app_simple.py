@@ -10,8 +10,16 @@ import random
 from datetime import datetime, timedelta
 import time
 import io
+import sys
+import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+
+_SRC = os.path.dirname(os.path.abspath(__file__))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+
+from export.excel_export import make_excel_safe
 
 # ==================== PAGE CONFIG ====================
 st.set_page_config(page_title="SynthSLM", page_icon="🎲", layout="wide")
@@ -399,7 +407,7 @@ def export_page():
             else:  # Excel
                 output = io.BytesIO()
                 with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                    df.to_excel(writer, index=False, sheet_name='Data')
+                    make_excel_safe(df).to_excel(writer, index=False, sheet_name='Data')
                 data = output.getvalue()
                 mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 file_ext = "xlsx"

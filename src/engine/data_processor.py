@@ -77,27 +77,61 @@ class DataProcessor:
             raise DataValidationError(f"Data cleaning failed: {str(e)}")
     
     def process_sample(self, sample: pd.DataFrame, data_type: str = "unknown") -> pd.DataFrame:
-        """Process sample data with deduplication"""
+        """Process sample data for modeling.
+
+        Important: do NOT apply aggressive near-dedup here — that collapses small
+        domain seeds (e.g. 15 HR rows → 1) and destroys categorical diversity for
+        CustomGenerator frequency models.
+        """
         try:
             if sample is None or len(sample) == 0:
                 raise DataValidationError("Sample is empty")
-            
+
             df = sample.copy()
-            df = self.deduplicator.deduplicate(df, data_type)
-            
+            # Exact duplicate rows only (keep near-duplicates for modeling variety)
+            before = len(df)
+            df = df.drop_duplicates()
+            if len(df) < before:
+                logger.info(f"Removed {before - len(df)} exact duplicate sample rows")
+
             string_cols = df.select_dtypes(include=['object']).columns
             for col in string_cols:
                 try:
                     df[col] = df[col].astype(str).str.strip()
                 except Exception as e:
                     logger.warning(f"Could not process string column '{col}': {str(e)}")
-            
+
+            # Soft-normalize bool-like labels
+            for col in df.columns:
+                if df[col].dtype == object or str(df[col].dtype) == 'string':
+                    df[col] = df[col].map(self._normalize_cell)
+
             logger.info(f"Processed sample: {df.shape}")
             return df
-            
+
         except Exception as e:
             logger.error(f"Sample processing failed: {str(e)}")
             raise DataValidationError(f"Sample processing failed: {str(e)}")
+
+    @staticmethod
+    def _normalize_cell(value):
+        if value is None or (isinstance(value, float) and pd.isna(value)):
+            return value
+        if isinstance(value, bool):
+            return 'TRUE' if value else 'FALSE'
+        if isinstance(value, (int, float, np.integer, np.floating)) and not isinstance(value, bool):
+            return value
+        text = str(value).strip()
+        lowered = text.lower()
+        bool_map = {
+            'true': 'TRUE', 'false': 'FALSE',
+            'yes': 'TRUE', 'no': 'FALSE',
+            'y': 'TRUE', 'n': 'FALSE',
+            't': 'TRUE', 'f': 'FALSE',
+        }
+        if lowered in bool_map:
+            return bool_map[lowered]
+        return text
     
     def get_dedup_report(self) -> Dict[str, Any]:
         """Get deduplication report"""

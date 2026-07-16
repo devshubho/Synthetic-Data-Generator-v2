@@ -1,79 +1,284 @@
 """
-Quality Report - Comprehensive Analysis with Advanced Features
+Quality Report - Role-aware analysis for synthetic custom data.
 """
 
-import pandas as pd
+import re
+from typing import Any, Dict, Optional
+
 import numpy as np
-from datetime import datetime
+import pandas as pd
 from logger import get_logger
-import io
-import json
-import zipfile
 
 logger = get_logger()
 
+ID_COL_RE = re.compile(
+    r'(^id$|_id$|order_id|transaction_id|employee_id|account_id|patient_id|claim_id|'
+    r'policy_id|kyc_id|ref_id|uuid|sku|imei|msisdn|loan_id|booking_id)',
+    re.IGNORECASE,
+)
+
+OPEN_ROLES = {
+    'person_name', 'first_name', 'last_name', 'email', 'city', 'address',
+    'phone', 'company', 'job', 'state', 'country', 'text_open',
+    'aadhaar', 'pan', 'ifsc', 'upi', 'pincode', 'gstin',
+}
+CLOSED_ROLES = {'closed_categorical', 'product'}
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
 
 class QualityReporter:
-    """Generate comprehensive quality reports"""
-    
-    def generate_report(self, data: pd.DataFrame) -> dict:
-        """Generate full quality report"""
-        return {
-            'overall_score': self._overall_score(data),
+    """Generate comprehensive quality reports for synthetic data."""
+
+    def generate_report(
+        self,
+        data: pd.DataFrame,
+        sample: Optional[pd.DataFrame] = None,
+        column_roles: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
+        roles = column_roles or self._infer_roles(data, sample)
+        report = {
+            'overall_score': self._overall_score(data, sample, roles),
             'completeness': self._completeness(data),
-            'uniqueness': self._uniqueness(data),
-            'diversity': self._diversity(data),
-            'privacy_score': self._privacy_score(data),
+            'uniqueness': self._open_field_uniqueness(data, roles),
+            'diversity': self._open_field_diversity(data, roles),
+            'id_uniqueness': self._id_uniqueness(data),
+            'date_diversity': self._date_diversity(data),
+            'enum_fidelity': self._enum_fidelity(data, sample, roles),
+            'name_email_coherence': self._name_email_coherence(data, roles),
+            'numeric_fidelity': self._numeric_fidelity(data, sample, roles),
+            'privacy_score': self._id_uniqueness(data),
             'statistics': self._statistics(data),
-            'advanced_metrics': self.calculate_advanced_metrics(data)
+            'column_roles': roles,
         }
-    
-    def _overall_score(self, data: pd.DataFrame) -> float:
-        scores = [self._completeness(data), self._uniqueness(data), self._diversity(data)]
-        return round(sum(scores) / len(scores), 3)
-    
+        return report
+
+    def _overall_score(
+        self,
+        data: pd.DataFrame,
+        sample: Optional[pd.DataFrame],
+        roles: Dict[str, str],
+    ) -> float:
+        scores = [
+            self._completeness(data),
+            self._id_uniqueness(data),
+            self._date_diversity(data),
+            self._open_field_diversity(data, roles),
+        ]
+        for metric in (
+            self._enum_fidelity(data, sample, roles),
+            self._name_email_coherence(data, roles),
+            self._numeric_fidelity(data, sample, roles),
+            self._open_field_uniqueness(data, roles),
+        ):
+            if metric is not None:
+                scores.append(metric)
+        return round(float(np.mean(scores)), 3)
+
+    def _infer_roles(
+        self,
+        data: pd.DataFrame,
+        sample: Optional[pd.DataFrame] = None,
+    ) -> Dict[str, str]:
+        ref = sample if sample is not None else data
+        roles: Dict[str, str] = {}
+        for col in data.columns:
+            name = str(col).strip().lower().replace(' ', '_')
+            series = ref[col] if col in ref.columns else data[col]
+            if ID_COL_RE.search(str(col)):
+                roles[col] = 'id'
+                continue
+            if pd.api.types.is_numeric_dtype(series):
+                roles[col] = 'numeric'
+                continue
+            parsed = pd.to_datetime(series, errors='coerce')
+            if parsed.notna().mean() > 0.8:
+                roles[col] = 'datetime'
+                continue
+            non_null = series.dropna().astype(str).str.strip()
+            if 'email' in name or (
+                len(non_null) and non_null.map(lambda x: bool(EMAIL_RE.match(x))).mean() > 0.6
+            ):
+                roles[col] = 'email'
+            elif any(k in name for k in (
+                'full_name', 'customer_name', 'employee_name', 'patient_name', 'doctor',
+            )) or name in ('name',):
+                roles[col] = 'person_name'
+            elif 'city' in name:
+                roles[col] = 'city'
+            elif any(k in name for k in ('phone', 'mobile')):
+                roles[col] = 'phone'
+            else:
+                unique_count = non_null.nunique() if len(non_null) else 0
+                unique_ratio = unique_count / len(non_null) if len(non_null) else 0
+                roles[col] = (
+                    'closed_categorical'
+                    if unique_count and unique_ratio < 0.55
+                    else 'text_open'
+                )
+        return roles
+
     def _completeness(self, data: pd.DataFrame) -> float:
         total = data.shape[0] * data.shape[1]
         if total == 0:
-            return 0
-        nulls = data.isnull().sum().sum()
-        return 1 - (nulls / total)
-    
-    def _uniqueness(self, data: pd.DataFrame) -> float:
-        if len(data) == 0:
-            return 0
-        unique_ratios = [data[col].nunique() / len(data) for col in data.columns]
-        return np.mean(unique_ratios) if unique_ratios else 0
-    
-    def _diversity(self, data: pd.DataFrame) -> float:
+            return 0.0
+        return float(1 - (data.isnull().sum().sum() / total))
+
+    def _open_field_uniqueness(
+        self, data: pd.DataFrame, roles: Dict[str, str]
+    ) -> Optional[float]:
+        cols = [
+            c for c in data.columns
+            if roles.get(c) in OPEN_ROLES or roles.get(c) == 'id'
+        ]
+        if not cols:
+            return None
+        n = len(data)
+        if n == 0:
+            return 0.0
+        return float(np.mean([data[c].nunique(dropna=True) / n for c in cols]))
+
+    def _open_field_diversity(self, data: pd.DataFrame, roles: Dict[str, str]) -> float:
         scores = []
         for col in data.columns:
-            if pd.api.types.is_numeric_dtype(data[col]):
-                mean = data[col].mean()
-                if mean != 0:
-                    scores.append(min(data[col].std() / abs(mean), 1.0))
-                else:
-                    scores.append(0.5)
-            else:
-                probs = data[col].value_counts(normalize=True)
-                if len(probs) > 0:
-                    entropy = -sum(p * np.log(p + 1e-10) for p in probs)
-                    max_entropy = np.log(len(probs) + 1e-10)
-                    scores.append(entropy / max_entropy if max_entropy > 0 else 0)
-                else:
-                    scores.append(0)
-        return np.mean(scores) if scores else 0.5
-    
-    def _privacy_score(self, data: pd.DataFrame) -> float:
-        if len(data) == 0:
-            return 0
+            role = roles.get(col, '')
+            if role in CLOSED_ROLES or role in ('id', 'datetime', 'numeric'):
+                continue
+            if role not in OPEN_ROLES:
+                continue
+            probs = data[col].value_counts(normalize=True)
+            if len(probs) == 0:
+                scores.append(0.0)
+                continue
+            entropy = -sum(p * np.log(p + 1e-10) for p in probs)
+            max_entropy = np.log(len(probs) + 1e-10)
+            scores.append(float(entropy / max_entropy) if max_entropy > 0 else 0.0)
+        return float(np.mean(scores)) if scores else 1.0
+
+    def _enum_fidelity(
+        self,
+        data: pd.DataFrame,
+        sample: Optional[pd.DataFrame],
+        roles: Dict[str, str],
+    ) -> Optional[float]:
+        if sample is None:
+            return None
+        closed_cols = [
+            c for c in data.columns
+            if roles.get(c) in CLOSED_ROLES and c in sample.columns
+        ]
+        if not closed_cols:
+            return None
+        scores = []
+        for col in closed_cols:
+            seed = sample[col].dropna().astype(str).str.strip()
+            syn = data[col].dropna().astype(str).str.strip()
+            if len(seed) == 0 or len(syn) == 0:
+                scores.append(0.0)
+                continue
+            seed_set, syn_set = set(seed), set(syn)
+            vocab_score = len(syn_set & seed_set) / len(syn_set) if syn_set else 0.0
+            seed_p = seed.value_counts(normalize=True)
+            syn_p = syn.value_counts(normalize=True)
+            all_vals = sorted(seed_set | syn_set)
+            p = np.array([seed_p.get(v, 0.0) for v in all_vals], dtype=float)
+            q = np.array([syn_p.get(v, 0.0) for v in all_vals], dtype=float)
+            tv = 0.5 * np.abs(p - q).sum()
+            scores.append(0.5 * vocab_score + 0.5 * float(1.0 - tv))
+        return float(np.mean(scores)) if scores else None
+
+    def _name_email_coherence(
+        self, data: pd.DataFrame, roles: Dict[str, str]
+    ) -> Optional[float]:
+        name_col = next(
+            (c for c, r in roles.items() if r in ('person_name', 'first_name') and c in data.columns),
+            None,
+        )
+        email_col = next(
+            (c for c, r in roles.items() if r == 'email' and c in data.columns),
+            None,
+        )
+        if not name_col or not email_col:
+            for c in data.columns:
+                cl = c.lower()
+                if name_col is None and 'name' in cl and 'file' not in cl:
+                    name_col = c
+                if email_col is None and 'email' in cl:
+                    email_col = c
+        if not name_col or not email_col:
+            return None
+        hits = total = 0
+        for name, email in zip(data[name_col].astype(str), data[email_col].astype(str)):
+            if not email or '@' not in email or name in ('nan', 'None'):
+                continue
+            total += 1
+            local = email.split('@', 1)[0].lower()
+            parts = re.sub(r'[^a-z0-9\s]', '', name.lower()).split()
+            if any(p in local for p in parts if len(p) >= 2):
+                hits += 1
+        return float(hits / total) if total else None
+
+    def _numeric_fidelity(
+        self,
+        data: pd.DataFrame,
+        sample: Optional[pd.DataFrame],
+        roles: Dict[str, str],
+    ) -> Optional[float]:
+        if sample is None:
+            return None
+        numeric_cols = [
+            c for c in data.columns
+            if roles.get(c) == 'numeric' and c in sample.columns
+        ]
+        if not numeric_cols:
+            return None
+        scores = []
+        for col in numeric_cols:
+            s = pd.to_numeric(sample[col], errors='coerce').dropna()
+            d = pd.to_numeric(data[col], errors='coerce').dropna()
+            if len(s) < 2 or len(d) < 2:
+                scores.append(0.5)
+                continue
+            s_mean, s_std = float(s.mean()), float(s.std()) or 1.0
+            d_mean, d_std = float(d.mean()), float(d.std()) or 1.0
+            mean_ok = abs(d_mean - s_mean) <= 2.0 * s_std
+            std_ratio = min(d_std, s_std) / max(d_std, s_std)
+            scores.append(1.0 if mean_ok else 0.5)
+            scores.append(float(std_ratio))
+        return float(np.mean(scores)) if scores else None
+
+    def _id_uniqueness(self, data: pd.DataFrame) -> float:
+        id_cols = [c for c in data.columns if ID_COL_RE.search(str(c))]
+        if not id_cols:
+            for col in data.columns:
+                if pd.api.types.is_numeric_dtype(data[col]):
+                    continue
+                s = data[col].dropna().astype(str)
+                if len(s) == 0:
+                    continue
+                if s.nunique() / len(s) >= 0.95 and s.str.match(r'^[A-Za-z]+[-_]?\d+$').mean() > 0.5:
+                    id_cols.append(col)
+        if not id_cols:
+            return 1.0
+        n = len(data)
+        if n == 0:
+            return 0.0
+        return float(np.mean([data[c].nunique(dropna=True) / n for c in id_cols]))
+
+    def _date_diversity(self, data: pd.DataFrame) -> float:
         scores = []
         for col in data.columns:
-            unique_ratio = data[col].nunique() / len(data) if len(data) > 0 else 0
-            scores.append(1 - min(unique_ratio, 1.0))
-        return np.mean(scores) if scores else 0
-    
-    def _statistics(self, data: pd.DataFrame) -> dict:
+            parsed = pd.to_datetime(data[col], errors='coerce')
+            if parsed.notna().mean() < 0.8:
+                continue
+            vals = parsed.dropna()
+            if len(vals) == 0:
+                continue
+            span = max((vals.max().normalize() - vals.min().normalize()).days, 0)
+            denom = max(1, min(len(vals), span + 1 if span > 0 else vals.nunique()))
+            scores.append(min(1.0, vals.nunique() / denom))
+        return float(np.mean(scores)) if scores else 1.0
+
+    def _statistics(self, data: pd.DataFrame) -> Dict:
         stats_dict = {}
         for col in data.columns:
             if pd.api.types.is_numeric_dtype(data[col]):
@@ -82,277 +287,11 @@ class QualityReporter:
                     'std': data[col].std(),
                     'min': data[col].min(),
                     'max': data[col].max(),
-                    'q25': data[col].quantile(0.25),
-                    'q50': data[col].quantile(0.50),
-                    'q75': data[col].quantile(0.75)
                 }
             else:
+                vc = data[col].value_counts()
                 stats_dict[col] = {
                     'unique': data[col].nunique(),
-                    'most_common': data[col].value_counts().index[0] if len(data[col]) > 0 else None,
-                    'most_common_freq': data[col].value_counts().iloc[0] if len(data[col]) > 0 else 0
+                    'most_common': vc.index[0] if len(vc) > 0 else None,
                 }
         return stats_dict
-    
-    # ==================== ADVANCED METRICS ====================
-    
-    def calculate_advanced_metrics(self, data: pd.DataFrame) -> dict:
-        """Calculate advanced quality metrics"""
-        
-        metrics = {}
-        
-        # 1. Data Completeness Score
-        total_cells = data.shape[0] * data.shape[1]
-        null_cells = data.isnull().sum().sum()
-        metrics['completeness'] = 1 - (null_cells / total_cells) if total_cells > 0 else 0
-        
-        # 2. Column Consistency
-        numeric_cols = data.select_dtypes(include=[np.number]).columns
-        categorical_cols = data.select_dtypes(include=['object']).columns
-        
-        metrics['type_consistency'] = len([col for col in data.columns 
-                                           if data[col].dtype == data[col].dtype]) / len(data.columns) if len(data.columns) > 0 else 0
-        
-        # 3. Value Range Validity
-        if len(numeric_cols) > 0:
-            valid_ranges = 0
-            for col in numeric_cols:
-                mean = data[col].mean()
-                std = data[col].std()
-                outliers = ((data[col] < mean - 3*std) | (data[col] > mean + 3*std)).sum()
-                if outliers / len(data) < 0.05:
-                    valid_ranges += 1
-            metrics['range_validity'] = valid_ranges / len(numeric_cols)
-        else:
-            metrics['range_validity'] = 0
-        
-        # 4. Categorical Diversity
-        if len(categorical_cols) > 0:
-            diversity_scores = []
-            for col in categorical_cols:
-                unique_ratio = data[col].nunique() / len(data) if len(data) > 0 else 0
-                diversity_scores.append(unique_ratio)
-            metrics['categorical_diversity'] = np.mean(diversity_scores) if diversity_scores else 0
-        else:
-            metrics['categorical_diversity'] = 0
-        
-        # 5. Data Freshness (if datetime columns exist)
-        datetime_cols = data.select_dtypes(include=['datetime64']).columns
-        if len(datetime_cols) > 0:
-            latest_date = data[datetime_cols[0]].max()
-            if pd.notna(latest_date):
-                days_old = (datetime.now() - latest_date).days
-                metrics['data_freshness'] = max(0, 1 - (days_old / 365))
-            else:
-                metrics['data_freshness'] = 0
-        else:
-            metrics['data_freshness'] = 0
-        
-        # 6. Overall Quality Score (weighted)
-        weights = {
-            'completeness': 0.25,
-            'type_consistency': 0.15,
-            'range_validity': 0.20,
-            'categorical_diversity': 0.20,
-            'data_freshness': 0.20
-        }
-        
-        overall = 0
-        for metric, weight in weights.items():
-            if metric in metrics:
-                overall += metrics[metric] * weight
-        metrics['overall_quality'] = overall
-        
-        return metrics
-
-
-# ==================== DIFFERENTIAL PRIVACY ====================
-
-class DifferentialPrivacy:
-    """Apply differential privacy to synthetic data"""
-    
-    def __init__(self, epsilon: float = 1.0, delta: float = 1e-5):
-        self.epsilon = epsilon
-        self.delta = delta
-    
-    def add_laplace_noise(self, data: pd.DataFrame, sensitivity: float = 1.0) -> pd.DataFrame:
-        """Add Laplace noise for differential privacy"""
-        df = data.copy()
-        scale = sensitivity / self.epsilon
-        
-        for col in df.select_dtypes(include=[np.number]).columns:
-            noise = np.random.laplace(0, scale, len(df))
-            df[col] = df[col] + noise
-        
-        return df
-    
-    def add_gaussian_noise(self, data: pd.DataFrame, sensitivity: float = 1.0) -> pd.DataFrame:
-        """Add Gaussian noise for differential privacy"""
-        df = data.copy()
-        scale = sensitivity * np.sqrt(2 * np.log(1.25 / self.delta)) / self.epsilon
-        
-        for col in df.select_dtypes(include=[np.number]).columns:
-            noise = np.random.normal(0, scale, len(df))
-            df[col] = df[col] + noise
-        
-        return df
-    
-    def k_anonymity(self, data: pd.DataFrame, quasi_identifiers: list, k: int = 5) -> pd.DataFrame:
-        """Apply k-anonymity to data"""
-        df = data.copy()
-        
-        for col in quasi_identifiers:
-            if col in df.columns:
-                if pd.api.types.is_numeric_dtype(df[col]):
-                    df[col] = pd.cut(df[col], bins=k, labels=[f'Group_{i}' for i in range(k)])
-                else:
-                    value_counts = df[col].value_counts()
-                    rare_values = value_counts[value_counts < k].index
-                    df.loc[df[col].isin(rare_values), col] = 'Other'
-        
-        return df
-
-
-# ==================== SMART RECOMMENDATIONS ====================
-
-def get_smart_recommendations(data: pd.DataFrame, report: dict) -> list:
-    """Generate smart recommendations based on data quality"""
-    
-    recommendations = []
-    
-    # Check completeness
-    if report.get('completeness', 1) < 0.9:
-        null_cols = [col for col in data.columns if data[col].isnull().sum() > 0]
-        recommendations.append({
-            'severity': 'high',
-            'message': f'Missing values detected in {len(null_cols)} columns.',
-            'action': 'Use median for numeric, mode for categorical imputation',
-            'columns': null_cols[:5]
-        })
-    
-    # Check uniqueness
-    if report.get('uniqueness', 0) < 0.1:
-        recommendations.append({
-            'severity': 'medium',
-            'message': 'Low uniqueness detected. Data may have many duplicates.',
-            'action': 'Remove duplicate rows or add more varied data'
-        })
-    
-    # Check for potential PII
-    pii_keywords = ['email', 'phone', 'address', 'ssn', 'credit', 'card', 'id']
-    pii_cols = [col for col in data.columns if any(kw in col.lower() for kw in pii_keywords)]
-    if pii_cols:
-        recommendations.append({
-            'severity': 'critical',
-            'message': f'Potential PII detected in: {", ".join(pii_cols[:3])}',
-            'action': 'Apply anonymization or differential privacy',
-            'columns': pii_cols
-        })
-    
-    # Check for numeric outliers
-    numeric_cols = data.select_dtypes(include=[np.number]).columns
-    for col in numeric_cols[:3]:
-        mean = data[col].mean()
-        std = data[col].std()
-        outliers = ((data[col] < mean - 3*std) | (data[col] > mean + 3*std)).sum()
-        if outliers / len(data) > 0.05:
-            recommendations.append({
-                'severity': 'medium',
-                'message': f'Outliers detected in column: {col} ({outliers} records)',
-                'action': 'Consider winsorization or removal of extreme values'
-            })
-    
-    return recommendations
-
-
-# ==================== EXPORT WITH METADATA ====================
-
-def export_with_metadata(df: pd.DataFrame, filename: str, format: str = "csv") -> bytes:
-    """Export data with metadata"""
-    
-    metadata = {
-        'generated_at': datetime.now().isoformat(),
-        'record_count': len(df),
-        'column_count': len(df.columns),
-        'columns': list(df.columns),
-        'data_types': df.dtypes.astype(str).to_dict()
-    }
-    
-    zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-        # Add data file
-        if format == "csv":
-            data_bytes = df.to_csv(index=False).encode()
-            zip_file.writestr('data.csv', data_bytes)
-        elif format == "json":
-            data_bytes = df.to_json(orient='records', indent=2).encode()
-            zip_file.writestr('data.json', data_bytes)
-        elif format == "excel":
-            output = io.BytesIO()
-            with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                df.to_excel(writer, index=False, sheet_name='Data')
-            zip_file.writestr('data.xlsx', output.getvalue())
-        
-        # Add metadata
-        zip_file.writestr('metadata.json', json.dumps(metadata, indent=2))
-    
-    return zip_buffer.getvalue()
-
-
-# ==================== PLACEHOLDER FUNCTIONS ====================
-# These will be implemented when integrating with app.py
-
-def generate_personal_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_sales_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_employee_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_timeseries_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_logs_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_system_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_iot_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_healthcare_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_financial_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-def generate_toll_data(n):
-    """Placeholder - will be imported from generators"""
-    pass
-
-
-# ==================== CACHING ====================
-
-import streamlit as st
-
-@st.cache_data(ttl=3600)
-def cached_generate(data_type: str, num_records: int) -> pd.DataFrame:
-    """Cache generated data for faster loading"""
-    
-    # Import generators dynamically to avoid circular imports
-    from generators.template import TemplateGenerator
-    
-    generator = TemplateGenerator()
-    return generator.generate(data_type, num_records)

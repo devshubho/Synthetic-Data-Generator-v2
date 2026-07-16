@@ -11,9 +11,20 @@ from faker import Faker
 import random
 import time
 import io
+import sys
+import os
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+
+# Ensure src/ is on path when running via streamlit
+_SRC = os.path.dirname(os.path.abspath(__file__))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+
+from engine.pipeline import GenerationPipeline
+from analytics.quality_report import QualityReporter
+from export.excel_export import make_excel_safe
 
 # ==================== PAGE CONFIG ====================
 st.set_page_config(page_title="SynthSLM", page_icon="🎲", layout="wide")
@@ -261,29 +272,25 @@ def generate_toll_data(n):
     return pd.DataFrame(data)
 
 def generate_from_sample(sample, n):
+    """Faker-driven custom generation via GenerationPipeline (not seed bootstrap)."""
     if sample is None or len(sample) == 0:
         return pd.DataFrame()
-    indices = np.random.choice(len(sample), min(n, len(sample)*10), replace=True)
-    return sample.iloc[indices].reset_index(drop=True)
+    pipeline = GenerationPipeline()
+    return pipeline.generate_from_sample(
+        sample,
+        num_records=n,
+        preserve_correlations=True,
+        enable_privacy=True,
+    )
 
 # ==================== QUALITY ANALYZER ====================
 
-def analyze_quality(data):
+def analyze_quality(data, sample=None, column_roles=None):
     if data is None or len(data) == 0:
         return {'overall_score': 0, 'completeness': 0, 'uniqueness': 0}
-    
-    total_cells = data.shape[0] * data.shape[1]
-    completeness = 1 - (data.isnull().sum().sum() / total_cells) if total_cells > 0 else 0
-    uniqueness = data.nunique().mean() / len(data) if len(data) > 0 else 0
-    
-    report = {
-        'overall_score': round((completeness + uniqueness) / 2, 3),
-        'completeness': round(completeness, 3),
-        'uniqueness': round(uniqueness, 3),
-        'diversity': 0.5,
-        'privacy_score': 0.5
-    }
-    return report
+    reporter = QualityReporter()
+    roles = column_roles or getattr(data, 'attrs', {}).get('column_roles')
+    return reporter.generate_report(data, sample=sample, column_roles=roles)
 
 # ==================== ENHANCED VISUALIZATION ====================
 
@@ -853,7 +860,13 @@ def generate_page():
             gen_time = time.time() - start
             
             st.session_state.generated_data = df
-            report = analyze_quality(df)
+            sample_for_q = (
+                st.session_state.sample_data
+                if data_type == "User-Defined (Upload Sample)"
+                else None
+            )
+            roles_for_q = getattr(df, 'attrs', {}).get('column_roles')
+            report = analyze_quality(df, sample=sample_for_q, column_roles=roles_for_q)
             st.session_state.quality_report = report
             
             st.session_state.generation_history.append({
@@ -869,6 +882,27 @@ def generate_page():
             with col1: st.metric("Records", f"{len(df):,}")
             with col2: st.metric("Columns", len(df.columns))
             with col3: st.metric("Quality", f"{report['overall_score']:.1%}")
+
+            if data_type == "User-Defined (Upload Sample)":
+                with st.expander("📊 Quality breakdown", expanded=True):
+                    b1, b2, b3 = st.columns(3)
+                    with b1:
+                        st.metric("Completeness", f"{report.get('completeness', 0):.1%}")
+                        st.metric("ID Uniqueness", f"{report.get('id_uniqueness', 0):.1%}")
+                    with b2:
+                        st.metric("Date Diversity", f"{report.get('date_diversity', 0):.1%}")
+                        st.metric("Open Diversity", f"{report.get('diversity', 0):.1%}")
+                    with b3:
+                        enum_f = report.get('enum_fidelity')
+                        st.metric(
+                            "Enum Fidelity",
+                            f"{enum_f:.1%}" if enum_f is not None else "N/A",
+                        )
+                        coh = report.get('name_email_coherence')
+                        st.metric(
+                            "Name↔Email",
+                            f"{coh:.1%}" if coh is not None else "N/A",
+                        )
     
     if st.session_state.generated_data is not None:
         st.subheader("📊 Preview")
@@ -1028,7 +1062,7 @@ def export_page():
             else:  # Excel
                 output = io.BytesIO()
                 with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                    df.to_excel(writer, index=False, sheet_name='Data')
+                    make_excel_safe(df).to_excel(writer, index=False, sheet_name='Data')
                 data = output.getvalue()
                 mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 file_ext = "xlsx"
@@ -1042,7 +1076,7 @@ def export_page():
                 size_str = f"{file_size} B"
             
             st.success(f"✅ Data ready for download ({size_str})")
-            
+
             st.download_button(
                 label=f"📥 Download {display_format}",
                 data=data,
