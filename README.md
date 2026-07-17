@@ -1,4 +1,4 @@
-# Project Synthesis (Synthetic Data Generator v2)
+# Project Synthesis (Synthetic Data Generator v3)
 
 Streamlit app that generates high-quality synthetic tabular data from built-in templates or from your own sample upload.
 
